@@ -1,368 +1,699 @@
 <!DOCTYPE html>
-
-<html data-bs-theme="dark" lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>University Admin Dashboard - Bridgeway</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
-<link href="css/site.css?v=VDS9eNm_joloY9_0uSet6S67vJ8OHN9FatF9WWQcMRQ" rel="stylesheet">
-</link></head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Admin Dashboard - Bridgeway</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/site.css?v=g9O6i4lC_4-6j6Jt6imMbKlg_MqVur_F4w49ibVKUeM" />
+</head>
 <body class="position-relative" style="min-height: 100vh; overflow-x: hidden;">
-<div class="bg-blob"></div>
-<div class="bg-blob-2"></div>
-<div class="bg-blob-3"></div>
-<nav class="bw-topbar" id="mainNav">
-<div class="bw-topbar-inner">
-<!-- Logo -->
-<a class="bw-topbar-brand" href="index.html">
-<img alt="Bridgeway" src="images/logo.png"/>
-</a>
-<!-- Spacer -->
-<div style="flex: 1;"></div>
-<!-- Profile Pill -->
-<div class="bw-profile-pill" id="profilePill" onclick="document.getElementById('profileDropdown').classList.toggle('show')">
-<div class="bw-profile-avatar">
-<img alt="Avatar" src="https://ui-avatars.com/api/?name=admin@uni.edu&amp;background=1a1a2e&amp;color=9B8EC4&amp;size=36&amp;bold=true"/>
-</div>
-<span class="bw-profile-name">admin@uni.edu</span>
-<i class="bi bi-chevron-down bw-profile-chevron"></i>
-</div>
-<!-- Dropdown -->
-<div class="bw-profile-dropdown" id="profileDropdown">
-<div class="bw-dropdown-header">
-<div class="bw-dropdown-avatar">
-<img alt="Avatar" src="https://ui-avatars.com/api/?name=admin@uni.edu&amp;background=1a1a2e&amp;color=9B8EC4&amp;size=48&amp;bold=true"/>
-</div>
-<div>
-<div class="bw-dropdown-name">admin@uni.edu</div>
-<div class="bw-dropdown-role">Logged In</div>
-</div>
-</div>
-<div class="bw-dropdown-divider"></div>
-<a class="bw-dropdown-item" href="#">
-<i class="bi bi-person"></i> My Profile
-                    </a>
-<a class="bw-dropdown-item" href="#">
-<i class="bi bi-gear"></i> Settings
-                    </a>
-<div class="bw-dropdown-divider"></div>
-<form action="index.html" class="m-0 p-0" method="get">
-<button class="bw-dropdown-item bw-dropdown-logout" type="submit">
-<i class="bi bi-box-arrow-right"></i> Logout
-                        </button>
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXTFhMXWz6gv3EjBQ0iCdrWmYez27Dha2MKO9JCj5_nfYdoVL4u_x36HkCFYbnipDqGpuBoqH-Jl24LHERv_LVpsUNNvPGyUmNlwbHY7BfXEIN09wTB0WZ9HE2OydJ90uCB6LJ3nMSq-AGJ6Os5kY5Qck-Y73mhg4gJ5eXUBsLn0Xg"/></form>
-</div>
-</div>
-</nav>
-<script>
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                const pill = document.getElementById('profilePill');
-                const dropdown = document.getElementById('profileDropdown');
-                if (pill && dropdown && !pill.contains(e.target) && !dropdown.contains(e.target)) {
-                    dropdown.classList.remove('show');
-                }
-            });
-        </script>
-<main>
+    <div class="bg-blob"></div>
+    <div class="bg-blob-2"></div>
+    <div class="bg-blob-3"></div>
+
+
+    <main>
+        
 <div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
-<div class="container position-relative z-1 dashboard-wrapper">
-<div class="dashboard-header mb-5 d-flex align-items-center animate-slide-left">
-<div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
-<i class="bi bi-cpu"></i>
+    <div class="container position-relative z-1 dashboard-wrapper">
+        <div class="dashboard-header mb-5 d-flex align-items-center animate-slide-left">
+            <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+                <i class="bi bi-cpu"></i>
+            </div>
+            <div>
+                <h2 class="mb-0 gradient-text">System Administration</h2>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Overview of the internship management platform</p>
+            </div>
+        </div>
+
+
+        <!-- Stats Cards Row 1 -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('users')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(108,142,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-people-fill" style="font-size:1.5rem; color:#6c8eff;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">7</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Total Users</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('students')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(78,205,196,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-mortarboard-fill" style="font-size:1.5rem; color:#4ecdc4;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">2</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Students</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('companies')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,107,107,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-building" style="font-size:1.5rem; color:#ff6b6b;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">2</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Companies</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('supervisors')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,217,61,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-person-badge-fill" style="font-size:1.5rem; color:#ffd93d;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">2</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Supervisors</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards Row 2 -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('posts')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(123,111,166,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-briefcase-fill" style="font-size:1.5rem; color:#7B6FA6;"></i>
+                    </div>
+                    <h3 style="color:#fff; font-weight: 700; margin:0;">6</h3>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Internship Posts</small>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('pending')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(245,158,11,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-hourglass-split" style="font-size:1.5rem; color:#f59e0b;"></i>
+                    </div>
+                    <h3 style="color:#fff; font-weight: 700; margin:0;">0</h3>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Pending Applications</small>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('approved')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(52,211,153,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-check-circle-fill" style="font-size:1.5rem; color:#34d399;"></i>
+                    </div>
+                    <h3 style="color:#fff; font-weight: 700; margin:0;">3</h3>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Approved Applications</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Panels -->
+        <!-- Users -->
+        <div id="detail-users" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">All System Users</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-users').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Email</th><th>Role</th><th>College</th></tr></thead>
+                    <tbody>
+                            <tr>
+                                <td style="color:#fff;">1</td>
+                                <td>admin@uni.edu</td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Admin</span></td>
+                                <td>College of IT</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">2</td>
+                                <td>dr.smith@uni.edu</td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Supervisor</span></td>
+                                <td>College of IT</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">3</td>
+                                <td>hr@techcorp.com</td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Company</span></td>
+                                <td>College of IT</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">4</td>
+                                <td>student1@uni.edu</td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Student</span></td>
+                                <td>College of IT</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">5</td>
+                                <td>admin2@uni.edu</td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Company</span></td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">6</td>
+                                <td>supervisor@uni.edu</td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Supervisor</span></td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">7</td>
+                                <td>student2@gmail.com</td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Student</span></td>
+                                <td>N/A</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Students -->
+        <div id="detail-students" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Students</h5>
+                <div>
+                    <button class="btn btn-sm premium-btn-outline me-2" onclick="toggleForm('createStudentForm')"><i class="bi bi-plus-circle me-1"></i> Add Student</button>
+                    <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-students').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                </div>
+            </div>
+            
+            <!-- Create Student Form -->
+            <div id="createStudentForm" style="display:none;" class="p-4 mb-4" style="background: rgba(123,111,166,0.05); border-radius: 12px; border: 1px solid rgba(123,111,166,0.2);">
+                <h6 style="color:#fff; margin-bottom: 1rem;">Add New Student User</h6>
+                <form method="post" action="/Admin?handler=CreateStudent">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Full Name</label>
+                            <input type="text" name="fullName" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Email</label>
+                            <input type="email" name="email" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Password</label>
+                            <input type="password" name="password" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Department</label>
+                            <input type="text" name="department" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">GPA</label>
+                            <input type="number" step="0.01" name="gpa" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">College</label>
+                            <select name="collegeId" class="form-select premium-input">
+                                <option value="">Select College...</option>
+ <option value="1">College of IT</option>                             </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="premium-btn"><i class="bi bi-person-plus-fill me-2"></i>Create Student</button>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+            </div>
+
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>GPA</th><th>Supervisor</th><th>Actions</th></tr></thead>
+                    <tbody>
+                            <tr>
+                                <td style="color:#fff;">4</td>
+                                <td style="font-weight: 500;">Alice Johnson</td>
+                                <td>Software Engineering</td>
+                                <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">3.5</span></td>
+                                <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                                Assign
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-dark shadow" style="background: #141420; border: 1px solid rgba(123,111,166,0.3); border-radius: 8px;">
+                                                    <li>
+                                                        <form method="post" class="m-0 p-0" action="/Admin?handler=AssignSupervisor">
+                                                            <input type="hidden" name="studentId" value="4" />
+                                                            <input type="hidden" name="supervisorId" value="2" />
+                                                            <button type="button" onclick="this.closest('form').submit();" class="dropdown-item" style="color: #ccc; font-size: 0.85rem; padding: 0.5rem 1rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(123,111,166,0.2)'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
+                                                                <i class="bi bi-person-badge me-2 text-secondary"></i>Dr. John Smith
+                                                            </button>
+                                                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" class="m-0 p-0" action="/Admin?handler=AssignSupervisor">
+                                                            <input type="hidden" name="studentId" value="4" />
+                                                            <input type="hidden" name="supervisorId" value="6" />
+                                                            <button type="button" onclick="this.closest('form').submit();" class="dropdown-item" style="color: #ccc; font-size: 0.85rem; padding: 0.5rem 1rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(123,111,166,0.2)'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
+                                                                <i class="bi bi-person-badge me-2 text-secondary"></i>dr 
+                                                            </button>
+                                                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+                                                    </li>
+                                            </ul>
+                                        </div>
+                                </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Student', 4, 'Alice Johnson')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">7</td>
+                                <td style="font-weight: 500;">dr </td>
+                                <td>wtv</td>
+                                <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">N/A</span></td>
+                                <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                                Assign
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-dark shadow" style="background: #141420; border: 1px solid rgba(123,111,166,0.3); border-radius: 8px;">
+                                                    <li>
+                                                        <form method="post" class="m-0 p-0" action="/Admin?handler=AssignSupervisor">
+                                                            <input type="hidden" name="studentId" value="7" />
+                                                            <input type="hidden" name="supervisorId" value="2" />
+                                                            <button type="button" onclick="this.closest('form').submit();" class="dropdown-item" style="color: #ccc; font-size: 0.85rem; padding: 0.5rem 1rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(123,111,166,0.2)'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
+                                                                <i class="bi bi-person-badge me-2 text-secondary"></i>Dr. John Smith
+                                                            </button>
+                                                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" class="m-0 p-0" action="/Admin?handler=AssignSupervisor">
+                                                            <input type="hidden" name="studentId" value="7" />
+                                                            <input type="hidden" name="supervisorId" value="6" />
+                                                            <button type="button" onclick="this.closest('form').submit();" class="dropdown-item" style="color: #ccc; font-size: 0.85rem; padding: 0.5rem 1rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(123,111,166,0.2)'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
+                                                                <i class="bi bi-person-badge me-2 text-secondary"></i>dr 
+                                                            </button>
+                                                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+                                                    </li>
+                                            </ul>
+                                        </div>
+                                </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Student', 7, 'dr ')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Companies -->
+        <div id="detail-companies" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Companies</h5>
+                <div>
+                    <button class="btn btn-sm premium-btn-outline me-2" onclick="toggleForm('createCompanyForm')"><i class="bi bi-plus-circle me-1"></i> Add Company</button>
+                    <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-companies').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                </div>
+            </div>
+
+            <!-- Create Company Form -->
+            <div id="createCompanyForm" style="display:none;" class="p-4 mb-4" style="background: rgba(123,111,166,0.05); border-radius: 12px; border: 1px solid rgba(123,111,166,0.2);">
+                <h6 style="color:#fff; margin-bottom: 1rem;">Add New Company User</h6>
+                <form method="post" action="/Admin?handler=CreateCompany">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Company Name</label>
+                            <input type="text" name="companyName" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Contact Email</label>
+                            <input type="email" name="contactEmail" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Password</label>
+                            <input type="password" name="password" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Location</label>
+                            <input type="text" name="location" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="premium-label">Description</label>
+                            <input type="text" name="description" class="form-control premium-input" />
+                        </div>
+                    </div>
+                    <button type="submit" class="premium-btn"><i class="bi bi-building-add me-2"></i>Create Company</button>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+            </div>
+
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Company Name</th><th>Contact</th><th>Location</th><th>Actions</th></tr></thead>
+                    <tbody>
+                            <tr>
+                                <td style="color:#fff;">3</td>
+                                <td style="font-weight: 500;"><i class="bi bi-building me-2 text-secondary"></i>Ghaith company</td>
+                                <td>hr@techcorp.com</td>
+                                <td>Amman</td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Company', 3, 'Ghaith company')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">5</td>
+                                <td style="font-weight: 500;"><i class="bi bi-building me-2 text-secondary"></i>Company</td>
+                                <td>admin2@uni.edu</td>
+                                <td>N/A</td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Company', 5, 'Company')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Supervisors -->
+        <div id="detail-supervisors" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Supervisors</h5>
+                <div>
+                    <button class="btn btn-sm premium-btn-outline me-2" onclick="toggleForm('createSupervisorForm')"><i class="bi bi-plus-circle me-1"></i> Add Supervisor</button>
+                    <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-supervisors').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                </div>
+            </div>
+
+            <!-- Create Supervisor Form -->
+            <div id="createSupervisorForm" style="display:none;" class="p-4 mb-4" style="background: rgba(123,111,166,0.05); border-radius: 12px; border: 1px solid rgba(123,111,166,0.2);">
+                <h6 style="color:#fff; margin-bottom: 1rem;">Add New Supervisor User</h6>
+                <form method="post" action="/Admin?handler=CreateSupervisor">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Full Name</label>
+                            <input type="text" name="fullName" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Email</label>
+                            <input type="email" name="email" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Password</label>
+                            <input type="password" name="password" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Department</label>
+                            <input type="text" name="department" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">College</label>
+                            <select name="collegeId" class="form-select premium-input">
+                                <option value="">Select College...</option>
+ <option value="1">College of IT</option>                             </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="premium-btn"><i class="bi bi-person-plus-fill me-2"></i>Create Supervisor</button>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+            </div>
+
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>College</th><th>Actions</th></tr></thead>
+                    <tbody>
+                            <tr>
+                                <td style="color:#fff;">2</td>
+                                <td style="font-weight: 500;">Dr. John Smith</td>
+                                <td>Computer Science</td>
+                                <td>College of IT</td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Supervisor', 2, 'Dr. John Smith')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">6</td>
+                                <td style="font-weight: 500;">dr </td>
+                                <td>N/A</td>
+                                <td>N/A</td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Supervisor', 6, 'dr ')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Internship Posts -->
+        <div id="detail-posts" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Internship Posts</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-posts').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Title</th><th>Company</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                            <tr>
+                                <td style="color:#fff;">3</td>
+                                <td style="font-weight: 500;">test</td>
+                                <td>Ghaith company</td>
+                                <td>
+ <span class="badge" style="background: rgba(52,211,153,0.1); color:#34d399;">Open</span>                                 </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Post', 3, 'test')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">4</td>
+                                <td style="font-weight: 500;">asd</td>
+                                <td>Ghaith company</td>
+                                <td>
+ <span class="badge" style="background: rgba(52,211,153,0.1); color:#34d399;">Open</span>                                 </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Post', 4, 'asd')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">5</td>
+                                <td style="font-weight: 500;">asd</td>
+                                <td>Ghaith company</td>
+                                <td>
+ <span class="badge" style="background: rgba(52,211,153,0.1); color:#34d399;">Open</span>                                 </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Post', 5, 'asd')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">6</td>
+                                <td style="font-weight: 500;">Software Engineering Intern</td>
+                                <td>Ghaith company</td>
+                                <td>
+ <span class="badge" style="background: rgba(255,255,255,0.1); color:#aaa;">Closed</span>                                 </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Post', 6, 'Software Engineering Intern')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">7</td>
+                                <td style="font-weight: 500;">QA / Software Testing Intern</td>
+                                <td>Ghaith company</td>
+                                <td>
+ <span class="badge" style="background: rgba(52,211,153,0.1); color:#34d399;">Open</span>                                 </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Post', 7, 'QA / Software Testing Intern')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#fff;">8</td>
+                                <td style="font-weight: 500;">QA / Software Testing Intern</td>
+                                <td>Ghaith company</td>
+                                <td>
+ <span class="badge" style="background: rgba(52,211,153,0.1); color:#34d399;">Open</span>                                 </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Post', 8, 'QA / Software Testing Intern')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pending Applications -->
+        <div id="detail-pending" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Pending Applications</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-pending').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+                <div class="text-center py-4">
+                    <p style="color:#777; margin:0;">No pending applications.</p>
+                </div>
+        </div>
+
+        <!-- Approved Applications -->
+        <div id="detail-approved" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Approved Applications</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-approved').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+                <div class="premium-table-container shadow-sm">
+                    <table class="table-custom mb-0">
+                        <thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Status</th><th>Action</th></tr></thead>
+                        <tbody>
+                                <tr>
+                                    <td style="color:#fff;">3</td>
+                                    <td>Alice Johnson</td>
+                                    <td>test</td>
+                                    <td>Ghaith company</td>
+                                    <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
+                                    <td>
+                                        <button type="button" onclick="openTerminateModal(3, 'Alice Johnson', 'test')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;" onmouseover="this.style.background='rgba(255,107,107,0.25)'" onmouseout="this.style.background='rgba(255,107,107,0.1)'">
+                                            <i class="bi bi-x-octagon-fill me-1"></i>Terminate
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color:#fff;">4</td>
+                                    <td>Alice Johnson</td>
+                                    <td>asd</td>
+                                    <td>Ghaith company</td>
+                                    <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
+                                    <td>
+                                        <button type="button" onclick="openTerminateModal(4, 'Alice Johnson', 'asd')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;" onmouseover="this.style.background='rgba(255,107,107,0.25)'" onmouseout="this.style.background='rgba(255,107,107,0.1)'">
+                                            <i class="bi bi-x-octagon-fill me-1"></i>Terminate
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color:#fff;">5</td>
+                                    <td>Alice Johnson</td>
+                                    <td>asd</td>
+                                    <td>Ghaith company</td>
+                                    <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
+                                    <td>
+                                        <button type="button" onclick="openTerminateModal(5, 'Alice Johnson', 'asd')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;" onmouseover="this.style.background='rgba(255,107,107,0.25)'" onmouseout="this.style.background='rgba(255,107,107,0.1)'">
+                                            <i class="bi bi-x-octagon-fill me-1"></i>Terminate
+                                        </button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
 </div>
-<div>
-<h2 class="mb-0 gradient-text">System Administration</h2>
-<p class="text-secondary mb-0" style="font-size: 0.9rem;">Overview of the internship management platform</p>
-</div>
-</div>
-<!-- Stats Cards Row 1 -->
-<div class="row mb-4">
-<div class="col-md-3 mb-3">
-<div class="premium-card text-center p-4 admin-card" onclick="showDetail('users')">
-<div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(108,142,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-<i class="bi bi-people-fill" style="font-size:1.5rem; color:#6c8eff;"></i>
-</div>
-<h2 style="color:#fff; font-weight: 700; margin:0;">4</h2>
-<small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Total Users</small>
-</div>
-</div>
-<div class="col-md-3 mb-3">
-<div class="premium-card text-center p-4 admin-card" onclick="showDetail('students')">
-<div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(78,205,196,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-<i class="bi bi-mortarboard-fill" style="font-size:1.5rem; color:#4ecdc4;"></i>
-</div>
-<h2 style="color:#fff; font-weight: 700; margin:0;">1</h2>
-<small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Students</small>
-</div>
-</div>
-<div class="col-md-3 mb-3">
-<div class="premium-card text-center p-4 admin-card" onclick="showDetail('companies')">
-<div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,107,107,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-<i class="bi bi-building" style="font-size:1.5rem; color:#ff6b6b;"></i>
-</div>
-<h2 style="color:#fff; font-weight: 700; margin:0;">1</h2>
-<small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Companies</small>
-</div>
-</div>
-<div class="col-md-3 mb-3">
-<div class="premium-card text-center p-4 admin-card" onclick="showDetail('supervisors')">
-<div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,217,61,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-<i class="bi bi-person-badge-fill" style="font-size:1.5rem; color:#ffd93d;"></i>
-</div>
-<h2 style="color:#fff; font-weight: 700; margin:0;">1</h2>
-<small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Supervisors</small>
-</div>
-</div>
-</div>
-<!-- Stats Cards Row 2 -->
-<div class="row mb-5">
-<div class="col-md-4 mb-3">
-<div class="premium-card text-center p-4 admin-card" onclick="showDetail('posts')">
-<div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(123,111,166,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-<i class="bi bi-briefcase-fill" style="font-size:1.5rem; color:#7B6FA6;"></i>
-</div>
-<h3 style="color:#fff; font-weight: 700; margin:0;">5</h3>
-<small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Internship Posts</small>
-</div>
-</div>
-<div class="col-md-4 mb-3">
-<div class="premium-card text-center p-4 admin-card" onclick="showDetail('pending')">
-<div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(245,158,11,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-<i class="bi bi-hourglass-split" style="font-size:1.5rem; color:#f59e0b;"></i>
-</div>
-<h3 style="color:#fff; font-weight: 700; margin:0;">0</h3>
-<small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Pending Applications</small>
-</div>
-</div>
-<div class="col-md-4 mb-3">
-<div class="premium-card text-center p-4 admin-card" onclick="showDetail('approved')">
-<div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(52,211,153,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-<i class="bi bi-check-circle-fill" style="font-size:1.5rem; color:#34d399;"></i>
-</div>
-<h3 style="color:#fff; font-weight: 700; margin:0;">1</h3>
-<small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Approved Applications</small>
-</div>
-</div>
-</div>
-<!-- Detail Panels -->
-<!-- Users -->
-<div class="detail-panel premium-card p-4" id="detail-users" style="display:none; animation: fadeIn 0.3s ease;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff; font-weight: 600; margin:0;">All System Users</h5>
-<button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-users').style.display='none'"><i class="bi bi-x-lg"></i></button>
-</div>
-<div class="premium-table-container shadow-sm">
-<table class="table-custom mb-0">
-<thead><tr><th>ID</th><th>Email</th><th>Role</th><th>College</th></tr></thead>
-<tbody>
-<tr>
-<td style="color:#fff;">1</td>
-<td>admin@uni.edu</td>
-<td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Admin</span></td>
-<td>College of IT</td>
-</tr>
-<tr>
-<td style="color:#fff;">2</td>
-<td>dr.smith@uni.edu</td>
-<td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Supervisor</span></td>
-<td>College of IT</td>
-</tr>
-<tr>
-<td style="color:#fff;">3</td>
-<td>hr@techcorp.com</td>
-<td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Company</span></td>
-<td>College of IT</td>
-</tr>
-<tr>
-<td style="color:#fff;">4</td>
-<td>student1@uni.edu</td>
-<td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">Student</span></td>
-<td>College of IT</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Students -->
-<div class="detail-panel premium-card p-4" id="detail-students" style="display:none; animation: fadeIn 0.3s ease;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff; font-weight: 600; margin:0;">All Students</h5>
-<button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-students').style.display='none'"><i class="bi bi-x-lg"></i></button>
-</div>
-<div class="premium-table-container shadow-sm">
-<table class="table-custom mb-0">
-<thead><tr><th>ID</th><th>Name</th><th>Department</th><th>GPA</th><th>Supervisor</th></tr></thead>
-<tbody>
-<tr>
-<td style="color:#fff;">4</td>
-<td style="font-weight: 500;">Alice Johnson</td>
-<td>Software Engineering</td>
-<td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">3.5</span></td>
-<td>Dr. John Smith</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Companies -->
-<div class="detail-panel premium-card p-4" id="detail-companies" style="display:none; animation: fadeIn 0.3s ease;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff; font-weight: 600; margin:0;">All Companies</h5>
-<button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-companies').style.display='none'"><i class="bi bi-x-lg"></i></button>
-</div>
-<div class="premium-table-container shadow-sm">
-<table class="table-custom mb-0">
-<thead><tr><th>ID</th><th>Company Name</th><th>Contact</th><th>Location</th><th>Description</th></tr></thead>
-<tbody>
-<tr>
-<td style="color:#fff;">3</td>
-<td style="font-weight: 500;"><i class="bi bi-building me-2 text-secondary"></i>Tech Corp Inc.</td>
-<td>hr@techcorp.com</td>
-<td>Amman</td>
-<td><small style="color:#aaa;">Leading tech firm</small></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Supervisors -->
-<div class="detail-panel premium-card p-4" id="detail-supervisors" style="display:none; animation: fadeIn 0.3s ease;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff; font-weight: 600; margin:0;">All Supervisors</h5>
-<button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-supervisors').style.display='none'"><i class="bi bi-x-lg"></i></button>
-</div>
-<div class="premium-table-container shadow-sm">
-<table class="table-custom mb-0">
-<thead><tr><th>ID</th><th>Name</th><th>Department</th><th>College</th></tr></thead>
-<tbody>
-<tr>
-<td style="color:#fff;">2</td>
-<td style="font-weight: 500;">Dr. John Smith</td>
-<td>Computer Science</td>
-<td>College of IT</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Internship Posts -->
-<div class="detail-panel premium-card p-4" id="detail-posts" style="display:none; animation: fadeIn 0.3s ease;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff; font-weight: 600; margin:0;">All Internship Posts</h5>
-<button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-posts').style.display='none'"><i class="bi bi-x-lg"></i></button>
-</div>
-<div class="premium-table-container shadow-sm">
-<table class="table-custom mb-0">
-<thead><tr><th>ID</th><th>Title</th><th>Company</th><th>Deadline</th><th>Requirements</th></tr></thead>
-<tbody>
-<tr>
-<td style="color:#fff;">1</td>
-<td style="font-weight: 500;">test</td>
-<td>Tech Corp Inc.</td>
-<td>Feb 02, 2622</td>
-<td><small style="color:#aaa;">test</small></td>
-</tr>
-<tr>
-<td style="color:#fff;">2</td>
-<td style="font-weight: 500;">test</td>
-<td>Tech Corp Inc.</td>
-<td>Jan 01, 0001</td>
-<td><small style="color:#aaa;">test</small></td>
-</tr>
-<tr>
-<td style="color:#fff;">3</td>
-<td style="font-weight: 500;">test</td>
-<td>Tech Corp Inc.</td>
-<td>Jan 01, 0001</td>
-<td><small style="color:#aaa;">test</small></td>
-</tr>
-<tr>
-<td style="color:#fff;">4</td>
-<td style="font-weight: 500;">asd</td>
-<td>Tech Corp Inc.</td>
-<td>Jan 01, 0001</td>
-<td><small style="color:#aaa;">asd</small></td>
-</tr>
-<tr>
-<td style="color:#fff;">5</td>
-<td style="font-weight: 500;">asd</td>
-<td>Tech Corp Inc.</td>
-<td>Oct 10, 2026</td>
-<td><small style="color:#aaa;">asd</small></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Pending Applications -->
-<div class="detail-panel premium-card p-4" id="detail-pending" style="display:none; animation: fadeIn 0.3s ease;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff; font-weight: 600; margin:0;">Pending Applications</h5>
-<button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-pending').style.display='none'"><i class="bi bi-x-lg"></i></button>
-</div>
-<div class="text-center py-4">
-<p style="color:#777; margin:0;">No pending applications.</p>
-</div>
-</div>
-<!-- Approved Applications -->
-<div class="detail-panel premium-card p-4" id="detail-approved" style="display:none; animation: fadeIn 0.3s ease;">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff; font-weight: 600; margin:0;">Approved Applications</h5>
-<button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-approved').style.display='none'"><i class="bi bi-x-lg"></i></button>
-</div>
-<div class="premium-table-container shadow-sm">
-<table class="table-custom mb-0">
-<thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Status</th></tr></thead>
-<tbody>
-<tr>
-<td style="color:#fff;">2</td>
-<td>Alice Johnson</td>
-<td>test</td>
-<td>Tech Corp Inc.</td>
-<td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<style>
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .admin-card:hover {
-        transform: translateY(-5px) !important;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important;
-        border-color: rgba(123, 111, 166, 0.4) !important;
-    }
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .admin-card:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+        border-color: rgba(123, 111, 166, 0.4) !important;
+    }
+    .modal, .modal-dialog, .modal-content, .modal-backdrop {
+        transition: none !important; animation: none !important;
+    }
 </style>
-<script>
-    function showDetail(type) {
-        document.querySelectorAll('.detail-panel').forEach(p => p.style.display = 'none');
-        document.querySelectorAll('.admin-card').forEach(c => c.style.borderColor = 'rgba(255, 255, 255, 0.08)');
-
-        var panel = document.getElementById('detail-' + type);
-        if (panel.dataset.open === 'true') {
-            panel.dataset.open = 'false';
-            return;
-        }
-
-        document.querySelectorAll('.detail-panel').forEach(p => p.dataset.open = 'false');
-
-        panel.style.display = 'block';
-        panel.dataset.open = 'true';
-    }
-</script>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/site.js?v=DLk_NJefq1UXFz713WZkG8RvA7zmrtavjk_auXyAP4o"></script>
+
+<!-- Generic Delete Modal -->
+<div class="modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content premium-card" style="background: #141420; border: 1px solid rgba(255, 107, 107, 0.3);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="color: #ff6b6b; font-weight: 600;"><i class="bi bi-exclamation-triangle-fill me-2"></i> Confirm Delete</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4" style="color: #aaa;">
+        Are you sure you want to completely delete <strong id="deleteModalType" style="color:#9B8EC4;"></strong>: <strong id="deleteModalName" style="color:#fff;"></strong>? This action cannot be undone and will remove all related data.
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="premium-btn-outline" data-bs-dismiss="modal" style="padding: 0.5rem 1.2rem;">Cancel</button>
+        <form id="deleteModalForm" method="post" class="m-0 p-0">
+            <input type="hidden" id="deleteModalId" name="" value="" />
+            <button type="button" onclick="document.getElementById('deleteModalForm').submit();" class="premium-btn" style="background: #ff6b6b; color: white; padding: 0.5rem 1.2rem; border: none;"><i class="bi bi-trash-fill me-2"></i>Delete</button>
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Terminate Confirmation Modal -->
+<div class="modal" id="terminateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content premium-card" style="background: #141420; border: 1px solid rgba(255, 107, 107, 0.3);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="color: #ff6b6b; font-weight: 600;"><i class="bi bi-exclamation-triangle-fill me-2"></i> Terminate Internship</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4" style="color: #aaa;">
+        Are you sure you want to terminate the internship for <strong id="terminateStudentName" style="color:#fff;"></strong> at <strong id="terminatePositionName" style="color:#9B8EC4;"></strong>? This will revoke their accepted status.
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="premium-btn-outline" data-bs-dismiss="modal" style="padding: 0.5rem 1.2rem;">Cancel</button>
+        <form id="terminateForm" method="post" class="m-0 p-0" action="/Admin?handler=Terminate">
+            <input type="hidden" id="terminateAppId" name="applicationId" value="" />
+            <button type="button" onclick="document.getElementById('terminateForm').submit();" class="premium-btn" style="background: #ff6b6b; color: white; padding: 0.5rem 1.2rem; border: none;"><i class="bi bi-x-octagon-fill me-2"></i>Terminate</button>
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ34eNnuiGpucshEpZWkITvynASBnuJ1ngSM3Y4ZyUjD1W0bvGcuLOY3g7O5vJ_4Vlxl1-O9bpWxHZpAv9DaJPpCbRv3dCc-IM33kWVSXy_zt6sGNoDvaIqA2rnx5p23SY" /></form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+    function showDetail(type) {
+        document.querySelectorAll('.detail-panel').forEach(p => p.style.display = 'none');
+        document.querySelectorAll('.admin-card').forEach(c => c.style.borderColor = 'rgba(255, 255, 255, 0.08)');
+
+        var panel = document.getElementById('detail-' + type);
+        if (panel.dataset.open === 'true') {
+            panel.dataset.open = 'false';
+            return;
+        }
+
+        document.querySelectorAll('.detail-panel').forEach(p => p.dataset.open = 'false');
+        panel.style.display = 'block';
+        panel.dataset.open = 'true';
+    }
+
+    function toggleForm(id) {
+        var form = document.getElementById(id);
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function openDeleteModal(type, id, name) {
+        document.getElementById('deleteModalType').textContent = type;
+        document.getElementById('deleteModalName').textContent = name;
+        var idField = document.getElementById('deleteModalId');
+        
+        // Dynamically set the ID field name based on type
+        if (type === 'Student') idField.name = 'studentId';
+        else if (type === 'Company') idField.name = 'companyId';
+        else if (type === 'Supervisor') idField.name = 'supervisorId';
+        else if (type === 'Post') idField.name = 'internshipId';
+        
+        idField.value = id;
+        document.getElementById('deleteModalForm').setAttribute('action', '?handler=Delete' + type);
+        new bootstrap.Modal(document.getElementById('deleteModal')).show();
+    }
+
+    function openTerminateModal(appId, studentName, positionName) {
+        document.getElementById('terminateAppId').value = appId;
+        document.getElementById('terminateStudentName').textContent = studentName;
+        document.getElementById('terminatePositionName').textContent = positionName;
+        new bootstrap.Modal(document.getElementById('terminateModal')).show();
+    }
+</script>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=DLk_NJefq1UXFz713WZkG8RvA7zmrtavjk_auXyAP4o"></script>
+    <script>
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('mainNav');
@@ -380,5 +711,6 @@
             });
         });
     </script>
+    
 </body>
 </html>

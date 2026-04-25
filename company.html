@@ -1,270 +1,377 @@
 <!DOCTYPE html>
-
-<html data-bs-theme="dark" lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Company Dashboard - Bridgeway</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
-<link href="css/site.css?v=VDS9eNm_joloY9_0uSet6S67vJ8OHN9FatF9WWQcMRQ" rel="stylesheet">
-</link></head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Company Dashboard - Bridgeway</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/site.css?v=g9O6i4lC_4-6j6Jt6imMbKlg_MqVur_F4w49ibVKUeM" />
+</head>
 <body class="position-relative" style="min-height: 100vh; overflow-x: hidden;">
-<div class="bg-blob"></div>
-<div class="bg-blob-2"></div>
-<div class="bg-blob-3"></div>
-<nav class="bw-topbar" id="mainNav">
-<div class="bw-topbar-inner">
-<!-- Logo -->
-<a class="bw-topbar-brand" href="index.html">
-<img alt="Bridgeway" src="images/logo.png"/>
-</a>
-<!-- Spacer -->
-<div style="flex: 1;"></div>
-<!-- Profile Pill -->
-<div class="bw-profile-pill" id="profilePill" onclick="document.getElementById('profileDropdown').classList.toggle('show')">
-<div class="bw-profile-avatar">
-<img alt="Avatar" src="https://ui-avatars.com/api/?name=hr@techcorp.com&amp;background=1a1a2e&amp;color=9B8EC4&amp;size=36&amp;bold=true"/>
-</div>
-<span class="bw-profile-name">hr@techcorp.com</span>
-<i class="bi bi-chevron-down bw-profile-chevron"></i>
-</div>
-<!-- Dropdown -->
-<div class="bw-profile-dropdown" id="profileDropdown">
-<div class="bw-dropdown-header">
-<div class="bw-dropdown-avatar">
-<img alt="Avatar" src="https://ui-avatars.com/api/?name=hr@techcorp.com&amp;background=1a1a2e&amp;color=9B8EC4&amp;size=48&amp;bold=true"/>
-</div>
-<div>
-<div class="bw-dropdown-name">hr@techcorp.com</div>
-<div class="bw-dropdown-role">Logged In</div>
-</div>
-</div>
-<div class="bw-dropdown-divider"></div>
-<a class="bw-dropdown-item" href="#">
-<i class="bi bi-person"></i> My Profile
-                    </a>
-<a class="bw-dropdown-item" href="#">
-<i class="bi bi-gear"></i> Settings
-                    </a>
-<div class="bw-dropdown-divider"></div>
-<form action="index.html" class="m-0 p-0" method="get">
-<button class="bw-dropdown-item bw-dropdown-logout" type="submit">
-<i class="bi bi-box-arrow-right"></i> Logout
-                        </button>
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQ96LUJnDC8gqEHIRVV9QyaO3FmXyDWEyJscoJXSTBiLFgwqCuirIopgtURAw32jMxC1hCzjQcE9mtloMbau2PLJ31Cr92ip75EqEjjX4NgS9P6fZamYOGWihknp7lTkCI_Qqn92_nE12ndxBGoNVr9mJHShZiW2lac4qxhHMkwPQ"/></form>
-</div>
-</div>
-</nav>
-<script>
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                const pill = document.getElementById('profilePill');
-                const dropdown = document.getElementById('profileDropdown');
-                if (pill && dropdown && !pill.contains(e.target) && !dropdown.contains(e.target)) {
-                    dropdown.classList.remove('show');
-                }
-            });
-        </script>
-<main>
+    <div class="bg-blob"></div>
+    <div class="bg-blob-2"></div>
+    <div class="bg-blob-3"></div>
+
+
+    <main>
+        
 <div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
-<div class="container position-relative z-1 dashboard-wrapper">
-<div class="dashboard-header mb-4 d-flex align-items-center animate-slide-left">
-<div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
-<i class="bi bi-building"></i>
+    <div class="container position-relative z-1 dashboard-wrapper">
+        <div class="dashboard-header mb-4 d-flex align-items-center animate-slide-left">
+            <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+                <i class="bi bi-building"></i>
+            </div>
+            <div>
+                <h2 class="mb-0 gradient-text">Company Dashboard</h2>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Manage your internship postings and applicants</p>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <!-- Left Column: Company Profile -->
+            <div class="col-md-4 mb-4 animate-in delay-1">
+                <div class="premium-card p-4">
+                    <div class="text-center mb-4">
+                        <div class="profile-avatar d-inline-block mb-3">
+                            <img src="https://ui-avatars.com/api/?name=Ghaith&#x2B;company&background=141420&color=9B8EC4&size=96" class="rounded-circle" alt="Avatar" width="96" height="96" />
+                        </div>
+                        <h5 class="mb-1" style="color:#fff; font-weight: 600;">Ghaith company</h5>
+                        <small style="color:#9B8EC4;">Leading tech firm</small>
+                    </div>
+                    <hr class="divider" />
+                    <div style="font-size:0.9rem;">
+                        <p class="mb-2"><strong class="premium-label" style="display:inline;">Location:</strong> <span style="color:#eee; float:right;">Amman</span></p>
+                        <p class="mb-2"><strong class="premium-label" style="display:inline;">Contact:</strong> <span style="color:#eee; float:right;">hr@techcorp.com</span></p>
+                        <p class="mb-0"><strong class="premium-label" style="display:inline;">Active Posts:</strong> <span style="color:#9B8EC4; font-weight:600; float:right;">6</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-8">
+                <ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(123,111,166,0.15);">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#my-posts" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #7B6FA6;">My Job Posts</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#manage-interns" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Manage Applications</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#evaluations" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Submit Evaluations</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    
+                    <!-- My Posts Tab -->
+                    <div class="tab-pane fade show active" id="my-posts" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 style="color:#fff;margin:0;font-weight:600;">Internship Opportunities</h5>
+                            <a class="premium-btn text-decoration-none" style="padding: 0.6rem 1.5rem; font-size:0.85rem;" href="/Company/CreatePost"><i class="bi bi-plus-lg me-2"></i> Create Post</a>
+                        </div>
+                        
+                                <div class="premium-card p-4 mb-3 position-relative">
+                                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-2 align-items-center" style="z-index: 10;">
+                                        <a class="text-secondary text-decoration-none transition-colors d-flex align-items-center justify-content-center" title="Edit Post" style="width: 40px; height: 40px; border-radius: 8px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.color='#6c757d'; this.style.background='transparent'" href="/Company/EditPost/3">
+                                            <i class="bi bi-pencil-square fs-5" style="pointer-events: none;"></i>
+                                        </a>
+                                        <button type="button" onclick="openDeleteModal(3)" class="btn btn-link m-0 border-0 d-flex align-items-center justify-content-center" title="Delete Post" style="width: 40px; height: 40px; background: transparent; box-shadow: none; color: #ff6b6b; transition: all 0.2s; opacity: 0.8; border-radius: 8px; cursor: pointer;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255, 107, 107, 0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'">
+                                            <i class="bi bi-trash fs-5" style="pointer-events: none;"></i>
+                                        </button>
+                                    </div>
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem; padding-right: 70px;">test</h5>
+                                    <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">test</p>
+                                    <div class="mb-3">
+                                            <span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">test</span>
+                                            <span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
+                                    </div>
+                                    <hr class="divider" />
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <small style="color:#888; display:block;"><i class="bi bi-people me-1"></i> 1 Total Applications</small>
+                                            <small style="color:#9B8EC4; font-weight:600;"><i class="bi bi-person-check-fill me-1"></i> 1 / 1 Accepted</small>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                                <a class="premium-btn-outline text-decoration-none" style="padding: 0.4rem 1.2rem; font-size:0.8rem;" href="/Company/ViewApplicants/3">View Applicants</a>
+                                        </div>
+                                    </div>
+                                        <div class="w-100 text-center" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(123,111,166,0.2); border-radius: 8px; padding: 0.6rem;">
+                                            <small style="color: #666; font-weight:600; text-transform: uppercase; letter-spacing:1px;"><i class="bi bi-lock-fill me-2"></i> Post Closed</small>
+                                        </div>
+                                </div>
+                                <div class="premium-card p-4 mb-3 position-relative">
+                                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-2 align-items-center" style="z-index: 10;">
+                                        <a class="text-secondary text-decoration-none transition-colors d-flex align-items-center justify-content-center" title="Edit Post" style="width: 40px; height: 40px; border-radius: 8px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.color='#6c757d'; this.style.background='transparent'" href="/Company/EditPost/4">
+                                            <i class="bi bi-pencil-square fs-5" style="pointer-events: none;"></i>
+                                        </a>
+                                        <button type="button" onclick="openDeleteModal(4)" class="btn btn-link m-0 border-0 d-flex align-items-center justify-content-center" title="Delete Post" style="width: 40px; height: 40px; background: transparent; box-shadow: none; color: #ff6b6b; transition: all 0.2s; opacity: 0.8; border-radius: 8px; cursor: pointer;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255, 107, 107, 0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'">
+                                            <i class="bi bi-trash fs-5" style="pointer-events: none;"></i>
+                                        </button>
+                                    </div>
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem; padding-right: 70px;">asd</h5>
+                                    <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">asd</p>
+                                    <div class="mb-3">
+                                            <span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">asd</span>
+                                            <span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
+                                    </div>
+                                    <hr class="divider" />
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <small style="color:#888; display:block;"><i class="bi bi-people me-1"></i> 1 Total Applications</small>
+                                            <small style="color:#9B8EC4; font-weight:600;"><i class="bi bi-person-check-fill me-1"></i> 1 / 1 Accepted</small>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                                <a class="premium-btn-outline text-decoration-none" style="padding: 0.4rem 1.2rem; font-size:0.8rem;" href="/Company/ViewApplicants/4">View Applicants</a>
+                                        </div>
+                                    </div>
+                                        <div class="w-100 text-center" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(123,111,166,0.2); border-radius: 8px; padding: 0.6rem;">
+                                            <small style="color: #666; font-weight:600; text-transform: uppercase; letter-spacing:1px;"><i class="bi bi-lock-fill me-2"></i> Post Closed</small>
+                                        </div>
+                                </div>
+                                <div class="premium-card p-4 mb-3 position-relative">
+                                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-2 align-items-center" style="z-index: 10;">
+                                        <a class="text-secondary text-decoration-none transition-colors d-flex align-items-center justify-content-center" title="Edit Post" style="width: 40px; height: 40px; border-radius: 8px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.color='#6c757d'; this.style.background='transparent'" href="/Company/EditPost/5">
+                                            <i class="bi bi-pencil-square fs-5" style="pointer-events: none;"></i>
+                                        </a>
+                                        <button type="button" onclick="openDeleteModal(5)" class="btn btn-link m-0 border-0 d-flex align-items-center justify-content-center" title="Delete Post" style="width: 40px; height: 40px; background: transparent; box-shadow: none; color: #ff6b6b; transition: all 0.2s; opacity: 0.8; border-radius: 8px; cursor: pointer;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255, 107, 107, 0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'">
+                                            <i class="bi bi-trash fs-5" style="pointer-events: none;"></i>
+                                        </button>
+                                    </div>
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem; padding-right: 70px;">asd</h5>
+                                    <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">asd</p>
+                                    <div class="mb-3">
+                                            <span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">asd</span>
+                                            <span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Oct 10, 2026</span>
+                                    </div>
+                                    <hr class="divider" />
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <small style="color:#888; display:block;"><i class="bi bi-people me-1"></i> 1 Total Applications</small>
+                                            <small style="color:#9B8EC4; font-weight:600;"><i class="bi bi-person-check-fill me-1"></i> 1 / 1 Accepted</small>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                                <a class="premium-btn-outline text-decoration-none" style="padding: 0.4rem 1.2rem; font-size:0.8rem;" href="/Company/ViewApplicants/5">View Applicants</a>
+                                        </div>
+                                    </div>
+                                        <div class="w-100 text-center" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(123,111,166,0.2); border-radius: 8px; padding: 0.6rem;">
+                                            <small style="color: #666; font-weight:600; text-transform: uppercase; letter-spacing:1px;"><i class="bi bi-lock-fill me-2"></i> Post Closed</small>
+                                        </div>
+                                </div>
+                                <div class="premium-card p-4 mb-3 position-relative">
+                                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-2 align-items-center" style="z-index: 10;">
+                                        <a class="text-secondary text-decoration-none transition-colors d-flex align-items-center justify-content-center" title="Edit Post" style="width: 40px; height: 40px; border-radius: 8px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.color='#6c757d'; this.style.background='transparent'" href="/Company/EditPost/6">
+                                            <i class="bi bi-pencil-square fs-5" style="pointer-events: none;"></i>
+                                        </a>
+                                        <button type="button" onclick="openDeleteModal(6)" class="btn btn-link m-0 border-0 d-flex align-items-center justify-content-center" title="Delete Post" style="width: 40px; height: 40px; background: transparent; box-shadow: none; color: #ff6b6b; transition: all 0.2s; opacity: 0.8; border-radius: 8px; cursor: pointer;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255, 107, 107, 0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'">
+                                            <i class="bi bi-trash fs-5" style="pointer-events: none;"></i>
+                                        </button>
+                                    </div>
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem; padding-right: 70px;">Software Engineering Intern</h5>
+                                    <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">123</p>
+                                    <div class="mb-3">
+                                            <span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Nov 30, 2026</span>
+                                    </div>
+                                    <hr class="divider" />
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <small style="color:#888; display:block;"><i class="bi bi-people me-1"></i> 0 Total Applications</small>
+                                            <small style="color:#9B8EC4; font-weight:600;"><i class="bi bi-person-check-fill me-1"></i> 0 / 1 Accepted</small>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                                <button class="premium-btn-outline" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;" disabled>View Applicants</button>
+                                        </div>
+                                    </div>
+                                        <div class="w-100 text-center" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(123,111,166,0.2); border-radius: 8px; padding: 0.6rem;">
+                                            <small style="color: #666; font-weight:600; text-transform: uppercase; letter-spacing:1px;"><i class="bi bi-lock-fill me-2"></i> Post Closed</small>
+                                        </div>
+                                </div>
+                                <div class="premium-card p-4 mb-3 position-relative">
+                                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-2 align-items-center" style="z-index: 10;">
+                                        <a class="text-secondary text-decoration-none transition-colors d-flex align-items-center justify-content-center" title="Edit Post" style="width: 40px; height: 40px; border-radius: 8px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.color='#6c757d'; this.style.background='transparent'" href="/Company/EditPost/7">
+                                            <i class="bi bi-pencil-square fs-5" style="pointer-events: none;"></i>
+                                        </a>
+                                        <button type="button" onclick="openDeleteModal(7)" class="btn btn-link m-0 border-0 d-flex align-items-center justify-content-center" title="Delete Post" style="width: 40px; height: 40px; background: transparent; box-shadow: none; color: #ff6b6b; transition: all 0.2s; opacity: 0.8; border-radius: 8px; cursor: pointer;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255, 107, 107, 0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'">
+                                            <i class="bi bi-trash fs-5" style="pointer-events: none;"></i>
+                                        </button>
+                                    </div>
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem; padding-right: 70px;">QA / Software Testing Intern</h5>
+                                    <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">123</p>
+                                    <div class="mb-3">
+                                            <span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Nov 29, 2026</span>
+                                    </div>
+                                    <hr class="divider" />
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <small style="color:#888; display:block;"><i class="bi bi-people me-1"></i> 0 Total Applications</small>
+                                            <small style="color:#9B8EC4; font-weight:600;"><i class="bi bi-person-check-fill me-1"></i> 0 / 1 Accepted</small>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                                <button class="premium-btn-outline" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;" disabled>View Applicants</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="premium-card p-4 mb-3 position-relative">
+                                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-2 align-items-center" style="z-index: 10;">
+                                        <a class="text-secondary text-decoration-none transition-colors d-flex align-items-center justify-content-center" title="Edit Post" style="width: 40px; height: 40px; border-radius: 8px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.color='#6c757d'; this.style.background='transparent'" href="/Company/EditPost/8">
+                                            <i class="bi bi-pencil-square fs-5" style="pointer-events: none;"></i>
+                                        </a>
+                                        <button type="button" onclick="openDeleteModal(8)" class="btn btn-link m-0 border-0 d-flex align-items-center justify-content-center" title="Delete Post" style="width: 40px; height: 40px; background: transparent; box-shadow: none; color: #ff6b6b; transition: all 0.2s; opacity: 0.8; border-radius: 8px; cursor: pointer;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255, 107, 107, 0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'">
+                                            <i class="bi bi-trash fs-5" style="pointer-events: none;"></i>
+                                        </button>
+                                    </div>
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem; padding-right: 70px;">QA / Software Testing Intern</h5>
+                                    <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">asd</p>
+                                    <div class="mb-3">
+                                            <span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">asd</span>
+                                            <span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Dec 17, 2026</span>
+                                    </div>
+                                    <hr class="divider" />
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <small style="color:#888; display:block;"><i class="bi bi-people me-1"></i> 0 Total Applications</small>
+                                            <small style="color:#9B8EC4; font-weight:600;"><i class="bi bi-person-check-fill me-1"></i> 0 / 5 Accepted</small>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                                <button class="premium-btn-outline" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;" disabled>View Applicants</button>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+
+                    <!-- Manage Interns Tab -->
+                    <div class="tab-pane fade" id="manage-interns" role="tabpanel">
+                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Student Applications</h5>
+                            <div class="premium-table-container shadow-sm">
+                                <table class="table-custom mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Role Applied For</th>
+                                            <th>GPA</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                <td style="color:#fff; font-weight:500;">Alice Johnson</td>
+                                                <td>test</td>
+                                                <td>
+                                                    <span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span>
+                                                </td>
+                                                <td>
+                                                        <span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color:#fff; font-weight:500;">Alice Johnson</td>
+                                                <td>asd</td>
+                                                <td>
+                                                    <span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span>
+                                                </td>
+                                                <td>
+                                                        <span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color:#fff; font-weight:500;">Alice Johnson</td>
+                                                <td>asd</td>
+                                                <td>
+                                                    <span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span>
+                                                </td>
+                                                <td>
+                                                        <span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
+                                                </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        
+                        <div class="premium-card p-3 mt-4" style="background: rgba(123,111,166,0.05); border-color: rgba(123,111,166,0.15);">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-info-circle-fill me-3 fs-4" style="color:#7B6FA6;"></i>
+                                <div>
+                                    <h6 class="mb-1" style="color:#fff; font-size:0.95rem;">Approval Process</h6>
+                                    <p class="mb-0" style="color:#aaa; font-size:0.85rem;">Once you post an internship, the university <strong style="color:#9B8EC4;">Supervisor</strong> handles all student approvals and rejections.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Evaluations Tab -->
+                    <div class="tab-pane fade" id="evaluations" role="tabpanel">
+                        <div class="premium-card p-4 p-md-5">
+                            <h5 class="mb-2" style="color:#fff; font-weight:600;">Submit Evaluation</h5>
+                            <p style="color:#aaa; font-size:0.9rem; margin-bottom: 2rem;">Submit weekly progress reports or the final evaluation for your current interns.</p>
+                            
+                            <form>
+                                <div class="mb-4">
+                                    <label class="premium-label">Select Intern</label>
+                                    <select class="form-select premium-input">
+                                            <option>Alice Johnson (test)</option>
+                                            <option>Alice Johnson (asd)</option>
+                                            <option>Alice Johnson (asd)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="premium-label">Report Type</label>
+                                    <select class="form-select premium-input">
+                                        <option>Weekly Report (Week 1)</option>
+                                        <option>Weekly Report (Week 2)</option>
+                                        <option>Final Evaluation</option>
+                                    </select>
+                                </div>
+                                <div class="mb-5">
+                                    <label class="premium-label">Comments / Notes</label>
+                                    <textarea class="form-control premium-input" rows="4" placeholder="Write your performance assessment here..."></textarea>
+                                </div>
+                                <button type="submit" class="premium-btn w-100"><i class="bi bi-send-fill me-2"></i> Submit Evaluation</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-<h2 class="mb-0 gradient-text">Company Dashboard</h2>
-<p class="text-secondary mb-0" style="font-size: 0.9rem;">Manage your internship postings and applicants</p>
+
+<!-- Delete Confirmation Modal -->
+<style>
+    .modal, .modal-dialog, .modal-content, .modal-backdrop {
+        transition: none !important;
+        animation: none !important;
+    }
+</style>
+<div class="modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content premium-card" style="background: #141420; border: 1px solid rgba(255, 107, 107, 0.3);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="color: #ff6b6b; font-weight: 600;"><i class="bi bi-exclamation-triangle-fill me-2"></i> Confirm Deletion</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4" style="color: #aaa;">
+        Are you sure you want to permanently delete this internship post? This action cannot be undone, and any unaccepted applications tied to this post will be automatically removed.
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="premium-btn-outline" data-bs-dismiss="modal" style="padding: 0.5rem 1.2rem;">Cancel</button>
+        <form id="modalDeleteForm" method="post" class="m-0 p-0" action="/Company/Dashboard?handler=DeletePost">
+            <input type="hidden" id="deleteModalInternshipId" name="internshipId" value="" />
+            <button type="button" onclick="document.getElementById('modalDeleteForm').submit();" class="premium-btn" style="background: #ff6b6b; color: white; padding: 0.5rem 1.2rem; border: none; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);"><i class="bi bi-trash-fill me-2"></i> Delete Post</button>
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXTjUiTTzdulrI9By03zp0N0zu7RwVlGbIEhFQpL-rgPr11CXNyvJYQqApDsG6O8hRh2SLgPaSdG4sk1pt4V46cu8sf9JomP7aHEUUnjOlF754bNege0fjE_I_u6Jf9n0lE" /></form>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-<div class="row">
-<!-- Left Column: Company Profile -->
-<div class="col-md-4 mb-4 animate-in delay-1">
-<div class="premium-card p-4">
-<div class="text-center mb-4">
-<div class="profile-avatar d-inline-block mb-3">
-<img alt="Avatar" class="rounded-circle" height="96" src="https://ui-avatars.com/api/?name=Tech+Corp+Inc.&amp;background=141420&amp;color=9B8EC4&amp;size=96" width="96"/>
-</div>
-<h5 class="mb-1" style="color:#fff; font-weight: 600;">Tech Corp Inc.</h5>
-<small style="color:#9B8EC4;">Leading tech firm</small>
-</div>
-<hr class="divider"/>
-<div style="font-size:0.9rem;">
-<p class="mb-2"><strong class="premium-label" style="display:inline;">Location:</strong> <span style="color:#eee; float:right;">Amman</span></p>
-<p class="mb-2"><strong class="premium-label" style="display:inline;">Contact:</strong> <span style="color:#eee; float:right;">hr@techcorp.com</span></p>
-<p class="mb-0"><strong class="premium-label" style="display:inline;">Active Posts:</strong> <span style="color:#9B8EC4; font-weight:600; float:right;">5</span></p>
-</div>
-</div>
-</div>
-<!-- Right Column -->
-<div class="col-md-8">
-<ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(123,111,166,0.15);">
-<li class="nav-item" role="presentation">
-<button class="nav-link active" data-bs-target="#my-posts" data-bs-toggle="tab" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #7B6FA6;" type="button">My Job Posts</button>
-</li>
-<li class="nav-item" role="presentation">
-<button class="nav-link" data-bs-target="#manage-interns" data-bs-toggle="tab" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;" type="button">Manage Applications</button>
-</li>
-<li class="nav-item" role="presentation">
-<button class="nav-link" data-bs-target="#evaluations" data-bs-toggle="tab" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;" type="button">Submit Evaluations</button>
-</li>
-</ul>
-<div class="tab-content">
-<!-- My Posts Tab -->
-<div class="tab-pane fade show active" id="my-posts" role="tabpanel">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h5 style="color:#fff;margin:0;font-weight:600;">Internship Opportunities</h5>
-<a class="premium-btn text-decoration-none" href="/Company/CreatePost" style="padding: 0.6rem 1.5rem; font-size:0.85rem;"><i class="bi bi-plus-lg me-2"></i> Create Post</a>
-</div>
-<div class="premium-card p-4 mb-3">
-<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">test</h5>
-<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">test</p>
-<div class="mb-3">
-<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">test</span>
-<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Feb 02, 2622</span>
-</div>
-<hr class="divider"/>
-<div class="d-flex justify-content-between align-items-center">
-<small style="color:#888;"><i class="bi bi-people me-1"></i> 1 Applicants</small>
-<a class="premium-btn-outline text-decoration-none" href="/Company/ViewApplicants/1" style="padding: 0.4rem 1.2rem; font-size:0.8rem;">View Applicants</a>
-</div>
-</div>
-<div class="premium-card p-4 mb-3">
-<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">test</h5>
-<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">test</p>
-<div class="mb-3">
-<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">test</span>
-<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
-</div>
-<hr class="divider"/>
-<div class="d-flex justify-content-between align-items-center">
-<small style="color:#888;"><i class="bi bi-people me-1"></i> 1 Applicants</small>
-<a class="premium-btn-outline text-decoration-none" href="/Company/ViewApplicants/2" style="padding: 0.4rem 1.2rem; font-size:0.8rem;">View Applicants</a>
-</div>
-</div>
-<div class="premium-card p-4 mb-3">
-<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">test</h5>
-<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">test</p>
-<div class="mb-3">
-<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">test</span>
-<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
-</div>
-<hr class="divider"/>
-<div class="d-flex justify-content-between align-items-center">
-<small style="color:#888;"><i class="bi bi-people me-1"></i> 0 Applicants</small>
-<button class="premium-btn-outline" disabled="" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;">View Applicants</button>
-</div>
-</div>
-<div class="premium-card p-4 mb-3">
-<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">asd</h5>
-<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">asd</p>
-<div class="mb-3">
-<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">asd</span>
-<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
-</div>
-<hr class="divider"/>
-<div class="d-flex justify-content-between align-items-center">
-<small style="color:#888;"><i class="bi bi-people me-1"></i> 0 Applicants</small>
-<button class="premium-btn-outline" disabled="" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;">View Applicants</button>
-</div>
-</div>
-<div class="premium-card p-4 mb-3">
-<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">asd</h5>
-<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">asd</p>
-<div class="mb-3">
-<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">asd</span>
-<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Oct 10, 2026</span>
-</div>
-<hr class="divider"/>
-<div class="d-flex justify-content-between align-items-center">
-<small style="color:#888;"><i class="bi bi-people me-1"></i> 0 Applicants</small>
-<button class="premium-btn-outline" disabled="" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;">View Applicants</button>
-</div>
-</div>
-</div>
-<!-- Manage Interns Tab -->
-<div class="tab-pane fade" id="manage-interns" role="tabpanel">
-<h5 class="mb-4" style="color:#fff; font-weight:600;">Student Applications</h5>
-<div class="premium-table-container shadow-sm">
-<table class="table-custom mb-0">
-<thead>
-<tr>
-<th>Student Name</th>
-<th>Role Applied For</th>
-<th>GPA</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="color:#fff; font-weight:500;">Alice Johnson</td>
-<td>test</td>
-<td>
-<span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span>
-</td>
-<td>
-<span class="badge-rejected"><i class="bi bi-x-circle-fill me-1"></i>Rejected</span>
-</td>
-</tr>
-<tr>
-<td style="color:#fff; font-weight:500;">Alice Johnson</td>
-<td>test</td>
-<td>
-<span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span>
-</td>
-<td>
-<span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="premium-card p-3 mt-4" style="background: rgba(123,111,166,0.05); border-color: rgba(123,111,166,0.15);">
-<div class="d-flex align-items-center">
-<i class="bi bi-info-circle-fill me-3 fs-4" style="color:#7B6FA6;"></i>
-<div>
-<h6 class="mb-1" style="color:#fff; font-size:0.95rem;">Approval Process</h6>
-<p class="mb-0" style="color:#aaa; font-size:0.85rem;">Once you post an internship, the university <strong style="color:#9B8EC4;">Supervisor</strong> handles all student approvals and rejections.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Evaluations Tab -->
-<div class="tab-pane fade" id="evaluations" role="tabpanel">
-<div class="premium-card p-4 p-md-5">
-<h5 class="mb-2" style="color:#fff; font-weight:600;">Submit Evaluation</h5>
-<p style="color:#aaa; font-size:0.9rem; margin-bottom: 2rem;">Submit weekly progress reports or the final evaluation for your current interns.</p>
-<form>
-<div class="mb-4">
-<label class="premium-label">Select Intern</label>
-<select class="form-select premium-input">
-<option>Alice Johnson (test)</option>
-</select>
-</div>
-<div class="mb-4">
-<label class="premium-label">Report Type</label>
-<select class="form-select premium-input">
-<option>Weekly Report (Week 1)</option>
-<option>Weekly Report (Week 2)</option>
-<option>Final Evaluation</option>
-</select>
-</div>
-<div class="mb-5">
-<label class="premium-label">Comments / Notes</label>
-<textarea class="form-control premium-input" placeholder="Write your performance assessment here..." rows="4"></textarea>
-</div>
-<button class="premium-btn w-100" type="submit"><i class="bi bi-send-fill me-2"></i> Submit Evaluation</button>
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 <script>
+    function openDeleteModal(internshipId) {
+        document.getElementById('deleteModalInternshipId').value = internshipId;
+        var myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        myModal.show();
+    }
+
     document.querySelectorAll('.nav-link').forEach(tab => {
         tab.addEventListener('click', function() {
             document.querySelectorAll('.nav-link').forEach(t => {
@@ -276,10 +383,12 @@
         });
     });
 </script>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/site.js?v=DLk_NJefq1UXFz713WZkG8RvA7zmrtavjk_auXyAP4o"></script>
-<script>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=DLk_NJefq1UXFz713WZkG8RvA7zmrtavjk_auXyAP4o"></script>
+    <script>
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('mainNav');
@@ -297,5 +406,6 @@
             });
         });
     </script>
+    
 </body>
 </html>
