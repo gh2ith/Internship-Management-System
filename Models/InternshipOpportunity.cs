@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace WebApplication1.Models;
@@ -20,6 +20,10 @@ public partial class InternshipOpportunity
     public string? Requirments { get; set; }
 
     public int? StdId { get; set; }
+
+    public bool? IsClosed { get; set; }
+
+    public int? Capacity { get; set; }
 
     public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
 

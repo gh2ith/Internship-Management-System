@@ -21,6 +21,11 @@ namespace WebApplication1.Pages.Student
         public List<InternshipOpportunity> AvailablePosts { get; set; } = new();
         public List<Application> MyApplications { get; set; } = new();
 
+        public bool HasActiveApplication { get; set; }
+
+        [TempData]
+        public string? ErrorMessage { get; set; }
+
         public async Task OnGetAsync()
         {
             var email = User.Identity?.Name;
@@ -37,6 +42,7 @@ namespace WebApplication1.Pages.Student
             // Load all available internship posts with their company info
             AvailablePosts = await _context.InternshipOpportunities
                 .Include(i => i.Company)
+                .Include(i => i.Applications)
                 .ToListAsync();
 
             // Load this student's applications
@@ -47,6 +53,8 @@ namespace WebApplication1.Pages.Student
                     .Include(a => a.Comp)
                     .Where(a => a.StdId == StudentInfo.StudentId)
                     .ToListAsync();
+                    
+                HasActiveApplication = MyApplications.Any(a => a.Status == 0 || a.Status == 1);
             }
         }
 
@@ -60,13 +68,29 @@ namespace WebApplication1.Pages.Student
             if (student == null) return RedirectToPage();
 
             var post = await _context.InternshipOpportunities
+                .Include(i => i.Applications)
                 .FirstOrDefaultAsync(i => i.InternshipId == internshipId);
             if (post == null) return RedirectToPage();
 
-            // Check if already applied
-            var alreadyApplied = await _context.Applications
-                .AnyAsync(a => a.StdId == student.StudentId && a.InternshipId == internshipId);
-            if (alreadyApplied) return RedirectToPage();
+            var acceptedCount = post.Applications.Count(a => a.Status == 1);
+            var capacity = post.Capacity ?? 1;
+            if (post.IsClosed == true || acceptedCount >= capacity)
+            {
+                ErrorMessage = "This internship post is no longer accepting applications (Closed or Full).";
+                return RedirectToPage();
+            }
+
+            // Check if student already has a pending or accepted application
+            var hasActiveApplication = await _context.Applications
+                .AnyAsync(a => a.StdId == student.StudentId && (a.Status == 0 || a.Status == 1));
+            
+            if (hasActiveApplication) 
+            {
+                ErrorMessage = "You already have an active application. You must wait for the supervisor's decision before applying to another internship.";
+                return RedirectToPage();
+            }
+            
+            // Just in case, check if already applied to this specific one (e.g. if it was rejected before, they technically can re-apply to the same one or a different one based on requirements. We will allow re-applying to the same one if it was rejected previously, so we don't strictly block re-application to the same ID if it was rejected. Wait, if it was rejected, we should allow them to apply again. So we just check if they have an active one above.)
 
             // Get next ID
             var maxId = await _context.Applications

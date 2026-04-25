@@ -153,6 +153,8 @@ public partial class MydbContext : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("requirments");
             entity.Property(e => e.StdId).HasColumnName("std_id");
+            entity.Property(e => e.IsClosed).HasColumnName("is_closed");
+            entity.Property(e => e.Capacity).HasColumnName("capacity");
             entity.Property(e => e.SuperId).HasColumnName("super_id");
             entity.Property(e => e.Title)
                 .HasMaxLength(45)

@@ -16,6 +16,21 @@
             </div>
         </div>
 
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="settings-alert animate-in mb-4" style="background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); color: #34d399; padding: 1rem; border-radius: 8px;">
+                <i class="bi bi-check-circle-fill me-2"></i>@Model.SuccessMessage
+                <button type="button" onclick="this.parentElement.remove()" style="color: #34d399; background: transparent; border: none; float: right;"><i class="bi bi-x-lg"></i></button>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="settings-alert animate-in mb-4" style="background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.2); color: #ff6b6b; padding: 1rem; border-radius: 8px;">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>@Model.ErrorMessage
+                <button type="button" onclick="this.parentElement.remove()" style="color: #ff6b6b; background: transparent; border: none; float: right;"><i class="bi bi-x-lg"></i></button>
+            </div>
+        }
+
         <!-- Stats Cards Row 1 -->
         <div class="row mb-4">
             <div class="col-md-3 mb-3">
@@ -94,7 +109,7 @@
                 <h5 style="color:#fff; font-weight: 600; margin:0;">All System Users</h5>
                 <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-users').style.display='none'"><i class="bi bi-x-lg"></i></button>
             </div>
-            <div class="premium-table-container shadow-sm">
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
                 <table class="table-custom mb-0">
                     <thead><tr><th>ID</th><th>Email</th><th>Role</th><th>College</th></tr></thead>
                     <tbody>
@@ -115,12 +130,53 @@
         <!-- Students -->
         <div id="detail-students" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 style="color:#fff; font-weight: 600; margin:0;">All Students</h5>
-                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-students').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Students</h5>
+                <div>
+                    <button class="btn btn-sm premium-btn-outline me-2" onclick="toggleForm('createStudentForm')"><i class="bi bi-plus-circle me-1"></i> Add Student</button>
+                    <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-students').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                </div>
             </div>
-            <div class="premium-table-container shadow-sm">
+            
+            <!-- Create Student Form -->
+            <div id="createStudentForm" style="display:none;" class="p-4 mb-4" style="background: rgba(123,111,166,0.05); border-radius: 12px; border: 1px solid rgba(123,111,166,0.2);">
+                <h6 style="color:#fff; margin-bottom: 1rem;">Add New Student User</h6>
+                <form method="post" asp-page-handler="CreateStudent">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Full Name</label>
+                            <input type="text" name="fullName" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Email</label>
+                            <input type="email" name="email" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Password</label>
+                            <input type="password" name="password" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Department</label>
+                            <input type="text" name="department" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">GPA</label>
+                            <input type="number" step="0.01" name="gpa" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">College</label>
+                            <select name="collegeId" class="form-select premium-input">
+                                <option value="">Select College...</option>
+                                @foreach(var c in Model.Colleges) { <option value="@c.CollegeId">@c.CollegeName</option> }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="premium-btn"><i class="bi bi-person-plus-fill me-2"></i>Create Student</button>
+                </form>
+            </div>
+
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
                 <table class="table-custom mb-0">
-                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>GPA</th><th>Supervisor</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>GPA</th><th>Supervisor</th><th>Actions</th></tr></thead>
                     <tbody>
                         @foreach (var s in Model.Students)
                         {
@@ -129,7 +185,45 @@
                                 <td style="font-weight: 500;">@s.FullName</td>
                                 <td>@(s.StDepartment ?? "N/A")</td>
                                 <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(s.Gpa?.ToString("F1") ?? "N/A")</span></td>
-                                <td>@(s.Super?.FullName ?? "Unassigned")</td>
+                                <td>
+                                    @if (s.SuperId == null)
+                                    {
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                                Assign
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-dark shadow" style="background: #141420; border: 1px solid rgba(123,111,166,0.3); border-radius: 8px;">
+                                                @foreach (var sup in Model.Supervisors) {
+                                                    <li>
+                                                        <form method="post" asp-page-handler="AssignSupervisor" class="m-0 p-0">
+                                                            <input type="hidden" name="studentId" value="@s.StudentId" />
+                                                            <input type="hidden" name="supervisorId" value="@sup.SupervisorId" />
+                                                            <button type="button" onclick="this.closest('form').submit();" class="dropdown-item" style="color: #ccc; font-size: 0.85rem; padding: 0.5rem 1rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(123,111,166,0.2)'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
+                                                                <i class="bi bi-person-badge me-2 text-secondary"></i>@sup.FullName
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                }
+                                                @if (!Model.Supervisors.Any()) {
+                                                    <li><span class="dropdown-item text-muted" style="font-size: 0.85rem;">No supervisors available</span></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <form method="post" asp-page-handler="UnassignSupervisor" class="d-flex align-items-center gap-2 m-0 p-0">
+                                            <input type="hidden" name="studentId" value="@s.StudentId" />
+                                            <span style="color:#9B8EC4; font-size:0.85rem;">@s.Super?.FullName</span>
+                                            <button type="submit" class="btn btn-sm" style="background: transparent; border: 1px solid rgba(245,158,11,0.3); color: #f59e0b; padding: 0.1rem 0.4rem; font-size: 0.7rem;" title="Unassign">✕</button>
+                                        </form>
+                                    }
+                                </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Student', @s.StudentId, '@s.FullName')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -140,12 +234,46 @@
         <!-- Companies -->
         <div id="detail-companies" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 style="color:#fff; font-weight: 600; margin:0;">All Companies</h5>
-                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-companies').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Companies</h5>
+                <div>
+                    <button class="btn btn-sm premium-btn-outline me-2" onclick="toggleForm('createCompanyForm')"><i class="bi bi-plus-circle me-1"></i> Add Company</button>
+                    <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-companies').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                </div>
             </div>
-            <div class="premium-table-container shadow-sm">
+
+            <!-- Create Company Form -->
+            <div id="createCompanyForm" style="display:none;" class="p-4 mb-4" style="background: rgba(123,111,166,0.05); border-radius: 12px; border: 1px solid rgba(123,111,166,0.2);">
+                <h6 style="color:#fff; margin-bottom: 1rem;">Add New Company User</h6>
+                <form method="post" asp-page-handler="CreateCompany">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Company Name</label>
+                            <input type="text" name="companyName" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Contact Email</label>
+                            <input type="email" name="contactEmail" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Password</label>
+                            <input type="password" name="password" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Location</label>
+                            <input type="text" name="location" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="premium-label">Description</label>
+                            <input type="text" name="description" class="form-control premium-input" />
+                        </div>
+                    </div>
+                    <button type="submit" class="premium-btn"><i class="bi bi-building-add me-2"></i>Create Company</button>
+                </form>
+            </div>
+
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
                 <table class="table-custom mb-0">
-                    <thead><tr><th>ID</th><th>Company Name</th><th>Contact</th><th>Location</th><th>Description</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Company Name</th><th>Contact</th><th>Location</th><th>Actions</th></tr></thead>
                     <tbody>
                         @foreach (var c in Model.Companies)
                         {
@@ -154,7 +282,11 @@
                                 <td style="font-weight: 500;"><i class="bi bi-building me-2 text-secondary"></i>@c.CompanyName</td>
                                 <td>@c.ContactInfo</td>
                                 <td>@(c.Location ?? "N/A")</td>
-                                <td><small style="color:#aaa;">@(c.Description ?? "N/A")</small></td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Company', @c.CompanyId, '@c.CompanyName')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -165,12 +297,49 @@
         <!-- Supervisors -->
         <div id="detail-supervisors" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 style="color:#fff; font-weight: 600; margin:0;">All Supervisors</h5>
-                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-supervisors').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Supervisors</h5>
+                <div>
+                    <button class="btn btn-sm premium-btn-outline me-2" onclick="toggleForm('createSupervisorForm')"><i class="bi bi-plus-circle me-1"></i> Add Supervisor</button>
+                    <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-supervisors').style.display='none'"><i class="bi bi-x-lg"></i></button>
+                </div>
             </div>
-            <div class="premium-table-container shadow-sm">
+
+            <!-- Create Supervisor Form -->
+            <div id="createSupervisorForm" style="display:none;" class="p-4 mb-4" style="background: rgba(123,111,166,0.05); border-radius: 12px; border: 1px solid rgba(123,111,166,0.2);">
+                <h6 style="color:#fff; margin-bottom: 1rem;">Add New Supervisor User</h6>
+                <form method="post" asp-page-handler="CreateSupervisor">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Full Name</label>
+                            <input type="text" name="fullName" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Email</label>
+                            <input type="email" name="email" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Password</label>
+                            <input type="password" name="password" class="form-control premium-input" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">Department</label>
+                            <input type="text" name="department" class="form-control premium-input" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="premium-label">College</label>
+                            <select name="collegeId" class="form-select premium-input">
+                                <option value="">Select College...</option>
+                                @foreach(var c in Model.Colleges) { <option value="@c.CollegeId">@c.CollegeName</option> }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="premium-btn"><i class="bi bi-person-plus-fill me-2"></i>Create Supervisor</button>
+                </form>
+            </div>
+
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
                 <table class="table-custom mb-0">
-                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>College</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>College</th><th>Actions</th></tr></thead>
                     <tbody>
                         @foreach (var s in Model.Supervisors)
                         {
@@ -179,6 +348,11 @@
                                 <td style="font-weight: 500;">@s.FullName</td>
                                 <td>@(s.SuperDepartment ?? "N/A")</td>
                                 <td>@(s.College?.CollegeName ?? "N/A")</td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Supervisor', @s.SupervisorId, '@s.FullName')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -189,12 +363,12 @@
         <!-- Internship Posts -->
         <div id="detail-posts" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 style="color:#fff; font-weight: 600; margin:0;">All Internship Posts</h5>
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Manage Internship Posts</h5>
                 <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-posts').style.display='none'"><i class="bi bi-x-lg"></i></button>
             </div>
-            <div class="premium-table-container shadow-sm">
+            <div class="premium-table-container shadow-sm" style="overflow: visible;">
                 <table class="table-custom mb-0">
-                    <thead><tr><th>ID</th><th>Title</th><th>Company</th><th>Deadline</th><th>Requirements</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Title</th><th>Company</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         @foreach (var p in Model.Posts)
                         {
@@ -202,8 +376,17 @@
                                 <td style="color:#fff;">@p.InternshipId</td>
                                 <td style="font-weight: 500;">@p.Title</td>
                                 <td>@(p.Company?.CompanyName ?? "N/A")</td>
-                                <td>@(p.Deadline?.ToString("MMM dd, yyyy") ?? "N/A")</td>
-                                <td><small style="color:#aaa;">@(p.Requirments ?? "None")</small></td>
+                                <td>
+                                    @if (p.IsClosed == true)
+                                    { <span class="badge" style="background: rgba(255,255,255,0.1); color:#aaa;">Closed</span> }
+                                    else
+                                    { <span class="badge" style="background: rgba(52,211,153,0.1); color:#34d399;">Open</span> }
+                                </td>
+                                <td>
+                                    <button type="button" onclick="openDeleteModal('Post', @p.InternshipId, '@p.Title')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                                        <i class="bi bi-trash-fill me-1"></i>Delete
+                                    </button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -222,7 +405,7 @@
             {
                 <div class="premium-table-container shadow-sm">
                     <table class="table-custom mb-0">
-                        <thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Status</th></tr></thead>
+                        <thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Actions</th></tr></thead>
                         <tbody>
                             @foreach (var a in pendingApps)
                             {
@@ -231,7 +414,18 @@
                                     <td>@(a.Std?.FullName ?? "Unknown")</td>
                                     <td>@(a.Internship?.Title ?? "N/A")</td>
                                     <td>@(a.Comp?.CompanyName ?? "N/A")</td>
-                                    <td><span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i>Pending</span></td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <form method="post" asp-page-handler="ApproveApplication" class="m-0 p-0">
+                                                <input type="hidden" name="applicationId" value="@a.ApplicationId" />
+                                                <button type="submit" class="btn btn-sm" style="background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;"><i class="bi bi-check-lg me-1"></i>Approve</button>
+                                            </form>
+                                            <form method="post" asp-page-handler="RejectApplication" class="m-0 p-0">
+                                                <input type="hidden" name="applicationId" value="@a.ApplicationId" />
+                                                <button type="submit" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;"><i class="bi bi-x-lg me-1"></i>Reject</button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -257,7 +451,7 @@
             {
                 <div class="premium-table-container shadow-sm">
                     <table class="table-custom mb-0">
-                        <thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Status</th></tr></thead>
+                        <thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Status</th><th>Action</th></tr></thead>
                         <tbody>
                             @foreach (var a in approvedApps)
                             {
@@ -266,7 +460,12 @@
                                     <td>@(a.Std?.FullName ?? "Unknown")</td>
                                     <td>@(a.Internship?.Title ?? "N/A")</td>
                                     <td>@(a.Comp?.CompanyName ?? "N/A")</td>
-                                    <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span></td>
+                                    <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
+                                    <td>
+                                        <button type="button" onclick="openTerminateModal(@a.ApplicationId, '@(a.Std?.FullName?.Replace("'", "\\'") ?? "Unknown")', '@(a.Internship?.Title?.Replace("'", "\\'") ?? "N/A")')" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px;" onmouseover="this.style.background='rgba(255,107,107,0.25)'" onmouseout="this.style.background='rgba(255,107,107,0.1)'">
+                                            <i class="bi bi-x-octagon-fill me-1"></i>Terminate
+                                        </button>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -293,7 +492,54 @@
         box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important;
         border-color: rgba(123, 111, 166, 0.4) !important;
     }
+    .modal, .modal-dialog, .modal-content, .modal-backdrop {
+        transition: none !important; animation: none !important;
+    }
 </style>
+
+<!-- Generic Delete Modal -->
+<div class="modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content premium-card" style="background: #141420; border: 1px solid rgba(255, 107, 107, 0.3);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="color: #ff6b6b; font-weight: 600;"><i class="bi bi-exclamation-triangle-fill me-2"></i> Confirm Delete</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4" style="color: #aaa;">
+        Are you sure you want to completely delete <strong id="deleteModalType" style="color:#9B8EC4;"></strong>: <strong id="deleteModalName" style="color:#fff;"></strong>? This action cannot be undone and will remove all related data.
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="premium-btn-outline" data-bs-dismiss="modal" style="padding: 0.5rem 1.2rem;">Cancel</button>
+        <form id="deleteModalForm" method="post" class="m-0 p-0">
+            <input type="hidden" id="deleteModalId" name="" value="" />
+            <button type="button" onclick="document.getElementById('deleteModalForm').submit();" class="premium-btn" style="background: #ff6b6b; color: white; padding: 0.5rem 1.2rem; border: none;"><i class="bi bi-trash-fill me-2"></i>Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Terminate Confirmation Modal -->
+<div class="modal" id="terminateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content premium-card" style="background: #141420; border: 1px solid rgba(255, 107, 107, 0.3);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="color: #ff6b6b; font-weight: 600;"><i class="bi bi-exclamation-triangle-fill me-2"></i> Terminate Internship</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4" style="color: #aaa;">
+        Are you sure you want to terminate the internship for <strong id="terminateStudentName" style="color:#fff;"></strong> at <strong id="terminatePositionName" style="color:#9B8EC4;"></strong>? This will revoke their accepted status.
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="premium-btn-outline" data-bs-dismiss="modal" style="padding: 0.5rem 1.2rem;">Cancel</button>
+        <form id="terminateForm" method="post" asp-page-handler="Terminate" class="m-0 p-0">
+            <input type="hidden" id="terminateAppId" name="applicationId" value="" />
+            <button type="button" onclick="document.getElementById('terminateForm').submit();" class="premium-btn" style="background: #ff6b6b; color: white; padding: 0.5rem 1.2rem; border: none;"><i class="bi bi-x-octagon-fill me-2"></i>Terminate</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
     function showDetail(type) {
@@ -307,8 +553,35 @@
         }
 
         document.querySelectorAll('.detail-panel').forEach(p => p.dataset.open = 'false');
-
         panel.style.display = 'block';
         panel.dataset.open = 'true';
+    }
+
+    function toggleForm(id) {
+        var form = document.getElementById(id);
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function openDeleteModal(type, id, name) {
+        document.getElementById('deleteModalType').textContent = type;
+        document.getElementById('deleteModalName').textContent = name;
+        var idField = document.getElementById('deleteModalId');
+        
+        // Dynamically set the ID field name based on type
+        if (type === 'Student') idField.name = 'studentId';
+        else if (type === 'Company') idField.name = 'companyId';
+        else if (type === 'Supervisor') idField.name = 'supervisorId';
+        else if (type === 'Post') idField.name = 'internshipId';
+        
+        idField.value = id;
+        document.getElementById('deleteModalForm').setAttribute('action', '?handler=Delete' + type);
+        new bootstrap.Modal(document.getElementById('deleteModal')).show();
+    }
+
+    function openTerminateModal(appId, studentName, positionName) {
+        document.getElementById('terminateAppId').value = appId;
+        document.getElementById('terminateStudentName').textContent = studentName;
+        document.getElementById('terminatePositionName').textContent = positionName;
+        new bootstrap.Modal(document.getElementById('terminateModal')).show();
     }
 </script>

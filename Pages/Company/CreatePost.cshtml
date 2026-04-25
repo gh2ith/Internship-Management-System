@@ -58,6 +58,12 @@
                         <span asp-validation-for="Requirements" class="text-danger small mt-1 d-block"></span>
                     </div>
 
+                    <div class="mb-4">
+                        <label asp-for="Capacity" class="premium-label">Number of Positions (Capacity) *</label>
+                        <input asp-for="Capacity" type="number" min="1" class="form-control premium-input" placeholder="e.g. 1" required />
+                        <span asp-validation-for="Capacity" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
                     <div class="mb-5">
                         <label class="premium-label">Application Deadline *</label>
                         <div class="d-flex gap-3">

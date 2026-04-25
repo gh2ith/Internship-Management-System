@@ -1,0 +1,214 @@
+@page
+@model WebApplication1.Pages.Account.SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="settings-page">
+    <div class="container" style="max-width: 720px; padding: 2.5rem 1.5rem;">
+
+        <!-- Page Header -->
+        <div class="settings-header animate-in">
+            <div class="d-flex align-items-center gap-3 mb-1">
+                <div class="settings-icon-box">
+                    <i class="bi bi-gear-fill"></i>
+                </div>
+                <div>
+                    <h1 class="gradient-text" style="font-size: 1.6rem; margin: 0;">Account Settings</h1>
+                    <p style="color: #666; font-size: 0.85rem; margin: 0;">Manage your account preferences</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success / Error Alerts -->
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="settings-alert settings-alert-success animate-in delay-1" id="successAlert">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>@Model.SuccessMessage</span>
+                <button type="button" class="settings-alert-close" onclick="this.parentElement.remove()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="settings-alert settings-alert-error animate-in delay-1" id="errorAlert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>@Model.ErrorMessage</span>
+                <button type="button" class="settings-alert-close" onclick="this.parentElement.remove()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        }
+
+        <!-- Account Info Section -->
+        <div class="premium-card settings-section animate-in delay-2">
+            <div class="settings-section-header">
+                <i class="bi bi-person-circle"></i>
+                <div>
+                    <h3>Account Information</h3>
+                    <p>Your account details</p>
+                </div>
+            </div>
+            <div class="settings-section-body">
+                <div class="settings-field">
+                    <label class="premium-label">Email Address</label>
+                    <div class="settings-readonly-field">
+                        <i class="bi bi-envelope"></i>
+                        <span>@Model.UserEmail</span>
+                        <span class="settings-readonly-badge"><i class="bi bi-lock-fill" style="margin-right: 3px; font-size: 0.65rem;"></i>Locked</span>
+                    </div>
+                </div>
+                <div class="settings-field">
+                    <label class="premium-label">Role</label>
+                    <div class="settings-readonly-field">
+                        <i class="bi bi-shield-check"></i>
+                        <span>@Model.UserRole</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Section -->
+        <div class="premium-card settings-section animate-in delay-3">
+            <div class="settings-section-header">
+                <i class="bi bi-key-fill"></i>
+                <div>
+                    <h3>Change Password</h3>
+                    <p>Update your password to keep your account secure</p>
+                </div>
+            </div>
+            <div class="settings-section-body">
+                <form method="post" id="passwordForm">
+                    <div class="settings-field">
+                        <label class="premium-label" for="currentPassword">Current Password</label>
+                        <div class="settings-input-wrapper">
+                            <i class="bi bi-lock"></i>
+                            <input type="password" class="premium-input settings-input" id="currentPassword"
+                                   name="PasswordForm.CurrentPassword" placeholder="Enter current password" required />
+                            <button type="button" class="settings-toggle-password" onclick="togglePassword('currentPassword', this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings-field">
+                        <label class="premium-label" for="newPassword">New Password</label>
+                        <div class="settings-input-wrapper">
+                            <i class="bi bi-lock-fill"></i>
+                            <input type="password" class="premium-input settings-input" id="newPassword"
+                                   name="PasswordForm.NewPassword" placeholder="Enter new password (min 6 chars)" required minlength="6" />
+                            <button type="button" class="settings-toggle-password" onclick="togglePassword('newPassword', this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <div class="settings-password-strength" id="strengthBar">
+                            <div class="settings-strength-fill" id="strengthFill"></div>
+                        </div>
+                        <span class="settings-strength-text" id="strengthText"></span>
+                    </div>
+
+                    <div class="settings-field">
+                        <label class="premium-label" for="confirmPassword">Confirm New Password</label>
+                        <div class="settings-input-wrapper">
+                            <i class="bi bi-lock-fill"></i>
+                            <input type="password" class="premium-input settings-input" id="confirmPassword"
+                                   name="PasswordForm.ConfirmPassword" placeholder="Confirm new password" required minlength="6" />
+                            <button type="button" class="settings-toggle-password" onclick="togglePassword('confirmPassword', this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <span class="settings-match-text" id="matchText"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4 pt-2" style="border-top: 1px solid rgba(123,111,166,0.08); padding-top: 1.5rem;">
+                        <button type="submit" class="premium-btn" id="submitBtn" style="padding: 0.7rem 1.8rem; font-size: 0.85rem;">
+                            <i class="bi bi-check2-circle me-2"></i>Update Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Toggle password visibility
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'bi bi-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'bi bi-eye';
+        }
+    }
+
+    // Password strength checker
+    const newPasswordInput = document.getElementById('newPassword');
+    const strengthFill = document.getElementById('strengthFill');
+    const strengthText = document.getElementById('strengthText');
+    const confirmInput = document.getElementById('confirmPassword');
+    const matchText = document.getElementById('matchText');
+
+    newPasswordInput.addEventListener('input', function () {
+        const val = this.value;
+        let score = 0;
+        if (val.length >= 6) score++;
+        if (val.length >= 10) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        const levels = [
+            { width: '0%', color: 'transparent', text: '' },
+            { width: '20%', color: '#ff4444', text: 'Very Weak' },
+            { width: '40%', color: '#ff8844', text: 'Weak' },
+            { width: '60%', color: '#ffbb33', text: 'Fair' },
+            { width: '80%', color: '#7B6FA6', text: 'Strong' },
+            { width: '100%', color: '#5cb85c', text: 'Very Strong' }
+        ];
+
+        const level = val.length === 0 ? levels[0] : levels[Math.min(score, 5)];
+        strengthFill.style.width = level.width;
+        strengthFill.style.background = level.color;
+        strengthText.textContent = level.text;
+        strengthText.style.color = level.color;
+
+        checkMatch();
+    });
+
+    confirmInput.addEventListener('input', checkMatch);
+
+    function checkMatch() {
+        const newVal = newPasswordInput.value;
+        const confVal = confirmInput.value;
+        if (confVal.length === 0) {
+            matchText.textContent = '';
+            return;
+        }
+        if (newVal === confVal) {
+            matchText.textContent = '✓ Passwords match';
+            matchText.style.color = '#5cb85c';
+        } else {
+            matchText.textContent = '✗ Passwords do not match';
+            matchText.style.color = '#ff4444';
+        }
+    }
+
+    // Auto-dismiss success alert after 4s
+    const successAlert = document.getElementById('successAlert');
+    if (successAlert) {
+        setTimeout(() => {
+            successAlert.style.opacity = '0';
+            successAlert.style.transform = 'translateY(-10px)';
+            setTimeout(() => successAlert.remove(), 300);
+        }, 4000);
+    }
+</script>
+}

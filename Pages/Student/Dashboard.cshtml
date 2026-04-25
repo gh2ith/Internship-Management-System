@@ -16,28 +16,20 @@
             </div>
         </div>
 
-        <div class="row">
-            <!-- Left Column: Student Profile -->
-            <div class="col-md-4 mb-4 animate-in delay-1">
-                <div class="premium-card p-4">
-                    <div class="text-center mb-4">
-                        <div class="profile-avatar d-inline-block mb-3">
-                            <img src="https://ui-avatars.com/api/?name=@(Model.StudentInfo?.FullName?.Replace(" ", "+") ?? "Student")&background=141420&color=9B8EC4&size=96" class="rounded-circle" alt="Avatar" width="96" height="96" />
-                        </div>
-                        <h5 class="mb-1" style="color:#fff; font-weight: 600;">@(Model.StudentInfo?.FullName ?? "Student")</h5>
-                        <small style="color:#9B8EC4;">@(Model.StudentInfo?.StDepartment ?? "")</small>
-                    </div>
-                    <hr class="divider" />
-                    <div style="font-size:0.9rem;">
-                        <p class="mb-2"><strong class="premium-label" style="display:inline;">Student ID:</strong> <span style="color:#eee; float:right;">@(Model.StudentInfo?.StudentId.ToString() ?? "N/A")</span></p>
-                        <p class="mb-2"><strong class="premium-label" style="display:inline;">GPA:</strong> <span style="color:#eee; float:right;">@(Model.StudentInfo?.Gpa?.ToString("F1") ?? "N/A") / 4.0</span></p>
-                        <p class="mb-0"><strong class="premium-label" style="display:inline;">Email:</strong> <span style="color:#eee; float:right;">@User.Identity?.Name</span></p>
-                    </div>
-                </div>
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="settings-alert animate-in delay-1 mb-4" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.2); color: #ff6b6b;" id="errorAlert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>@Model.ErrorMessage</span>
+                <button type="button" class="settings-alert-close" onclick="this.parentElement.remove()" style="color: #ff6b6b;">
+                    <i class="bi bi-x-lg"></i>
+                </button>
             </div>
+        }
 
-            <!-- Right Column: Internships & Applications -->
-            <div class="col-md-8">
+        <div class="row">
+            <!-- Full Width: Internships & Applications -->
+            <div class="col-md-12">
                 <ul class="nav nav-tabs mb-4" id="studentTabs" role="tablist" style="border-bottom: 1px solid rgba(123, 111, 166, 0.15);">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="available-tab" data-bs-toggle="tab" data-bs-target="#available-posts" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #7B6FA6;">Available Internships</button>
@@ -55,45 +47,77 @@
                         
                         @if (Model.AvailablePosts.Any())
                         {
-                            @foreach (var post in Model.AvailablePosts)
-                            {
-                                var alreadyApplied = Model.MyApplications.Any(a => a.InternshipId == post.InternshipId);
-                                <div class="premium-card p-4 mb-3">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <div>
-                                            <h5 style="color:#fff; font-weight:600; margin-bottom: 0.2rem;">@post.Title</h5>
-                                            <small style="color:#7B6FA6; font-weight: 500;"><i class="bi bi-building me-1"></i> @(post.Company?.CompanyName ?? "Unknown")</small>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+                                @foreach (var post in Model.AvailablePosts)
+                                {
+                                    var alreadyApplied = Model.MyApplications.Any(a => a.InternshipId == post.InternshipId);
+                                    <div class="premium-internship-card p-4 d-flex flex-column h-100" style="background: rgba(16, 16, 28, 0.6); border: 1px solid rgba(123, 111, 166, 0.15); border-radius: 16px; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(155, 142, 196, 0.3)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+                                        <!-- Animated Glow Background -->
+                                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(155, 142, 196, 0.04) 0%, transparent 50%); z-index: 0; pointer-events: none;"></div>
+                                        
+                                        <div class="d-flex align-items-center mb-3" style="position: relative; z-index: 1;">
+                                            <div class="me-3" style="width: 52px; height: 52px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(123, 111, 166, 0.3); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                                                <img src="https://ui-avatars.com/api/?name=@(post.Company?.CompanyName?.Replace(" ", "+") ?? "Company")&background=141420&color=9B8EC4&size=52" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;" />
+                                            </div>
+                                            <div>
+                                                <h5 class="mb-0" style="color:#fff; font-weight:700; font-size: 1.15rem; letter-spacing: -0.3px;">@post.Title</h5>
+                                                <small style="color:#9B8EC4; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">@post.Company?.CompanyName</small>
+                                            </div>
                                         </div>
-                                        @if (post.Deadline.HasValue)
-                                        {
-                                            <span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: @post.Deadline.Value.ToString("MMM dd, yyyy")</span>
-                                        }
-                                    </div>
-                                    <p class="mt-3 mb-3" style="color:#aaa; font-size:0.9rem; line-height: 1.6;">@post.Description</p>
-                                    
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            @if (!string.IsNullOrEmpty(post.Requirments))
+                                        
+                                        <div class="mb-3" style="position: relative; z-index: 1;">
+                                            @if (post.Deadline.HasValue)
                                             {
-                                                <span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">@post.Requirments</span>
+                                                <div class="d-inline-flex align-items-center mb-2" style="background: rgba(255, 107, 107, 0.08); color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.2); padding: 0.35rem 0.7rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                                                    <i class="bi bi-clock-history me-2"></i> Ends @post.Deadline.Value.ToString("MMM dd, yyyy")
+                                                </div>
                                             }
                                         </div>
-                                        <div>
-                                            @if (alreadyApplied)
+                                        
+                                        <p style="color:#aaa; font-size:0.9rem; line-height: 1.6; flex-grow: 1; position: relative; z-index: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            @post.Description
+                                        </p>
+                                        
+                                        <div class="mt-3 pt-3 mb-4 border-top" style="border-color: rgba(123, 111, 166, 0.1) !important; position: relative; z-index: 1;">
+                                            @if (!string.IsNullOrEmpty(post.Requirments))
                                             {
-                                                <button class="premium-btn-outline ms-2" style="padding: 0.4rem 1.2rem; font-size:0.85rem; opacity: 0.5; cursor: not-allowed;" disabled><i class="bi bi-check2-all me-2"></i> Applied</button>
+                                                <span style="color:#666; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.6rem; font-weight: 600;">Requirements</span>
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <span style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500;">@post.Requirments</span>
+                                                </div>
+                                            }
+                                        </div>
+                                        
+                                        <div class="mt-auto" style="position: relative; z-index: 1;">
+                                            @{
+                                                var acceptedCount = post.Applications.Count(a => a.Status == 1);
+                                                var capacity = post.Capacity ?? 1;
+                                                var isClosedOrFull = post.IsClosed == true || acceptedCount >= capacity;
+                                            }
+                                            
+                                            @if (isClosedOrFull)
+                                            {
+                                                <button class="w-100 premium-btn-outline" style="opacity: 0.5; cursor: not-allowed; border-color: rgba(255, 107, 107, 0.2); padding: 0.75rem; color: #ff6b6b;" disabled title="This post is no longer accepting applications."><i class="bi bi-x-circle-fill me-2"></i> Post Closed</button>
+                                            }
+                                            else if (alreadyApplied)
+                                            {
+                                                <button class="w-100 premium-btn-outline" style="opacity: 0.6; cursor: not-allowed; padding: 0.75rem;" disabled><i class="bi bi-check2-all me-2"></i> Successfully Applied</button>
+                                            }
+                                            else if (Model.HasActiveApplication)
+                                            {
+                                                <button class="w-100 premium-btn-outline" style="opacity: 0.5; cursor: not-allowed; border-color: rgba(123, 111, 166, 0.2); padding: 0.75rem;" disabled title="You must await supervisor response before applying again."><i class="bi bi-lock-fill me-2 text-secondary"></i> Limit Reached</button>
                                             }
                                             else
                                             {
-                                                <form method="post" asp-page-handler="Apply" style="display:inline;">
+                                                <form method="post" asp-page-handler="Apply" class="w-100">
                                                     <input type="hidden" name="internshipId" value="@post.InternshipId" />
-                                                    <button type="submit" class="premium-btn ms-2" style="padding: 0.4rem 1.2rem; font-size:0.85rem;"><i class="bi bi-send me-2"></i> Apply Now</button>
+                                                    <button type="submit" class="w-100 premium-btn" style="box-shadow: 0 8px 25px rgba(155, 142, 196, 0.3); padding: 0.75rem; font-weight: 600; font-size: 0.95rem;"><i class="bi bi-send-fill me-2"></i> Apply Now</button>
                                                 </form>
                                             }
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         }
                         else
                         {

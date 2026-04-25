@@ -1,0 +1,113 @@
+@page
+@model WebApplication1.Pages.Company.ProfileModel
+@{
+    ViewData["Title"] = "Company Profile";
+}
+
+<div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
+    <div class="container position-relative z-1 dashboard-wrapper" style="max-width: 900px;">
+
+        <!-- Page Header -->
+        <div class="dashboard-header mb-4 d-flex align-items-center animate-slide-left">
+            <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+                <i class="bi bi-building"></i>
+            </div>
+            <div>
+                <h2 class="mb-0 gradient-text">Company Profile</h2>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Manage your company information</p>
+            </div>
+        </div>
+
+        <!-- Success Alert -->
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="alert d-flex align-items-center mb-4 animate-in" style="background: rgba(92, 184, 92, 0.08); border: 1px solid rgba(92, 184, 92, 0.2); border-radius: 12px; color: #5cb85c; padding: 1rem 1.25rem;">
+                <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+                <span style="font-weight: 500;">@Model.SuccessMessage</span>
+            </div>
+        }
+
+        <form method="post">
+            <div class="premium-card animate-in delay-1" style="overflow: visible;">
+
+                <!-- Profile Information Banner -->
+                <div style="background: linear-gradient(135deg, rgba(123, 111, 166, 0.15), rgba(155, 142, 196, 0.08)); padding: 1rem 2rem; border-bottom: 1px solid rgba(123, 111, 166, 0.12);">
+                    <h6 class="mb-0" style="color: #9B8EC4; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">
+                        <i class="bi bi-info-circle me-2"></i>Profile Information
+                    </h6>
+                </div>
+
+                <div class="p-4 p-md-5">
+                    <div class="row">
+
+                        <!-- Avatar Column -->
+                        <div class="col-md-3 text-center mb-4 mb-md-0">
+                            <div class="profile-avatar d-inline-block mb-3">
+                                <img src="https://ui-avatars.com/api/?name=@(Model.CompanyInfo?.CompanyName?.Replace(" ", "+") ?? "C")&background=141420&color=9B8EC4&size=110&bold=true&font-size=0.4"
+                                     class="rounded-circle" alt="Company Avatar" width="110" height="110" />
+                            </div>
+                            <div>
+                                <small style="color: #666; font-size: 0.75rem;">Avatar auto-generated<br/>from company name</small>
+                            </div>
+                        </div>
+
+                        <!-- Fields Column -->
+                        <div class="col-md-9">
+                            <div class="row g-4">
+                                <!-- Company Name -->
+                                <div class="col-md-6">
+                                    <label asp-for="Input.CompanyName" class="premium-label">Company Name</label>
+                                    <input asp-for="Input.CompanyName" class="form-control premium-input" placeholder="Enter company name" />
+                                    <span asp-validation-for="Input.CompanyName" class="text-danger small mt-1 d-block"></span>
+                                </div>
+
+                                <!-- Location -->
+                                <div class="col-md-6">
+                                    <label asp-for="Input.Location" class="premium-label">Location</label>
+                                    <input asp-for="Input.Location" class="form-control premium-input" placeholder="e.g. Amman, Jordan" />
+                                </div>
+
+                                <!-- Contact Info (Read-only) -->
+                                <div class="col-md-12">
+                                    <label class="premium-label">Contact Email</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="text" class="form-control premium-input" value="@(Model.CompanyInfo?.ContactInfo ?? "")" disabled
+                                               style="opacity: 0.6; cursor: not-allowed;" />
+                                        <span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); padding: 0.4rem 0.7rem; border-radius: 8px; white-space: nowrap; font-size: 0.7rem;">
+                                            <i class="bi bi-lock-fill me-1"></i>Login Email
+                                        </span>
+                                    </div>
+                                    <small style="color: #555; font-size: 0.75rem; margin-top: 0.3rem; display: block;">
+                                        This is your login email and cannot be changed here.
+                                    </small>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="col-md-12">
+                                    <label asp-for="Input.Description" class="premium-label">Company Description</label>
+                                    <textarea asp-for="Input.Description" class="form-control premium-input" rows="4"
+                                              placeholder="Describe your company, services, and what makes you a great place for interns..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div style="border-top: 1px solid rgba(123, 111, 166, 0.1); padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+                    <a asp-page="/Company/Dashboard" class="premium-btn-outline text-decoration-none" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+                    </a>
+                    <button type="submit" class="premium-btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;">
+                        <i class="bi bi-check-lg me-2"></i>Save Changes
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

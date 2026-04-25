@@ -21,6 +21,9 @@ namespace WebApplication1.Pages.Company
         public List<InternshipOpportunity> Posts { get; set; } = new();
         public List<Application> Applications { get; set; } = new();
 
+        [TempData]
+        public string? ErrorMessage { get; set; }
+
         public async Task OnGetAsync()
         {
             var email = User.Identity?.Name;
@@ -44,6 +47,40 @@ namespace WebApplication1.Pages.Company
                     .Where(a => a.CompId == CompanyInfo.CompanyId)
                     .ToListAsync();
             }
+        }
+
+        public async Task<IActionResult> OnPostDeletePostAsync(int internshipId)
+        {
+            var email = User.Identity?.Name;
+            var company = await _context.Companies.FirstOrDefaultAsync(c => c.ContactInfo == email);
+            if (company == null) return RedirectToPage();
+
+            var post = await _context.InternshipOpportunities
+                .Include(i => i.Applications)
+                .FirstOrDefaultAsync(i => i.InternshipId == internshipId && i.CompanyId == company.CompanyId);
+
+            if (post != null)
+            {
+                var acceptedCount = post.Applications.Count(a => a.Status == 1);
+                
+                if (acceptedCount > 0)
+                {
+                    ErrorMessage = "Cannot delete an internship that has accepted students. Please edit the post and mark it as 'Closed' instead, or contact the university administration.";
+                    return RedirectToPage();
+                }
+
+                // Delete any pending or rejected applications attached to this post to satisfy SQL constraints
+                var removableApplications = post.Applications.Where(a => a.Status == 0 || a.Status == 2).ToList();
+                if (removableApplications.Any())
+                {
+                    _context.Applications.RemoveRange(removableApplications);
+                }
+
+                _context.InternshipOpportunities.Remove(post);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage();
         }
     }
 }

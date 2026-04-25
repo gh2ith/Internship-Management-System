@@ -16,6 +16,17 @@
             </div>
         </div>
 
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="settings-alert animate-in delay-1 mb-4" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.2); color: #ff6b6b;" id="errorAlert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>@Model.ErrorMessage</span>
+                <button type="button" class="settings-alert-close" onclick="this.parentElement.remove()" style="color: #ff6b6b; background: transparent; border: none; float: right;">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        }
+
         <div class="row">
             <!-- Left Column: Company Profile -->
             <div class="col-md-4 mb-4 animate-in delay-1">
@@ -63,8 +74,16 @@
                         {
                             @foreach (var post in Model.Posts)
                             {
-                                <div class="premium-card p-4 mb-3">
-                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">@post.Title</h5>
+                                <div class="premium-card p-4 mb-3 position-relative">
+                                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-2 align-items-center" style="z-index: 10;">
+                                        <a asp-page="/Company/EditPost" asp-route-id="@post.InternshipId" class="text-secondary text-decoration-none transition-colors d-flex align-items-center justify-content-center" title="Edit Post" style="width: 40px; height: 40px; border-radius: 8px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.1)'" onmouseout="this.style.color='#6c757d'; this.style.background='transparent'">
+                                            <i class="bi bi-pencil-square fs-5" style="pointer-events: none;"></i>
+                                        </a>
+                                        <button type="button" onclick="openDeleteModal(@post.InternshipId)" class="btn btn-link m-0 border-0 d-flex align-items-center justify-content-center" title="Delete Post" style="width: 40px; height: 40px; background: transparent; box-shadow: none; color: #ff6b6b; transition: all 0.2s; opacity: 0.8; border-radius: 8px; cursor: pointer;" onmouseover="this.style.opacity='1'; this.style.background='rgba(255, 107, 107, 0.1)'" onmouseout="this.style.opacity='0.8'; this.style.background='transparent'">
+                                            <i class="bi bi-trash fs-5" style="pointer-events: none;"></i>
+                                        </button>
+                                    </div>
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem; padding-right: 70px;">@post.Title</h5>
                                     <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">@post.Description</p>
                                     <div class="mb-3">
                                         @if (!string.IsNullOrEmpty(post.Requirments))
@@ -77,17 +96,34 @@
                                         }
                                     </div>
                                     <hr class="divider" />
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small style="color:#888;"><i class="bi bi-people me-1"></i> @post.Applications.Count Applicants</small>
-                                        @if (post.Applications.Count > 0)
-                                        {
-                                            <a asp-page="/Company/ViewApplicants" asp-route-id="@post.InternshipId" class="premium-btn-outline text-decoration-none" style="padding: 0.4rem 1.2rem; font-size:0.8rem;">View Applicants</a>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        @{
+                                            var acceptedCount = post.Applications.Count(a => a.Status == 1);
+                                            var capacity = post.Capacity ?? 1;
+                                            var isFull = acceptedCount >= capacity;
+                                            var isClosed = post.IsClosed == true || isFull;
                                         }
-                                        else
-                                        {
-                                            <button class="premium-btn-outline" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;" disabled>View Applicants</button>
-                                        }
+                                        <div>
+                                            <small style="color:#888; display:block;"><i class="bi bi-people me-1"></i> @post.Applications.Count Total Applications</small>
+                                            <small style="color:#9B8EC4; font-weight:600;"><i class="bi bi-person-check-fill me-1"></i> @acceptedCount / @capacity Accepted</small>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                            @if (post.Applications.Count > 0)
+                                            {
+                                                <a asp-page="/Company/ViewApplicants" asp-route-id="@post.InternshipId" class="premium-btn-outline text-decoration-none" style="padding: 0.4rem 1.2rem; font-size:0.8rem;">View Applicants</a>
+                                            }
+                                            else
+                                            {
+                                                <button class="premium-btn-outline" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;" disabled>View Applicants</button>
+                                            }
+                                        </div>
                                     </div>
+                                    @if (isClosed)
+                                    {
+                                        <div class="w-100 text-center" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(123,111,166,0.2); border-radius: 8px; padding: 0.6rem;">
+                                            <small style="color: #666; font-weight:600; text-transform: uppercase; letter-spacing:1px;"><i class="bi bi-lock-fill me-2"></i> Post Closed</small>
+                                        </div>
+                                    }
                                 </div>
                             }
                         }
@@ -207,7 +243,42 @@
         </div>
     </div>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<style>
+    .modal, .modal-dialog, .modal-content, .modal-backdrop {
+        transition: none !important;
+        animation: none !important;
+    }
+</style>
+<div class="modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content premium-card" style="background: #141420; border: 1px solid rgba(255, 107, 107, 0.3);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="color: #ff6b6b; font-weight: 600;"><i class="bi bi-exclamation-triangle-fill me-2"></i> Confirm Deletion</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4" style="color: #aaa;">
+        Are you sure you want to permanently delete this internship post? This action cannot be undone, and any unaccepted applications tied to this post will be automatically removed.
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="premium-btn-outline" data-bs-dismiss="modal" style="padding: 0.5rem 1.2rem;">Cancel</button>
+        <form id="modalDeleteForm" method="post" asp-page-handler="DeletePost" class="m-0 p-0">
+            <input type="hidden" id="deleteModalInternshipId" name="internshipId" value="" />
+            <button type="button" onclick="document.getElementById('modalDeleteForm').submit();" class="premium-btn" style="background: #ff6b6b; color: white; padding: 0.5rem 1.2rem; border: none; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);"><i class="bi bi-trash-fill me-2"></i> Delete Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+    function openDeleteModal(internshipId) {
+        document.getElementById('deleteModalInternshipId').value = internshipId;
+        var myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        myModal.show();
+    }
+
     document.querySelectorAll('.nav-link').forEach(tab => {
         tab.addEventListener('click', function() {
             document.querySelectorAll('.nav-link').forEach(t => {

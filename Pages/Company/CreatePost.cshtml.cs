@@ -28,6 +28,11 @@ namespace WebApplication1.Pages.Company
         public string? Requirements { get; set; }
 
         [BindProperty]
+        [Required(ErrorMessage = "Capacity is required.")]
+        [Range(1, 1000, ErrorMessage = "Capacity must be at least 1.")]
+        public int Capacity { get; set; } = 1;
+
+        [BindProperty]
         [Required(ErrorMessage = "Deadline is required.")]
         public DateTime? Deadline { get; set; }
 
@@ -67,7 +72,9 @@ namespace WebApplication1.Pages.Company
                 Title = Title,
                 Description = Description,
                 Requirments = Requirements,
-                Deadline = Deadline
+                Deadline = Deadline,
+                Capacity = Capacity,
+                IsClosed = false
             };
 
             _context.InternshipOpportunities.Add(post);
