@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html data-bs-theme="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign In - Bridgeway</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+<link href="css/site.css?v=UJ7ySZKUThMV98PGO5guDi1G_SBM0ghPdgVVkOLqP_Y" rel="stylesheet">
+</link></head>
+<body class="position-relative" style="min-height: 100vh; overflow-x: hidden;">
+<div class="bg-blob"></div>
+<div class="bg-blob-2"></div>
+<div class="bg-blob-3"></div>
+<main>
+<div class="position-relative d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 80px); overflow: hidden;">
+<div class="container position-relative z-1" style="max-width: 420px; width: 100%;">
+<div class="premium-card p-4 p-md-5 animate-in-scale" style="animation: pulseGlow 4s ease-in-out infinite, fadeInScale 0.6s ease-out both;">
+<div class="text-center mb-4">
+<img alt="Bridgeway" class="mb-4 mx-auto d-block" src="images/logo.png?v=2" style="height: 130px; object-fit: contain;"/>
+<h3 class="gradient-text" style="animation: fadeInUp 0.6s ease-out 0.15s both;">Welcome Back</h3>
+<p class="text-secondary" style="font-size: 0.9rem; animation: fadeInUp 0.6s ease-out 0.25s both;">Sign in to Bridgeway</p>
+</div>
+<form id="account" method="post">
+<div class="mb-4 animate-in delay-3">
+<label class="premium-label" for="Input_Email">Email</label>
+<input aria-required="true" autocomplete="username" class="form-control premium-input" data-val="true" data-val-required="The Email field is required." id="Input_Email" name="Input.Email" placeholder="you@university.edu" type="text" value=""/>
+<span class="text-danger small mt-1 d-block field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+</div>
+<div class="mb-5 animate-in delay-4">
+<label class="premium-label" for="Input_Password">Password</label>
+<input aria-required="true" autocomplete="current-password" class="form-control premium-input" data-val="true" data-val-required="The Password field is required." id="Input_Password" name="Input.Password" placeholder="Enter your password" type="password"/>
+<span class="text-danger small mt-1 d-block field-validation-valid" data-valmsg-for="Input.Password" data-valmsg-replace="true"></span>
+</div>
+<div class="animate-in delay-5">
+<button class="premium-btn w-100" id="login-submit" type="submit">Sign In <i class="bi bi-arrow-right ms-2"></i></button>
+</div>
+<input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQKQuFhWpEI8bQpQLZSVyqDuKCqzSAXA4SXKbikwYr5Ho9NeSii2H-EyrkQGvbbJnS0E7f99XXcSOGeURT2M6wCN_JsgvQ7a-918qGpvmTfzAhOYfwzfi0YKHOn5hDXwi0"/></form>
+
+<div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
+<p class="text-secondary small mb-2">View Interactive Demos:</p>
+<div class="d-flex flex-wrap gap-2 justify-content-center">
+<a class="btn btn-sm btn-outline-light" href="admin.html" style="background: rgba(255,217,61,0.1); border-color: rgba(255,217,61,0.3); color: #ffd93d;">Admin</a>
+<a class="btn btn-sm btn-outline-light" href="company.html" style="background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); color: #ff6b6b;">Company</a>
+<a class="btn btn-sm btn-outline-light" href="supervisor.html" style="background: rgba(108,142,255,0.1); border-color: rgba(108,142,255,0.3); color: #6c8eff;">Supervisor</a>
+<a class="btn btn-sm btn-outline-light" href="student.html" style="background: rgba(78,205,196,0.1); border-color: rgba(78,205,196,0.3); color: #4ecdc4;">Student</a>
+</div>
+</div>
+</div>
+<p class="text-center mt-4 animate-in delay-6" style="color: rgba(123, 111, 166, 0.5); font-size: 0.8rem;">
+<i class="bi bi-shield-check me-1"></i> Secured by Bridgeway Platform
+        </p>
+</div>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/site.js?v=DLk_NJefq1UXFz713WZkG8RvA7zmrtavjk_auXyAP4o"></script>
+<script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (nav) {
+                nav.classList.toggle('scrolled', window.scrollY > 30);
+            }
+        });
+
+        // Staggered fade-in for cards on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.premium-card, .admin-card, .stat-card');
+            cards.forEach((card, i) => {
+                card.classList.add('animate-in');
+                card.style.animationDelay = `${0.08 * i}s`;
+            });
+        });
+    </script>
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
