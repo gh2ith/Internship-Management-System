@@ -28,48 +28,28 @@
             color: var(--text);
             overflow-x: hidden;
             min-height: 100vh;
-        }
-
-        /* ===== PARTICLE CANVAS ===== */
-        #particles-canvas {
+        }        /* ===== REALISTIC BACKGROUND ===== */
+        .hero-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
+            background-image: 
+                linear-gradient(to bottom, rgba(10, 10, 20, 0.8), rgba(10, 10, 20, 0.95)),
+                url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
             pointer-events: none;
-        }
-
-        /* ===== AMBIENT BLOBS ===== */
-        .landing-blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            z-index: 0;
-            animation: blobFloat 18s ease-in-out infinite alternate;
-        }
-        .landing-blob-1 {
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, #7B6FA6, transparent 70%);
-            top: -15%; left: -10%;
-        }
-        .landing-blob-2 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, #4ecdc4, transparent 70%);
-            bottom: -10%; right: -10%;
-            animation-delay: -8s;
-        }
-        .landing-blob-3 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, #6c8eff, transparent 70%);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -4s;
-        }
-
-        @keyframes blobFloat {
-            0%   { transform: translate(0, 0) scale(1); }
-            50%  { transform: translate(30px, -30px) scale(1.1); }
-            100% { transform: translate(-20px, 20px) scale(0.95); }
         }
 
         /* ===== TOP NAVBAR (TRANSPARENT) ===== */
@@ -496,12 +476,8 @@
     </style>
 </head>
 <body>
-<!-- Ambient Blobs -->
-<div class="landing-blob landing-blob-1"></div>
-<div class="landing-blob landing-blob-2"></div>
-<div class="landing-blob landing-blob-3"></div>
-<!-- Particle Background -->
-<canvas id="particles-canvas"></canvas>
+<!-- Photographic Background -->
+<div class="hero-bg"></div>
 <!-- Top Navigation -->
 <nav class="landing-nav" id="landingNav">
 <a class="brand" href="index.html">
@@ -513,6 +489,14 @@
 </nav>
 <!-- Hero Section -->
 <section class="hero">
+<div class="university-info" style="display: flex; align-items: center; gap: 1.2rem; margin-bottom: 2rem; animation: fadeInDown 0.8s ease both; background: rgba(20, 20, 32, 0.5); padding: 0.8rem 1.5rem; border-radius: 50px; border: 1px solid rgba(123, 111, 166, 0.2); backdrop-filter: blur(10px);">
+<img alt="Al-Balqa Applied University" src="images/bau_logo.png" style="height: 60px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));"/>
+<div style="text-align: left; border-left: 2px solid rgba(123, 111, 166, 0.4); padding-left: 1.2rem;">
+<div style="font-size: 0.75rem; color: #4ecdc4; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 0.2rem;">Graduation Project</div>
+<div style="font-size: 1.1rem; font-weight: 700; color: #fff; line-height: 1.2;">Ghaith Amora</div>
+<div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.1rem;">Al-Balqa Applied University</div>
+</div>
+</div>
 <div class="hero-badge">
 <span class="dot"></span>
             Internship Management Platform
@@ -633,72 +617,7 @@
 <p>© 2026 Bridgeway. Built for a better internship experience.</p>
 </footer>
 <script>
-        // ===== Particle System (inspired by freefrontend.com animated hero backgrounds) =====
-        (function () {
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            const count = 60;
-
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = document.documentElement.scrollHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            class Particle {
-                constructor() { this.reset(); }
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 2 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.3;
-                    this.speedY = (Math.random() - 0.5) * 0.3;
-                    this.opacity = Math.random() * 0.4 + 0.1;
-                }
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(155, 142, 196, ${this.opacity})`;
-                    ctx.fill();
-                }
-            }
-
-            for (let i = 0; i < count; i++) particles.push(new Particle());
-
-            function connectParticles() {
-                for (let a = 0; a < particles.length; a++) {
-                    for (let b = a + 1; b < particles.length; b++) {
-                        const dx = particles[a].x - particles[b].x;
-                        const dy = particles[a].y - particles[b].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 140) {
-                            ctx.strokeStyle = `rgba(123, 111, 166, ${0.08 * (1 - dist / 140)})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.beginPath();
-                            ctx.moveTo(particles[a].x, particles[a].y);
-                            ctx.lineTo(particles[b].x, particles[b].y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => { p.update(); p.draw(); });
-                connectParticles();
-                requestAnimationFrame(animate);
-            }
-            animate();
-        })();
+        // Dynamic background initialized via CSS
 
         // ===== Navbar scroll effect =====
         window.addEventListener('scroll', () => {
