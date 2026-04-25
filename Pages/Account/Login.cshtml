@@ -1,0 +1,44 @@
+@page
+@model WebApplication1.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="position-relative d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 80px); overflow: hidden;">
+    <div class="bg-blob"></div>
+    <div class="bg-blob-2"></div>
+
+    <div class="container position-relative z-1" style="max-width: 450px; width: 100%;">
+        <div class="premium-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px;">
+                    <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
+                </div>
+                <h3 style="font-weight: 700; background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Sign In</h3>
+                <p class="text-secondary" style="font-size: 0.9rem;">Internship Management System</p>
+            </div>
+
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small"></div>
+
+                <div class="mb-4">
+                    <label asp-for="Input.Email" class="premium-label">Email</label>
+                    <input asp-for="Input.Email" class="form-control premium-input" placeholder="you@university.edu" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.Email" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="mb-5">
+                    <label asp-for="Input.Password" class="premium-label">Password</label>
+                    <input asp-for="Input.Password" class="form-control premium-input" placeholder="Enter your password" autocomplete="current-password" aria-required="true" type="password" />
+                    <span asp-validation-for="Input.Password" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <button id="login-submit" type="submit" class="premium-btn w-100">Sign In <i class="bi bi-arrow-right ms-2"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

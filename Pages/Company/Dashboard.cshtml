@@ -1,0 +1,220 @@
+@page
+@model WebApplication1.Pages.Company.DashboardModel
+@{
+    ViewData["Title"] = "Company Dashboard";
+}
+
+<div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
+    <div class="container position-relative z-1 dashboard-wrapper">
+        <div class="dashboard-header mb-4 d-flex align-items-center">
+            <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+                <i class="bi bi-building"></i>
+            </div>
+            <div>
+                <h2 class="mb-0" style="font-weight: 700; background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">Company Dashboard</h2>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Manage your internship postings and applicants</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column: Company Profile -->
+            <div class="col-md-4 mb-4">
+                <div class="premium-card p-4">
+                    <div class="text-center mb-4">
+                        <img src="https://ui-avatars.com/api/?name=@(Model.CompanyInfo?.CompanyName?.Replace(" ", "+") ?? "Company")&background=111&color=fff&size=96" class="rounded-circle mb-3" alt="Avatar" width="96" style="border: 2px solid rgba(167, 139, 250, 0.3);" />
+                        <h5 class="mb-1" style="color:#fff; font-weight: 600;">@(Model.CompanyInfo?.CompanyName ?? "Company")</h5>
+                        <small style="color:#aaa;">@(Model.CompanyInfo?.Description ?? "")</small>
+                    </div>
+                    <hr class="divider" style="border-color: rgba(255,255,255,0.05);" />
+                    <div style="font-size:0.9rem;">
+                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Location:</strong> <span style="color:#eee; float:right;">@(Model.CompanyInfo?.Location ?? "N/A")</span></p>
+                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Contact:</strong> <span style="color:#eee; float:right;">@(Model.CompanyInfo?.ContactInfo ?? "N/A")</span></p>
+                        <p class="mb-0"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Active Posts:</strong> <span style="color:#a78bfa; font-weight:600; float:right;">@Model.Posts.Count</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-8">
+                <ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#my-posts" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #a78bfa;">My Job Posts</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#manage-interns" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Manage Applications</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#evaluations" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Submit Evaluations</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    
+                    <!-- My Posts Tab -->
+                    <div class="tab-pane fade show active" id="my-posts" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 style="color:#fff;margin:0;font-weight:600;">Internship Opportunities</h5>
+                            <a asp-page="/Company/CreatePost" class="premium-btn text-decoration-none" style="padding: 0.6rem 1.5rem; font-size:0.85rem;"><i class="bi bi-plus-lg me-2"></i> Create Post</a>
+                        </div>
+                        
+                        @if (Model.Posts.Any())
+                        {
+                            @foreach (var post in Model.Posts)
+                            {
+                                <div class="premium-card p-4 mb-3" style="transition: transform 0.2s ease;">
+                                    <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">@post.Title</h5>
+                                    <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">@post.Description</p>
+                                    <div class="mb-3">
+                                        @if (!string.IsNullOrEmpty(post.Requirments))
+                                        {
+                                            <span class="badge" style="background: rgba(108,142,255,0.1); color: #6c8eff; border: 1px solid rgba(108,142,255,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">@post.Requirments</span>
+                                        }
+                                        @if (post.Deadline.HasValue)
+                                        {
+                                            <span class="badge ms-2" style="background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: @post.Deadline.Value.ToString("MMM dd, yyyy")</span>
+                                        }
+                                    </div>
+                                    <hr class="divider" style="border-color: rgba(255,255,255,0.05);" />
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small style="color:#888;"><i class="bi bi-people me-1"></i> @post.Applications.Count Applicants</small>
+                                        @if (post.Applications.Count > 0)
+                                        {
+                                            <a asp-page="/Company/ViewApplicants" asp-route-id="@post.InternshipId" class="premium-btn-outline text-decoration-none" style="padding: 0.4rem 1.2rem; font-size:0.8rem;">View Applicants</a>
+                                        }
+                                        else
+                                        {
+                                            <button class="premium-btn-outline" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;" disabled>View Applicants</button>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="premium-card p-5 text-center">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                    <i class="bi bi-inbox" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                                </div>
+                                <h6 style="color:#aaa;">No internship posts yet</h6>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom: 1.5rem;">Create your first post to start accepting applications.</p>
+                                <a asp-page="/Company/CreatePost" class="premium-btn text-decoration-none"><i class="bi bi-plus-lg me-2"></i> Create Post</a>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Manage Interns Tab -->
+                    <div class="tab-pane fade" id="manage-interns" role="tabpanel">
+                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Student Applications</h5>
+                        @if (Model.Applications.Any())
+                        {
+                            <div class="premium-table-container shadow-sm">
+                                <table class="table-custom mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Role Applied For</th>
+                                            <th>GPA</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var app in Model.Applications)
+                                        {
+                                            <tr>
+                                                <td style="color:#fff; font-weight:500;">@(app.Std?.FullName ?? "Unknown")</td>
+                                                <td>@(app.Internship?.Title ?? "N/A")</td>
+                                                <td>
+                                                    <span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span>
+                                                </td>
+                                                <td>
+                                                    @if (app.Status == 0)
+                                                    {
+                                                        <span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i>Pending</span>
+                                                    }
+                                                    else if (app.Status == 1)
+                                                    {
+                                                        <span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge-rejected"><i class="bi bi-x-circle-fill me-1"></i>Rejected</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="premium-card p-5 text-center">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                    <i class="bi bi-people" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                                </div>
+                                <h6 style="color:#aaa;">No applications received</h6>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom:0;">Students will appear here once they apply to your roles.</p>
+                            </div>
+                        }
+                        
+                        <div class="premium-card p-3 mt-4" style="background: rgba(108,142,255,0.05); border-color: rgba(108,142,255,0.1);">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-info-circle-fill text-primary me-3 fs-4"></i>
+                                <div>
+                                    <h6 class="mb-1" style="color:#fff; font-size:0.95rem;">Approval Process</h6>
+                                    <p class="mb-0" style="color:#aaa; font-size:0.85rem;">Once you post an internship, the university <strong style="color:#a78bfa;">Supervisor</strong> handles all student approvals and rejections.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Evaluations Tab -->
+                    <div class="tab-pane fade" id="evaluations" role="tabpanel">
+                        <div class="premium-card p-4 p-md-5">
+                            <h5 class="mb-2" style="color:#fff; font-weight:600;">Submit Evaluation</h5>
+                            <p style="color:#aaa; font-size:0.9rem; margin-bottom: 2rem;">Submit weekly progress reports or the final evaluation for your current interns.</p>
+                            
+                            <form>
+                                <div class="mb-4">
+                                    <label class="premium-label">Select Intern</label>
+                                    <select class="form-select premium-input">
+                                        @foreach (var app in Model.Applications.Where(a => a.Status == 1))
+                                        {
+                                            <option>@(app.Std?.FullName ?? "Unknown") (@(app.Internship?.Title ?? "N/A"))</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="premium-label">Report Type</label>
+                                    <select class="form-select premium-input">
+                                        <option>Weekly Report (Week 1)</option>
+                                        <option>Weekly Report (Week 2)</option>
+                                        <option>Final Evaluation</option>
+                                    </select>
+                                </div>
+                                <div class="mb-5">
+                                    <label class="premium-label">Comments / Notes</label>
+                                    <textarea class="form-control premium-input" rows="4" placeholder="Write your performance assessment here..."></textarea>
+                                </div>
+                                <button type="submit" class="premium-btn w-100"><i class="bi bi-send-fill me-2"></i> Submit Evaluation</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Simple script to handle tab switching styling
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.nav-link').forEach(t => {
+                t.style.color = '#777';
+                t.style.borderBottom = 'none';
+            });
+            this.style.color = '#fff';
+            this.style.borderBottom = '2px solid #a78bfa';
+        });
+    });
+</script>

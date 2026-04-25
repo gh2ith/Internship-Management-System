@@ -1,0 +1,314 @@
+@page
+@model WebApplication1.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "University Admin Dashboard";
+}
+
+<div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
+    <div class="container position-relative z-1 dashboard-wrapper">
+        <div class="dashboard-header mb-5 d-flex align-items-center">
+            <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+                <i class="bi bi-cpu"></i>
+            </div>
+            <div>
+                <h2 class="mb-0" style="font-weight: 700; background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">System Administration</h2>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Overview of the internship management platform</p>
+            </div>
+        </div>
+
+        <!-- Stats Cards Row 1 -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('users')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(108,142,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-people-fill" style="font-size:1.5rem; color:#6c8eff;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalUsers</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Total Users</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('students')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(78,205,196,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-mortarboard-fill" style="font-size:1.5rem; color:#4ecdc4;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalStudents</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Students</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('companies')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,107,107,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-building" style="font-size:1.5rem; color:#ff6b6b;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalCompanies</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Companies</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('supervisors')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,217,61,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-person-badge-fill" style="font-size:1.5rem; color:#ffd93d;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalSupervisors</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Supervisors</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards Row 2 -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('posts')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(167,139,250,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-briefcase-fill" style="font-size:1.5rem; color:#a78bfa;"></i>
+                    </div>
+                    <h3 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalPosts</h3>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Internship Posts</small>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('pending')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(245,158,11,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-hourglass-split" style="font-size:1.5rem; color:#f59e0b;"></i>
+                    </div>
+                    <h3 style="color:#fff; font-weight: 700; margin:0;">@Model.PendingApplications</h3>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Pending Applications</small>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('approved')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(52,211,153,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-check-circle-fill" style="font-size:1.5rem; color:#34d399;"></i>
+                    </div>
+                    <h3 style="color:#fff; font-weight: 700; margin:0;">@Model.ApprovedApplications</h3>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Approved Applications</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Panels -->
+        <!-- Users -->
+        <div id="detail-users" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">All System Users</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-users').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="premium-table-container shadow-sm">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Email</th><th>Role</th><th>College</th></tr></thead>
+                    <tbody>
+                        @foreach (var u in Model.Users)
+                        {
+                            <tr>
+                                <td style="color:#fff;">@u.UserId</td>
+                                <td>@u.Email</td>
+                                <td><span class="badge" style="background: rgba(167,139,250,0.1); color: #a78bfa;">@u.Role</span></td>
+                                <td>@(u.College?.CollegeName ?? "N/A")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Students -->
+        <div id="detail-students" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">All Students</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-students').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="premium-table-container shadow-sm">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>GPA</th><th>Supervisor</th></tr></thead>
+                    <tbody>
+                        @foreach (var s in Model.Students)
+                        {
+                            <tr>
+                                <td style="color:#fff;">@s.StudentId</td>
+                                <td style="font-weight: 500;">@s.FullName</td>
+                                <td>@(s.StDepartment ?? "N/A")</td>
+                                <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(s.Gpa?.ToString("F1") ?? "N/A")</span></td>
+                                <td>@(s.Super?.FullName ?? "Unassigned")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Companies -->
+        <div id="detail-companies" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">All Companies</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-companies').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="premium-table-container shadow-sm">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Company Name</th><th>Contact</th><th>Location</th><th>Description</th></tr></thead>
+                    <tbody>
+                        @foreach (var c in Model.Companies)
+                        {
+                            <tr>
+                                <td style="color:#fff;">@c.CompanyId</td>
+                                <td style="font-weight: 500;"><i class="bi bi-building me-2 text-secondary"></i>@c.CompanyName</td>
+                                <td>@c.ContactInfo</td>
+                                <td>@(c.Location ?? "N/A")</td>
+                                <td><small style="color:#aaa;">@(c.Description ?? "N/A")</small></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Supervisors -->
+        <div id="detail-supervisors" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">All Supervisors</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-supervisors').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="premium-table-container shadow-sm">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>College</th></tr></thead>
+                    <tbody>
+                        @foreach (var s in Model.Supervisors)
+                        {
+                            <tr>
+                                <td style="color:#fff;">@s.SupervisorId</td>
+                                <td style="font-weight: 500;">@s.FullName</td>
+                                <td>@(s.SuperDepartment ?? "N/A")</td>
+                                <td>@(s.College?.CollegeName ?? "N/A")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Internship Posts -->
+        <div id="detail-posts" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">All Internship Posts</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-posts').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="premium-table-container shadow-sm">
+                <table class="table-custom mb-0">
+                    <thead><tr><th>ID</th><th>Title</th><th>Company</th><th>Deadline</th><th>Requirements</th></tr></thead>
+                    <tbody>
+                        @foreach (var p in Model.Posts)
+                        {
+                            <tr>
+                                <td style="color:#fff;">@p.InternshipId</td>
+                                <td style="font-weight: 500;">@p.Title</td>
+                                <td>@(p.Company?.CompanyName ?? "N/A")</td>
+                                <td>@(p.Deadline?.ToString("MMM dd, yyyy") ?? "N/A")</td>
+                                <td><small style="color:#aaa;">@(p.Requirments ?? "None")</small></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pending Applications -->
+        <div id="detail-pending" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Pending Applications</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-pending').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            @{ var pendingApps = Model.Applications.Where(a => a.Status == 0).ToList(); }
+            @if (pendingApps.Any())
+            {
+                <div class="premium-table-container shadow-sm">
+                    <table class="table-custom mb-0">
+                        <thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Status</th></tr></thead>
+                        <tbody>
+                            @foreach (var a in pendingApps)
+                            {
+                                <tr>
+                                    <td style="color:#fff;">@a.ApplicationId</td>
+                                    <td>@(a.Std?.FullName ?? "Unknown")</td>
+                                    <td>@(a.Internship?.Title ?? "N/A")</td>
+                                    <td>@(a.Comp?.CompanyName ?? "N/A")</td>
+                                    <td><span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i>Pending</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <p style="color:#777; margin:0;">No pending applications.</p>
+                </div>
+            }
+        </div>
+
+        <!-- Approved Applications -->
+        <div id="detail-approved" class="detail-panel premium-card p-4" style="display:none; animation: fadeIn 0.3s ease;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;">Approved Applications</h5>
+                <button class="btn btn-sm text-secondary" onclick="document.getElementById('detail-approved').style.display='none'"><i class="bi bi-x-lg"></i></button>
+            </div>
+            @{ var approvedApps = Model.Applications.Where(a => a.Status == 1).ToList(); }
+            @if (approvedApps.Any())
+            {
+                <div class="premium-table-container shadow-sm">
+                    <table class="table-custom mb-0">
+                        <thead><tr><th>ID</th><th>Student</th><th>Position</th><th>Company</th><th>Status</th></tr></thead>
+                        <tbody>
+                            @foreach (var a in approvedApps)
+                            {
+                                <tr>
+                                    <td style="color:#fff;">@a.ApplicationId</td>
+                                    <td>@(a.Std?.FullName ?? "Unknown")</td>
+                                    <td>@(a.Internship?.Title ?? "N/A")</td>
+                                    <td>@(a.Comp?.CompanyName ?? "N/A")</td>
+                                    <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <p style="color:#777; margin:0;">No approved applications.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .admin-card:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+        border-color: rgba(167, 139, 250, 0.4) !important;
+    }
+</style>
+
+<script>
+    function showDetail(type) {
+        document.querySelectorAll('.detail-panel').forEach(p => p.style.display = 'none');
+        document.querySelectorAll('.admin-card').forEach(c => c.style.borderColor = 'rgba(255, 255, 255, 0.08)');
+
+        var panel = document.getElementById('detail-' + type);
+        if (panel.dataset.open === 'true') {
+            panel.dataset.open = 'false';
+            return;
+        }
+
+        document.querySelectorAll('.detail-panel').forEach(p => p.dataset.open = 'false');
+
+        panel.style.display = 'block';
+        panel.dataset.open = 'true';
+    }
+</script>

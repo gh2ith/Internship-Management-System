@@ -1,0 +1,11 @@
+@page
+@model WebApplication1.Pages.Student.IndexModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<h1>Student Dashboard</h1>
+<p>Welcome, Student! Here you can view internship offers and track your applications.</p>
+<form method="post" asp-page="/Account/Logout">
+    <button type="submit" class="btn btn-danger">Log Out</button>
+</form>

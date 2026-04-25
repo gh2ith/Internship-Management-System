@@ -1,0 +1,210 @@
+@page
+@model WebApplication1.Pages.Supervisor.DashboardModel
+@{
+    ViewData["Title"] = "Supervisor Dashboard";
+}
+
+<div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
+    <div class="container position-relative z-1 dashboard-wrapper">
+        <div class="dashboard-header mb-4 d-flex align-items-center">
+            <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <div>
+                <h2 class="mb-0" style="font-weight: 700; background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">Supervisor Dashboard</h2>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Review and manage student internship applications</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column: Supervisor Profile -->
+            <div class="col-md-4 mb-4">
+                <div class="premium-card p-4">
+                    <div class="text-center mb-4">
+                        <img src="https://ui-avatars.com/api/?name=@(Model.SupervisorInfo?.FullName?.Replace(" ", "+") ?? "Supervisor")&background=111&color=fff&size=96" class="rounded-circle mb-3" alt="Avatar" width="96" style="border: 2px solid rgba(167, 139, 250, 0.3);" />
+                        <h5 class="mb-1" style="color:#fff; font-weight: 600;">@(Model.SupervisorInfo?.FullName ?? "Supervisor")</h5>
+                        <small style="color:#aaa;">@(Model.SupervisorInfo?.SuperDepartment ?? "") Department</small>
+                    </div>
+                    <hr class="divider" style="border-color: rgba(255,255,255,0.05);" />
+                    <div style="font-size:0.9rem;">
+                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Email:</strong> <span style="color:#eee; float:right;">@User.Identity?.Name</span></p>
+                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Pending:</strong> <span style="color:#d4a72c; font-weight:600; float:right;">@Model.PendingApplications.Count</span></p>
+                        <p class="mb-0"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Active:</strong> <span style="color:#5cb85c; font-weight:600; float:right;">@Model.ApprovedApplications.Count</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-8">
+                <ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pending-apps" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #a78bfa;">
+                            Pending Applications
+                            @if (Model.PendingApplications.Count > 0)
+                            {
+                                <span class="badge ms-2" style="background:#a78bfa; color:#000;">@Model.PendingApplications.Count</span>
+                            }
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#active-students" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Active Students</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#student-reports" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Student Reports</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    
+                    <!-- Pending Applications Tab -->
+                    <div class="tab-pane fade show active" id="pending-apps" role="tabpanel">
+                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Applications Requiring Approval</h5>
+                        @if (Model.PendingApplications.Any())
+                        {
+                            <div class="premium-table-container shadow-sm">
+                                <table class="table-custom mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Student</th>
+                                            <th>Company</th>
+                                            <th>Position</th>
+                                            <th>GPA</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var app in Model.PendingApplications)
+                                        {
+                                            <tr>
+                                                <td style="color:#fff; font-weight:500;">@(app.Std?.FullName ?? "Unknown")</td>
+                                                <td><i class="bi bi-building me-2 text-secondary"></i>@(app.Comp?.CompanyName ?? "N/A")</td>
+                                                <td>@(app.Internship?.Title ?? "N/A")</td>
+                                                <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span></td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <form method="post" asp-page-handler="Accept" style="display:inline;">
+                                                            <input type="hidden" name="applicationId" value="@app.ApplicationId" />
+                                                            <button type="submit" class="btn btn-sm text-success" style="background: rgba(92, 184, 92, 0.1); border: 1px solid rgba(92, 184, 92, 0.2); border-radius: 8px;" title="Approve"><i class="bi bi-check-lg"></i></button>
+                                                        </form>
+                                                        <form method="post" asp-page-handler="Reject" style="display:inline;">
+                                                            <input type="hidden" name="applicationId" value="@app.ApplicationId" />
+                                                            <button type="submit" class="btn btn-sm text-danger ms-2" style="background: rgba(217, 83, 79, 0.1); border: 1px solid rgba(217, 83, 79, 0.2); border-radius: 8px;" title="Reject"><i class="bi bi-x-lg"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="premium-card p-5 text-center">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                    <i class="bi bi-check-circle" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                                </div>
+                                <h6 style="color:#aaa;">You're all caught up!</h6>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">No pending applications to review at this time.</p>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Active Students Tab -->
+                    <div class="tab-pane fade" id="active-students" role="tabpanel">
+                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Approved Students</h5>
+                        @if (Model.ApprovedApplications.Any())
+                        {
+                            <div class="premium-table-container shadow-sm">
+                                <table class="table-custom mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Student</th>
+                                            <th>Company</th>
+                                            <th>Position</th>
+                                            <th>GPA</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var app in Model.ApprovedApplications)
+                                        {
+                                            <tr>
+                                                <td style="color:#fff; font-weight:500;">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://ui-avatars.com/api/?name=@(app.Std?.FullName?.Replace(" ", "+") ?? "S")&background=333&color=fff&size=28" class="rounded-circle me-2" width="28" height="28" />
+                                                        @(app.Std?.FullName ?? "Unknown")
+                                                    </div>
+                                                </td>
+                                                <td><i class="bi bi-building me-2 text-secondary"></i>@(app.Comp?.CompanyName ?? "N/A")</td>
+                                                <td>@(app.Internship?.Title ?? "N/A")</td>
+                                                <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span></td>
+                                                <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="premium-card p-5 text-center">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                    <i class="bi bi-people" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                                </div>
+                                <h6 style="color:#aaa;">No active students</h6>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">Students will appear here once you approve their applications.</p>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Student Reports Tab -->
+                    <div class="tab-pane fade" id="student-reports" role="tabpanel">
+                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Reports from Companies</h5>
+                        @if (Model.Reports.Any())
+                        {
+                            @foreach (var report in Model.Reports)
+                            {
+                                <div class="premium-card p-4 mb-3">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h6 style="color:#fff; font-weight:600; margin-bottom: 4px;">@(report.Task ?? "Report")</h6>
+                                            <small style="color:#a78bfa;"><i class="bi bi-building me-1"></i> @(report.Comp?.CompanyName ?? "N/A")</small>
+                                        </div>
+                                        <span class="badge" style="background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); font-weight: 500; padding: 0.3rem 0.6rem; border-radius: 8px;">
+                                            <i class="bi bi-clock-history me-1"></i> @(report.NumberOfHours ?? 0) hours
+                                        </span>
+                                    </div>
+                                    <hr class="divider" style="border-color: rgba(255,255,255,0.05);" />
+                                    <p style="color:#aaa; font-size:0.9rem; margin:0;"><strong style="color:#ccc;">Tools used:</strong> @(report.Tools ?? "N/A")</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="premium-card p-5 text-center">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                    <i class="bi bi-journal-text" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                                </div>
+                                <h6 style="color:#aaa;">No reports submitted yet</h6>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">Company evaluations will appear here.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.nav-link').forEach(t => {
+                t.style.color = '#777';
+                t.style.borderBottom = 'none';
+            });
+            this.style.color = '#fff';
+            this.style.borderBottom = '2px solid #a78bfa';
+        });
+    });
+</script>

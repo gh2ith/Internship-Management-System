@@ -1,0 +1,76 @@
+@page "{id:int}"
+@model WebApplication1.Pages.Company.ViewApplicantsModel
+@{
+    ViewData["Title"] = "View Applicants";
+}
+
+<div class="container dashboard-wrapper" style="max-width:800px;">
+    <div class="glass-card">
+        <div class="d-flex align-items-center mb-4">
+            <a asp-page="/Company/Dashboard" style="color:#777;text-decoration:none;margin-right:12px;font-size:1.2rem;">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <div>
+                <h4 style="color:#fff;margin:0;">Applicants for: @Model.Post?.Title</h4>
+                <small style="color:#777;">@Model.Post?.Description</small>
+            </div>
+        </div>
+
+        @if (Model.Applicants.Any())
+        {
+            <div class="table-responsive">
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Department</th>
+                            <th>GPA</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var app in Model.Applicants)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=@(app.Std?.FullName?.Replace(" ", "+") ?? "S")&background=333&color=fff&size=32" 
+                                             class="rounded-circle me-2" width="32" height="32" />
+                                        @(app.Std?.FullName ?? "Unknown")
+                                    </div>
+                                </td>
+                                <td>@(app.Std?.StDepartment ?? "N/A")</td>
+                                <td>@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</td>
+                                <td>
+                                    @if (app.Status == 0)
+                                    {
+                                        <span class="badge-pending">Pending</span>
+                                    }
+                                    else if (app.Status == 1)
+                                    {
+                                        <span class="badge-approved">Approved</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-rejected">Rejected</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="glass-card" style="border-color:#2a2a2a;text-align:center;">
+                <i class="bi bi-person-x" style="font-size:2rem;color:#555;"></i>
+                <p style="color:#777;margin-top:8px;">No students have applied to this position yet.</p>
+            </div>
+        }
+
+        <div class="glass-card mt-3" style="border-color:#222;font-size:0.85rem;color:#777;">
+            <i class="bi bi-info-circle"></i> Application approvals are handled by the <strong style="color:#ccc;">Supervisor</strong>. You will see the status updates here.
+        </div>
+    </div>
+</div>

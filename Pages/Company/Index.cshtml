@@ -1,0 +1,11 @@
+@page
+@model WebApplication1.Pages.Company.IndexModel
+@{
+    ViewData["Title"] = "Company Dashboard";
+}
+
+<h1>Company Dashboard</h1>
+<p>Welcome! Here you can post internship opportunities, review applicants, and submit weekly constraints/reports.</p>
+<form method="post" asp-page="/Account/Logout">
+    <button type="submit" class="btn btn-danger">Log Out</button>
+</form>

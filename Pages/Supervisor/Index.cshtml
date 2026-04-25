@@ -1,0 +1,11 @@
+@page
+@model WebApplication1.Pages.Supervisor.IndexModel
+@{
+    ViewData["Title"] = "Supervisor Dashboard";
+}
+
+<h1>Supervisor Dashboard</h1>
+<p>Welcome, Doctor! Here you can evaluate students and review their internship weekly reports.</p>
+<form method="post" asp-page="/Account/Logout">
+    <button type="submit" class="btn btn-danger">Log Out</button>
+</form>

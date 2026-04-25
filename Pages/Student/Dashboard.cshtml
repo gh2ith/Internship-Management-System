@@ -1,0 +1,184 @@
+@page
+@model WebApplication1.Pages.Student.DashboardModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
+    <div class="container position-relative z-1 dashboard-wrapper">
+        <div class="dashboard-header mb-4 d-flex align-items-center">
+            <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+                <i class="bi bi-mortarboard"></i>
+            </div>
+            <div>
+                <h2 class="mb-0" style="font-weight: 700; background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">Student Dashboard</h2>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Find and apply for your ideal internship</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column: Student Profile -->
+            <div class="col-md-4 mb-4">
+                <div class="premium-card p-4">
+                    <div class="text-center mb-4">
+                        <img src="https://ui-avatars.com/api/?name=@(Model.StudentInfo?.FullName?.Replace(" ", "+") ?? "Student")&background=111&color=fff&size=96" class="rounded-circle mb-3" alt="Avatar" width="96" style="border: 2px solid rgba(167, 139, 250, 0.3);" />
+                        <h5 class="mb-1" style="color:#fff; font-weight: 600;">@(Model.StudentInfo?.FullName ?? "Student")</h5>
+                        <small style="color:#aaa;">@(Model.StudentInfo?.StDepartment ?? "")</small>
+                    </div>
+                    <hr class="divider" style="border-color: rgba(255,255,255,0.05);" />
+                    <div style="font-size:0.9rem;">
+                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Student ID:</strong> <span style="color:#eee; float:right;">@(Model.StudentInfo?.StudentId.ToString() ?? "N/A")</span></p>
+                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">GPA:</strong> <span style="color:#eee; float:right;">@(Model.StudentInfo?.Gpa?.ToString("F1") ?? "N/A") / 4.0</span></p>
+                        <p class="mb-0"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Email:</strong> <span style="color:#eee; float:right;">@User.Identity?.Name</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Internships & Applications -->
+            <div class="col-md-8">
+                <ul class="nav nav-tabs mb-4" id="studentTabs" role="tablist" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="available-tab" data-bs-toggle="tab" data-bs-target="#available-posts" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #a78bfa;">Available Internships</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="apps-tab" data-bs-toggle="tab" data-bs-target="#my-applications" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">My Applications</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="studentTabsContent">
+                    
+                    <!-- Available Posts Tab -->
+                    <div class="tab-pane fade show active" id="available-posts" role="tabpanel">
+                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Recent Internship Posts</h5>
+                        
+                        @if (Model.AvailablePosts.Any())
+                        {
+                            @foreach (var post in Model.AvailablePosts)
+                            {
+                                var alreadyApplied = Model.MyApplications.Any(a => a.InternshipId == post.InternshipId);
+                                <div class="premium-card p-4 mb-3" style="transition: transform 0.2s ease;">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 style="color:#fff; font-weight:600; margin-bottom: 0.2rem;">@post.Title</h5>
+                                            <small style="color:#a78bfa; font-weight: 500;"><i class="bi bi-building me-1"></i> @(post.Company?.CompanyName ?? "Unknown")</small>
+                                        </div>
+                                        @if (post.Deadline.HasValue)
+                                        {
+                                            <span class="badge" style="background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: @post.Deadline.Value.ToString("MMM dd, yyyy")</span>
+                                        }
+                                    </div>
+                                    <p class="mt-3 mb-3" style="color:#aaa; font-size:0.9rem; line-height: 1.6;">@post.Description</p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            @if (!string.IsNullOrEmpty(post.Requirments))
+                                            {
+                                                <span class="badge" style="background: rgba(108,142,255,0.1); color: #6c8eff; border: 1px solid rgba(108,142,255,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">@post.Requirments</span>
+                                            }
+                                        </div>
+                                        <div>
+                                            @if (alreadyApplied)
+                                            {
+                                                <button class="premium-btn-outline ms-2" style="padding: 0.4rem 1.2rem; font-size:0.85rem; opacity: 0.5; cursor: not-allowed;" disabled><i class="bi bi-check2-all me-2"></i> Applied</button>
+                                            }
+                                            else
+                                            {
+                                                <form method="post" asp-page-handler="Apply" style="display:inline;">
+                                                    <input type="hidden" name="internshipId" value="@post.InternshipId" />
+                                                    <button type="submit" class="premium-btn ms-2" style="padding: 0.4rem 1.2rem; font-size:0.85rem;"><i class="bi bi-send me-2"></i> Apply Now</button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="premium-card p-5 text-center">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                    <i class="bi bi-inbox" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                                </div>
+                                <h6 style="color:#aaa;">No internship posts available</h6>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">Check back later when companies post new roles.</p>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- My Applications Tab -->
+                    <div class="tab-pane fade" id="my-applications" role="tabpanel">
+                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Application Status Tracker</h5>
+                        @if (Model.MyApplications.Any())
+                        {
+                            <div class="premium-table-container shadow-sm">
+                                <table class="table-custom mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Role</th>
+                                            <th>Company</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var app in Model.MyApplications)
+                                        {
+                                            <tr>
+                                                <td style="color:#fff; font-weight:500;">@(app.Internship?.Title ?? "N/A")</td>
+                                                <td><i class="bi bi-building me-2 text-secondary"></i>@(app.Comp?.CompanyName ?? "N/A")</td>
+                                                <td>
+                                                    @if (app.Status == 0)
+                                                    {
+                                                        <span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i>Pending</span>
+                                                    }
+                                                    else if (app.Status == 1)
+                                                    {
+                                                        <span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge-rejected"><i class="bi bi-x-circle-fill me-1"></i>Rejected</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="premium-card p-5 text-center">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                    <i class="bi bi-file-earmark-text" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                                </div>
+                                <h6 style="color:#aaa;">You haven't applied to any internships yet</h6>
+                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">Go to the Available Internships tab to start applying.</p>
+                            </div>
+                        }
+                        <div class="premium-card p-3 mt-4" style="background: rgba(108,142,255,0.05); border-color: rgba(108,142,255,0.1);">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-info-circle-fill text-primary me-3 fs-4"></i>
+                                <div>
+                                    <h6 class="mb-1" style="color:#fff; font-size:0.95rem;">Approval Process</h6>
+                                    <p class="mb-0" style="color:#aaa; font-size:0.85rem;">The university <strong style="color:#a78bfa;">Supervisor</strong> reviews and approves/rejects your applications. The Company cannot influence this decision.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.nav-link').forEach(t => {
+                t.style.color = '#777';
+                t.style.borderBottom = 'none';
+            });
+            this.style.color = '#fff';
+            this.style.borderBottom = '2px solid #a78bfa';
+        });
+    });
+</script>
