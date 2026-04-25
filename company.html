@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html data-bs-theme="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Company Dashboard - Bridgeway</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+<link href="css/site.css?v=UJ7ySZKUThMV98PGO5guDi1G_SBM0ghPdgVVkOLqP_Y" rel="stylesheet">
+</link></head>
+<body class="position-relative" style="min-height: 100vh; overflow-x: hidden;">
+<div class="bg-blob"></div>
+<div class="bg-blob-2"></div>
+<div class="bg-blob-3"></div>
+<nav class="navbar navbar-expand-lg sticky-top" id="mainNav" style="z-index: 1000;">
+<div class="container">
+<a class="navbar-brand d-flex align-items-center py-0" href="index.html" style="margin-right: 2rem;">
+<img alt="Bridgeway" src="images/logo.png?v=2" style="height: 90px; object-fit: contain;"/>
+</a>
+<button class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav ms-auto align-items-center">
+<li class="nav-item dropdown">
+<a aria-expanded="false" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" href="#" id="navbarDropdown" role="button" style="color: #fff; font-weight: 500;">
+<div class="profile-avatar me-2">
+<img alt="Avatar" class="rounded-circle" height="32" src="https://ui-avatars.com/api/?name=hr@techcorp.com&amp;background=141420&amp;color=9B8EC4&amp;size=32" width="32"/>
+</div>
+<span>hr@techcorp.com</span>
+</a>
+<ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end shadow-lg premium-dropdown" style="background: rgba(20, 20, 32, 0.95); backdrop-filter: blur(16px); border: 1px solid rgba(123, 111, 166, 0.15); border-radius: 12px; min-width: 220px; padding: 0.5rem; margin-top: 10px;">
+<li>
+<div class="px-3 py-2">
+<small class="text-muted d-block mb-1" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px;">Signed in as</small>
+<strong style="color: #fff; font-size: 0.9rem; word-break: break-all;">hr@techcorp.com</strong>
+</div>
+</li>
+<li><hr class="dropdown-divider" style="border-color: rgba(123, 111, 166, 0.1); margin: 0.4rem 0;"/></li>
+<li>
+<a class="dropdown-item d-flex align-items-center" href="#" style="color: #ccc; border-radius: 8px; padding: 0.5rem 1rem;">
+<i class="bi bi-person me-2" style="color:#7B6FA6;"></i> My Profile
+                                    </a>
+</li>
+<li>
+<a class="dropdown-item d-flex align-items-center" href="#" style="color: #ccc; border-radius: 8px; padding: 0.5rem 1rem;">
+<i class="bi bi-gear me-2" style="color:#7B6FA6;"></i> Settings
+                                    </a>
+</li>
+<li><hr class="dropdown-divider" style="border-color: rgba(123, 111, 166, 0.1); margin: 0.4rem 0;"/></li>
+<li>
+<form action="index.html" class="m-0 p-0" method="get">
+<button class="dropdown-item d-flex align-items-center text-danger w-100 logout-btn" style="border-radius: 8px; padding: 0.5rem 1rem;" type="submit">
+<i class="bi bi-box-arrow-right me-2"></i> Logout
+                                        </button>
+<input name="__RequestVerificationToken" type="hidden" value="CfDJ8EG141ZuL5dMm9925zzlYXQI40pSVLbC0a4Zugw5rplGJF5mEEt1-iXWQIcS1bHwPHNMTNpaR7d1MvIvo0_ksn4LRLS0CTr9zjIYqKkBo5do-7__8nqyhfLBGdCNqKbqTNrMA7s2V1ILlicVIDHEmssB1XsWxDmhCQ0o0ydOkDxDbq0tlgoivjs0_jdzeti2mQ"/></form>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<main>
+<div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
+<div class="container position-relative z-1 dashboard-wrapper">
+<div class="dashboard-header mb-4 d-flex align-items-center animate-slide-left">
+<div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
+<i class="bi bi-building"></i>
+</div>
+<div>
+<h2 class="mb-0 gradient-text">Company Dashboard</h2>
+<p class="text-secondary mb-0" style="font-size: 0.9rem;">Manage your internship postings and applicants</p>
+</div>
+</div>
+<div class="row">
+<!-- Left Column: Company Profile -->
+<div class="col-md-4 mb-4 animate-in delay-1">
+<div class="premium-card p-4">
+<div class="text-center mb-4">
+<div class="profile-avatar d-inline-block mb-3">
+<img alt="Avatar" class="rounded-circle" height="96" src="https://ui-avatars.com/api/?name=Tech+Corp+Inc.&amp;background=141420&amp;color=9B8EC4&amp;size=96" width="96"/>
+</div>
+<h5 class="mb-1" style="color:#fff; font-weight: 600;">Tech Corp Inc.</h5>
+<small style="color:#9B8EC4;">Leading tech firm</small>
+</div>
+<hr class="divider">
+<div style="font-size:0.9rem;">
+<p class="mb-2"><strong class="premium-label" style="display:inline;">Location:</strong> <span style="color:#eee; float:right;">Amman</span></p>
+<p class="mb-2"><strong class="premium-label" style="display:inline;">Contact:</strong> <span style="color:#eee; float:right;">hr@techcorp.com</span></p>
+<p class="mb-0"><strong class="premium-label" style="display:inline;">Active Posts:</strong> <span style="color:#9B8EC4; font-weight:600; float:right;">5</span></p>
+</div>
+</hr></div>
+</div>
+<!-- Right Column -->
+<div class="col-md-8">
+<ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(123,111,166,0.15);">
+<li class="nav-item" role="presentation">
+<button class="nav-link active" data-bs-target="#my-posts" data-bs-toggle="tab" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #7B6FA6;" type="button">My Job Posts</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-target="#manage-interns" data-bs-toggle="tab" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;" type="button">Manage Applications</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-target="#evaluations" data-bs-toggle="tab" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;" type="button">Submit Evaluations</button>
+</li>
+</ul>
+<div class="tab-content">
+<!-- My Posts Tab -->
+<div class="tab-pane fade show active" id="my-posts" role="tabpanel">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h5 style="color:#fff;margin:0;font-weight:600;">Internship Opportunities</h5>
+<a class="premium-btn text-decoration-none" href="/Company/CreatePost" style="padding: 0.6rem 1.5rem; font-size:0.85rem;"><i class="bi bi-plus-lg me-2"></i> Create Post</a>
+</div>
+<div class="premium-card p-4 mb-3">
+<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">test</h5>
+<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">test</p>
+<div class="mb-3">
+<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">test</span>
+<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Feb 02, 2622</span>
+</div>
+<hr class="divider">
+<div class="d-flex justify-content-between align-items-center">
+<small style="color:#888;"><i class="bi bi-people me-1"></i> 1 Applicants</small>
+<a class="premium-btn-outline text-decoration-none" href="/Company/ViewApplicants/1" style="padding: 0.4rem 1.2rem; font-size:0.8rem;">View Applicants</a>
+</div>
+</hr></div>
+<div class="premium-card p-4 mb-3">
+<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">test</h5>
+<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">test</p>
+<div class="mb-3">
+<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">test</span>
+<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
+</div>
+<hr class="divider"/>
+<div class="d-flex justify-content-between align-items-center">
+<small style="color:#888;"><i class="bi bi-people me-1"></i> 1 Applicants</small>
+<a class="premium-btn-outline text-decoration-none" href="/Company/ViewApplicants/2" style="padding: 0.4rem 1.2rem; font-size:0.8rem;">View Applicants</a>
+</div>
+</div>
+<div class="premium-card p-4 mb-3">
+<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">test</h5>
+<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">test</p>
+<div class="mb-3">
+<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">test</span>
+<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
+</div>
+<hr class="divider"/>
+<div class="d-flex justify-content-between align-items-center">
+<small style="color:#888;"><i class="bi bi-people me-1"></i> 0 Applicants</small>
+<button class="premium-btn-outline" disabled="" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;">View Applicants</button>
+</div>
+</div>
+<div class="premium-card p-4 mb-3">
+<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">asd</h5>
+<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">asd</p>
+<div class="mb-3">
+<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">asd</span>
+<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Jan 01, 0001</span>
+</div>
+<hr class="divider"/>
+<div class="d-flex justify-content-between align-items-center">
+<small style="color:#888;"><i class="bi bi-people me-1"></i> 0 Applicants</small>
+<button class="premium-btn-outline" disabled="" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;">View Applicants</button>
+</div>
+</div>
+<div class="premium-card p-4 mb-3">
+<h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">asd</h5>
+<p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">asd</p>
+<div class="mb-3">
+<span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">asd</span>
+<span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: Oct 10, 2026</span>
+</div>
+<hr class="divider"/>
+<div class="d-flex justify-content-between align-items-center">
+<small style="color:#888;"><i class="bi bi-people me-1"></i> 0 Applicants</small>
+<button class="premium-btn-outline" disabled="" style="padding: 0.4rem 1.2rem; font-size:0.8rem; opacity: 0.5; cursor: not-allowed;">View Applicants</button>
+</div>
+</div>
+</div>
+<!-- Manage Interns Tab -->
+<div class="tab-pane fade" id="manage-interns" role="tabpanel">
+<h5 class="mb-4" style="color:#fff; font-weight:600;">Student Applications</h5>
+<div class="premium-table-container shadow-sm">
+<table class="table-custom mb-0">
+<thead>
+<tr>
+<th>Student Name</th>
+<th>Role Applied For</th>
+<th>GPA</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="color:#fff; font-weight:500;">Alice Johnson</td>
+<td>test</td>
+<td>
+<span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span>
+</td>
+<td>
+<span class="badge-rejected"><i class="bi bi-x-circle-fill me-1"></i>Rejected</span>
+</td>
+</tr>
+<tr>
+<td style="color:#fff; font-weight:500;">Alice Johnson</td>
+<td>test</td>
+<td>
+<span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span>
+</td>
+<td>
+<span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="premium-card p-3 mt-4" style="background: rgba(123,111,166,0.05); border-color: rgba(123,111,166,0.15);">
+<div class="d-flex align-items-center">
+<i class="bi bi-info-circle-fill me-3 fs-4" style="color:#7B6FA6;"></i>
+<div>
+<h6 class="mb-1" style="color:#fff; font-size:0.95rem;">Approval Process</h6>
+<p class="mb-0" style="color:#aaa; font-size:0.85rem;">Once you post an internship, the university <strong style="color:#9B8EC4;">Supervisor</strong> handles all student approvals and rejections.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Evaluations Tab -->
+<div class="tab-pane fade" id="evaluations" role="tabpanel">
+<div class="premium-card p-4 p-md-5">
+<h5 class="mb-2" style="color:#fff; font-weight:600;">Submit Evaluation</h5>
+<p style="color:#aaa; font-size:0.9rem; margin-bottom: 2rem;">Submit weekly progress reports or the final evaluation for your current interns.</p>
+<form>
+<div class="mb-4">
+<label class="premium-label">Select Intern</label>
+<select class="form-select premium-input">
+<option>Alice Johnson (test)</option>
+</select>
+</div>
+<div class="mb-4">
+<label class="premium-label">Report Type</label>
+<select class="form-select premium-input">
+<option>Weekly Report (Week 1)</option>
+<option>Weekly Report (Week 2)</option>
+<option>Final Evaluation</option>
+</select>
+</div>
+<div class="mb-5">
+<label class="premium-label">Comments / Notes</label>
+<textarea class="form-control premium-input" placeholder="Write your performance assessment here..." rows="4"></textarea>
+</div>
+<button class="premium-btn w-100" type="submit"><i class="bi bi-send-fill me-2"></i> Submit Evaluation</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.nav-link').forEach(t => {
+                t.style.color = '#777';
+                t.style.borderBottom = 'none';
+            });
+            this.style.color = '#fff';
+            this.style.borderBottom = '2px solid #7B6FA6';
+        });
+    });
+</script>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/site.js?v=DLk_NJefq1UXFz713WZkG8RvA7zmrtavjk_auXyAP4o"></script>
+<script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (nav) {
+                nav.classList.toggle('scrolled', window.scrollY > 30);
+            }
+        });
+
+        // Staggered fade-in for cards on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.premium-card, .admin-card, .stat-card');
+            cards.forEach((card, i) => {
+                card.classList.add('animate-in');
+                card.style.animationDelay = `${0.08 * i}s`;
+            });
+        });
+    </script>
+</body>
+</html>
