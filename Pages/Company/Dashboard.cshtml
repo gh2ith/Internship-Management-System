@@ -6,39 +6,41 @@
 
 <div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
     <div class="container position-relative z-1 dashboard-wrapper">
-        <div class="dashboard-header mb-4 d-flex align-items-center">
+        <div class="dashboard-header mb-4 d-flex align-items-center animate-slide-left">
             <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
                 <i class="bi bi-building"></i>
             </div>
             <div>
-                <h2 class="mb-0" style="font-weight: 700; background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">Company Dashboard</h2>
+                <h2 class="mb-0 gradient-text">Company Dashboard</h2>
                 <p class="text-secondary mb-0" style="font-size: 0.9rem;">Manage your internship postings and applicants</p>
             </div>
         </div>
 
         <div class="row">
             <!-- Left Column: Company Profile -->
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 animate-in delay-1">
                 <div class="premium-card p-4">
                     <div class="text-center mb-4">
-                        <img src="https://ui-avatars.com/api/?name=@(Model.CompanyInfo?.CompanyName?.Replace(" ", "+") ?? "Company")&background=111&color=fff&size=96" class="rounded-circle mb-3" alt="Avatar" width="96" style="border: 2px solid rgba(167, 139, 250, 0.3);" />
+                        <div class="profile-avatar d-inline-block mb-3">
+                            <img src="https://ui-avatars.com/api/?name=@(Model.CompanyInfo?.CompanyName?.Replace(" ", "+") ?? "Company")&background=141420&color=9B8EC4&size=96" class="rounded-circle" alt="Avatar" width="96" height="96" />
+                        </div>
                         <h5 class="mb-1" style="color:#fff; font-weight: 600;">@(Model.CompanyInfo?.CompanyName ?? "Company")</h5>
-                        <small style="color:#aaa;">@(Model.CompanyInfo?.Description ?? "")</small>
+                        <small style="color:#9B8EC4;">@(Model.CompanyInfo?.Description ?? "")</small>
                     </div>
-                    <hr class="divider" style="border-color: rgba(255,255,255,0.05);" />
+                    <hr class="divider" />
                     <div style="font-size:0.9rem;">
-                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Location:</strong> <span style="color:#eee; float:right;">@(Model.CompanyInfo?.Location ?? "N/A")</span></p>
-                        <p class="mb-2"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Contact:</strong> <span style="color:#eee; float:right;">@(Model.CompanyInfo?.ContactInfo ?? "N/A")</span></p>
-                        <p class="mb-0"><strong style="color:#a0a0a0; text-transform: uppercase; font-size:0.75rem; letter-spacing:1px;">Active Posts:</strong> <span style="color:#a78bfa; font-weight:600; float:right;">@Model.Posts.Count</span></p>
+                        <p class="mb-2"><strong class="premium-label" style="display:inline;">Location:</strong> <span style="color:#eee; float:right;">@(Model.CompanyInfo?.Location ?? "N/A")</span></p>
+                        <p class="mb-2"><strong class="premium-label" style="display:inline;">Contact:</strong> <span style="color:#eee; float:right;">@(Model.CompanyInfo?.ContactInfo ?? "N/A")</span></p>
+                        <p class="mb-0"><strong class="premium-label" style="display:inline;">Active Posts:</strong> <span style="color:#9B8EC4; font-weight:600; float:right;">@Model.Posts.Count</span></p>
                     </div>
                 </div>
             </div>
 
             <!-- Right Column -->
             <div class="col-md-8">
-                <ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(123,111,166,0.15);">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#my-posts" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #a78bfa;">My Job Posts</button>
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#my-posts" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #7B6FA6;">My Job Posts</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#manage-interns" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Manage Applications</button>
@@ -61,20 +63,20 @@
                         {
                             @foreach (var post in Model.Posts)
                             {
-                                <div class="premium-card p-4 mb-3" style="transition: transform 0.2s ease;">
+                                <div class="premium-card p-4 mb-3">
                                     <h5 style="color:#fff; font-weight:600; margin-bottom: 0.5rem;">@post.Title</h5>
                                     <p style="color:#aaa; font-size:0.9rem; line-height: 1.6;">@post.Description</p>
                                     <div class="mb-3">
                                         @if (!string.IsNullOrEmpty(post.Requirments))
                                         {
-                                            <span class="badge" style="background: rgba(108,142,255,0.1); color: #6c8eff; border: 1px solid rgba(108,142,255,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">@post.Requirments</span>
+                                            <span class="badge" style="background: rgba(123,111,166,0.08); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;">@post.Requirments</span>
                                         }
                                         @if (post.Deadline.HasValue)
                                         {
-                                            <span class="badge ms-2" style="background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: @post.Deadline.Value.ToString("MMM dd, yyyy")</span>
+                                            <span class="badge ms-2" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px;"><i class="bi bi-calendar-event me-1"></i> Deadline: @post.Deadline.Value.ToString("MMM dd, yyyy")</span>
                                         }
                                     </div>
-                                    <hr class="divider" style="border-color: rgba(255,255,255,0.05);" />
+                                    <hr class="divider" />
                                     <div class="d-flex justify-content-between align-items-center">
                                         <small style="color:#888;"><i class="bi bi-people me-1"></i> @post.Applications.Count Applicants</small>
                                         @if (post.Applications.Count > 0)
@@ -92,7 +94,7 @@
                         else
                         {
                             <div class="premium-card p-5 text-center">
-                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);">
                                     <i class="bi bi-inbox" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
                                 </div>
                                 <h6 style="color:#aaa;">No internship posts yet</h6>
@@ -124,7 +126,7 @@
                                                 <td style="color:#fff; font-weight:500;">@(app.Std?.FullName ?? "Unknown")</td>
                                                 <td>@(app.Internship?.Title ?? "N/A")</td>
                                                 <td>
-                                                    <span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span>
+                                                    <span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span>
                                                 </td>
                                                 <td>
                                                     @if (app.Status == 0)
@@ -149,7 +151,7 @@
                         else
                         {
                             <div class="premium-card p-5 text-center">
-                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1);">
+                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);">
                                     <i class="bi bi-people" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
                                 </div>
                                 <h6 style="color:#aaa;">No applications received</h6>
@@ -157,12 +159,12 @@
                             </div>
                         }
                         
-                        <div class="premium-card p-3 mt-4" style="background: rgba(108,142,255,0.05); border-color: rgba(108,142,255,0.1);">
+                        <div class="premium-card p-3 mt-4" style="background: rgba(123,111,166,0.05); border-color: rgba(123,111,166,0.15);">
                             <div class="d-flex align-items-center">
-                                <i class="bi bi-info-circle-fill text-primary me-3 fs-4"></i>
+                                <i class="bi bi-info-circle-fill me-3 fs-4" style="color:#7B6FA6;"></i>
                                 <div>
                                     <h6 class="mb-1" style="color:#fff; font-size:0.95rem;">Approval Process</h6>
-                                    <p class="mb-0" style="color:#aaa; font-size:0.85rem;">Once you post an internship, the university <strong style="color:#a78bfa;">Supervisor</strong> handles all student approvals and rejections.</p>
+                                    <p class="mb-0" style="color:#aaa; font-size:0.85rem;">Once you post an internship, the university <strong style="color:#9B8EC4;">Supervisor</strong> handles all student approvals and rejections.</p>
                                 </div>
                             </div>
                         </div>
@@ -206,7 +208,6 @@
     </div>
 </div>
 <script>
-    // Simple script to handle tab switching styling
     document.querySelectorAll('.nav-link').forEach(tab => {
         tab.addEventListener('click', function() {
             document.querySelectorAll('.nav-link').forEach(t => {
@@ -214,7 +215,7 @@
                 t.style.borderBottom = 'none';
             });
             this.style.color = '#fff';
-            this.style.borderBottom = '2px solid #a78bfa';
+            this.style.borderBottom = '2px solid #7B6FA6';
         });
     });
 </script>

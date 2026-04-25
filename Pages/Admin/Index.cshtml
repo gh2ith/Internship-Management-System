@@ -6,12 +6,12 @@
 
 <div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
     <div class="container position-relative z-1 dashboard-wrapper">
-        <div class="dashboard-header mb-5 d-flex align-items-center">
+        <div class="dashboard-header mb-5 d-flex align-items-center animate-slide-left">
             <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
                 <i class="bi bi-cpu"></i>
             </div>
             <div>
-                <h2 class="mb-0" style="font-weight: 700; background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">System Administration</h2>
+                <h2 class="mb-0 gradient-text">System Administration</h2>
                 <p class="text-secondary mb-0" style="font-size: 0.9rem;">Overview of the internship management platform</p>
             </div>
         </div>
@@ -19,8 +19,8 @@
         <!-- Stats Cards Row 1 -->
         <div class="row mb-4">
             <div class="col-md-3 mb-3">
-                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('users')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(108,142,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('users')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(108,142,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-people-fill" style="font-size:1.5rem; color:#6c8eff;"></i>
                     </div>
                     <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalUsers</h2>
@@ -28,8 +28,8 @@
                 </div>
             </div>
             <div class="col-md-3 mb-3">
-                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('students')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(78,205,196,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('students')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(78,205,196,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-mortarboard-fill" style="font-size:1.5rem; color:#4ecdc4;"></i>
                     </div>
                     <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalStudents</h2>
@@ -37,8 +37,8 @@
                 </div>
             </div>
             <div class="col-md-3 mb-3">
-                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('companies')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,107,107,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('companies')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,107,107,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-building" style="font-size:1.5rem; color:#ff6b6b;"></i>
                     </div>
                     <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalCompanies</h2>
@@ -46,8 +46,8 @@
                 </div>
             </div>
             <div class="col-md-3 mb-3">
-                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('supervisors')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,217,61,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('supervisors')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,217,61,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-person-badge-fill" style="font-size:1.5rem; color:#ffd93d;"></i>
                     </div>
                     <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalSupervisors</h2>
@@ -59,17 +59,17 @@
         <!-- Stats Cards Row 2 -->
         <div class="row mb-5">
             <div class="col-md-4 mb-3">
-                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('posts')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(167,139,250,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="bi bi-briefcase-fill" style="font-size:1.5rem; color:#a78bfa;"></i>
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('posts')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(123,111,166,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-briefcase-fill" style="font-size:1.5rem; color:#7B6FA6;"></i>
                     </div>
                     <h3 style="color:#fff; font-weight: 700; margin:0;">@Model.TotalPosts</h3>
                     <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Internship Posts</small>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('pending')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(245,158,11,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('pending')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(245,158,11,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-hourglass-split" style="font-size:1.5rem; color:#f59e0b;"></i>
                     </div>
                     <h3 style="color:#fff; font-weight: 700; margin:0;">@Model.PendingApplications</h3>
@@ -77,8 +77,8 @@
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('approved')" style="cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                    <div class="mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(52,211,153,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <div class="premium-card text-center p-4 admin-card" onclick="showDetail('approved')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(52,211,153,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-check-circle-fill" style="font-size:1.5rem; color:#34d399;"></i>
                     </div>
                     <h3 style="color:#fff; font-weight: 700; margin:0;">@Model.ApprovedApplications</h3>
@@ -103,7 +103,7 @@
                             <tr>
                                 <td style="color:#fff;">@u.UserId</td>
                                 <td>@u.Email</td>
-                                <td><span class="badge" style="background: rgba(167,139,250,0.1); color: #a78bfa;">@u.Role</span></td>
+                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4;">@u.Role</span></td>
                                 <td>@(u.College?.CollegeName ?? "N/A")</td>
                             </tr>
                         }
@@ -291,7 +291,7 @@
     .admin-card:hover {
         transform: translateY(-5px) !important;
         box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important;
-        border-color: rgba(167, 139, 250, 0.4) !important;
+        border-color: rgba(123, 111, 166, 0.4) !important;
     }
 </style>
 
