@@ -2,16 +2,25 @@ import os
 import requests
 import shutil
 from bs4 import BeautifulSoup
+import time
 
 BASE_URL = "http://localhost:5205"
 OUT_DIR = "../static_frontend"
 
-if os.path.exists(OUT_DIR):
-    shutil.rmtree(OUT_DIR)
-os.makedirs(OUT_DIR)
+if not os.path.exists(OUT_DIR):
+    os.makedirs(OUT_DIR)
+else:
+    for item in os.listdir(OUT_DIR):
+        if item == '.git': continue
+        item_path = os.path.join(OUT_DIR, item)
+        if os.path.isfile(item_path): os.remove(item_path)
+        elif os.path.isdir(item_path): shutil.rmtree(item_path)
+time.sleep(1)
 
 shutil.copytree("wwwroot/css", os.path.join(OUT_DIR, "css"))
 shutil.copytree("wwwroot/js", os.path.join(OUT_DIR, "js"))
+if os.path.exists("wwwroot/images"):
+    shutil.copytree("wwwroot/images", os.path.join(OUT_DIR, "images"))
 
 session = requests.Session()
 
@@ -30,11 +39,13 @@ def save_html(html, filename):
         elif tag['href'] == '/Supervisor/Dashboard': tag['href'] = 'supervisor.html'
         elif tag['href'] == '/Company/Dashboard': tag['href'] = 'company.html'
         elif tag['href'] == '/Student/Dashboard': tag['href'] = 'student.html'
-        elif tag['href'] == '/Account/Login': tag['href'] = 'index.html'
-        elif tag['href'] == '/Index': tag['href'] = 'index.html'
+        elif tag['href'] == '/Account/Login': tag['href'] = 'login.html'
+        elif tag['href'] == '/Index' or tag['href'] == '/': tag['href'] = 'index.html'
     
     for tag in soup.find_all(src=True):
         if tag['src'].startswith('/js/'): tag['src'] = tag['src'].lstrip('/')
+        elif tag['src'].startswith('/images/'): tag['src'] = tag['src'].lstrip('/')
+        elif tag['src'].startswith('~/images/'): tag['src'] = tag['src'].replace('~/', '')
     
     # Change logout form action to index.html
     for form in soup.find_all('form'):
@@ -42,12 +53,35 @@ def save_html(html, filename):
             form['action'] = 'index.html'
             form['method'] = 'get'
 
+    # Hardcode demo login links in login.html to make it easy for users to view the demos
+    if filename == "login.html":
+        # Add a demo section to the login card
+        card = soup.find('div', class_='premium-card')
+        if card:
+            demo_html = """
+            <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
+                <p class="text-secondary small mb-2">View Interactive Demos:</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                    <a href="admin.html" class="btn btn-sm btn-outline-light" style="background: rgba(255,217,61,0.1); border-color: rgba(255,217,61,0.3); color: #ffd93d;">Admin</a>
+                    <a href="company.html" class="btn btn-sm btn-outline-light" style="background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); color: #ff6b6b;">Company</a>
+                    <a href="supervisor.html" class="btn btn-sm btn-outline-light" style="background: rgba(108,142,255,0.1); border-color: rgba(108,142,255,0.3); color: #6c8eff;">Supervisor</a>
+                    <a href="student.html" class="btn btn-sm btn-outline-light" style="background: rgba(78,205,196,0.1); border-color: rgba(78,205,196,0.3); color: #4ecdc4;">Student</a>
+                </div>
+            </div>
+            """
+            demo_soup = BeautifulSoup(demo_html, 'html.parser')
+            card.append(demo_soup)
+
     with open(os.path.join(OUT_DIR, filename), 'w', encoding='utf-8') as f:
         f.write(str(soup))
 
-# 1. Index (Login)
-r = session.get(f"{BASE_URL}/Account/Login")
-save_html(r.text, "index.html")
+# 1. Landing Page
+r_landing = session.get(f"{BASE_URL}/")
+save_html(r_landing.text, "index.html")
+
+# 2. Login Page
+r_login = session.get(f"{BASE_URL}/Account/Login")
+save_html(r_login.text, "login.html")
 
 def export_dashboard(email, dashboard_url, out_name):
     session.cookies.clear()
@@ -60,7 +94,7 @@ def export_dashboard(email, dashboard_url, out_name):
     r2 = session.get(f"{BASE_URL}{dashboard_url}")
     save_html(r2.text, out_name)
 
-# Export dashboards
+# 3. Export dashboards
 export_dashboard("admin@uni.edu", "/Admin/Index", "admin.html")
 export_dashboard("dr.smith@uni.edu", "/Supervisor/Dashboard", "supervisor.html")
 export_dashboard("hr@techcorp.com", "/Company/Dashboard", "company.html")

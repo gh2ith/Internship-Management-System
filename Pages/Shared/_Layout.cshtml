@@ -16,55 +16,63 @@
 
     @if (User.Identity != null && User.Identity.IsAuthenticated)
     {
-        <nav class="navbar navbar-expand-lg sticky-top" id="mainNav" style="z-index: 1000;">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center py-0" asp-page="/Index" style="margin-right: 2rem;">
-                    <img src="~/images/logo.png?v=2" alt="Bridgeway" style="height: 90px; object-fit: contain;" />
+        <nav class="bw-topbar" id="mainNav">
+            <div class="bw-topbar-inner">
+                <!-- Logo -->
+                <a class="bw-topbar-brand" asp-page="/Index">
+                    <img src="~/images/logo.png?v=2" alt="Bridgeway" />
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #fff; font-weight: 500;">
-                                <div class="profile-avatar me-2">
-                                    <img src="https://ui-avatars.com/api/?name=@(User.Identity.Name?.Replace(" ", "+"))&background=141420&color=9B8EC4&size=32" class="rounded-circle" alt="Avatar" width="32" height="32" />
-                                </div>
-                                <span>@User.Identity.Name</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow-lg premium-dropdown" aria-labelledby="navbarDropdown" style="background: rgba(20, 20, 32, 0.95); backdrop-filter: blur(16px); border: 1px solid rgba(123, 111, 166, 0.15); border-radius: 12px; min-width: 220px; padding: 0.5rem; margin-top: 10px;">
-                                <li>
-                                    <div class="px-3 py-2">
-                                        <small class="text-muted d-block mb-1" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px;">Signed in as</small>
-                                        <strong style="color: #fff; font-size: 0.9rem; word-break: break-all;">@User.Identity.Name</strong>
-                                    </div>
-                                </li>
-                                <li><hr class="dropdown-divider" style="border-color: rgba(123, 111, 166, 0.1); margin: 0.4rem 0;"></li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#" style="color: #ccc; border-radius: 8px; padding: 0.5rem 1rem;">
-                                        <i class="bi bi-person me-2" style="color:#7B6FA6;"></i> My Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#" style="color: #ccc; border-radius: 8px; padding: 0.5rem 1rem;">
-                                        <i class="bi bi-gear me-2" style="color:#7B6FA6;"></i> Settings
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider" style="border-color: rgba(123, 111, 166, 0.1); margin: 0.4rem 0;"></li>
-                                <li>
-                                    <form method="post" asp-page="/Account/Logout" class="m-0 p-0">
-                                        <button type="submit" class="dropdown-item d-flex align-items-center text-danger w-100 logout-btn" style="border-radius: 8px; padding: 0.5rem 1rem;">
-                                            <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+
+                <!-- Spacer -->
+                <div style="flex: 1;"></div>
+
+                <!-- Profile Pill -->
+                <div class="bw-profile-pill" id="profilePill" onclick="document.getElementById('profileDropdown').classList.toggle('show')">
+                    <div class="bw-profile-avatar">
+                        <img src="https://ui-avatars.com/api/?name=@(User.Identity.Name?.Replace(" ", "+"))&background=1a1a2e&color=9B8EC4&size=36&bold=true" alt="Avatar" />
+                    </div>
+                    <span class="bw-profile-name">@User.Identity.Name</span>
+                    <i class="bi bi-chevron-down bw-profile-chevron"></i>
+                </div>
+
+                <!-- Dropdown -->
+                <div class="bw-profile-dropdown" id="profileDropdown">
+                    <div class="bw-dropdown-header">
+                        <div class="bw-dropdown-avatar">
+                            <img src="https://ui-avatars.com/api/?name=@(User.Identity.Name?.Replace(" ", "+"))&background=1a1a2e&color=9B8EC4&size=48&bold=true" alt="Avatar" />
+                        </div>
+                        <div>
+                            <div class="bw-dropdown-name">@User.Identity.Name</div>
+                            <div class="bw-dropdown-role">Logged In</div>
+                        </div>
+                    </div>
+                    <div class="bw-dropdown-divider"></div>
+                    <a class="bw-dropdown-item" href="#">
+                        <i class="bi bi-person"></i> My Profile
+                    </a>
+                    <a class="bw-dropdown-item" href="#">
+                        <i class="bi bi-gear"></i> Settings
+                    </a>
+                    <div class="bw-dropdown-divider"></div>
+                    <form method="post" asp-page="/Account/Logout" class="m-0 p-0">
+                        <button type="submit" class="bw-dropdown-item bw-dropdown-logout">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </nav>
+
+        <script>
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const pill = document.getElementById('profilePill');
+                const dropdown = document.getElementById('profileDropdown');
+                if (pill && dropdown && !pill.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        </script>
     }
 
     <main>
