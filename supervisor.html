@@ -127,7 +127,7 @@
 </div>
 <!-- Active Students Tab -->
 <div class="tab-pane fade" id="active-students" role="tabpanel">
-<h5 class="mb-4" style="color:#fff; font-weight:600;">Approved Students</h5>
+<h5 class="mb-4" style="color:#fff; font-weight:600;">Assigned Students</h5>
 <div class="premium-table-container shadow-sm">
 <table class="table-custom mb-0">
 <thead>
@@ -136,7 +136,7 @@
 <th>Company</th>
 <th>Position</th>
 <th>GPA</th>
-<th>Status</th>
+<th>Report</th>
 </tr>
 </thead>
 <tbody>
@@ -148,23 +148,74 @@
                                                     </div>
 </td>
 <td><i class="bi bi-building me-2 text-secondary"></i>Tech Corp Inc.</td>
-<td>test</td>
+<td>Software Engineering Intern</td>
 <td><span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">3.5</span></td>
-<td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
+<td><span class="badge" style="background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2);"><i class="bi bi-journal-check me-1"></i>2/8 weeks</span></td>
 </tr>
+</tbody>
+</table>
+</div>
+</div>
 </tbody>
 </table>
 </div>
 </div>
 <!-- Student Reports Tab -->
 <div class="tab-pane fade" id="student-reports" role="tabpanel">
-<h5 class="mb-4" style="color:#fff; font-weight:600;">Reports from Companies</h5>
-<div class="premium-card p-5 text-center">
-<div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);">
-<i class="bi bi-journal-text" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
-</div>
-<h6 style="color:#aaa;">No reports submitted yet</h6>
-<p style="color:#666; font-size:0.9rem; margin-bottom: 0;">Company evaluations will appear here.</p>
+<h5 class="mb-4" style="color:#fff; font-weight:600;">Weekly Reports</h5>
+
+<div class="mb-4">
+    <div class="d-flex align-items-center mb-3">
+        <img src="https://ui-avatars.com/api/?name=Alice+Johnson&background=141420&color=4ecdc4&size=32" class="rounded-circle me-2" width="32" height="32" />
+        <div>
+            <h6 style="color:#fff; font-weight:600; margin:0; font-size: 0.95rem;">Alice Johnson</h6>
+            <small style="color:#888;">2 / 8 weeks submitted</small>
+        </div>
+    </div>
+    <!-- Week progress bar -->
+    <div class="d-flex gap-1 mb-3">
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(52,211,153,0.6);"></div>
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(52,211,153,0.6);"></div>
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06);"></div>
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06);"></div>
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06);"></div>
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06);"></div>
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06);"></div>
+        <div style="flex:1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06);"></div>
+    </div>
+    
+    <div class="d-flex align-items-start mb-2 p-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(123,111,166,0.08); border-radius: 10px;">
+        <div style="width: 40px; height: 40px; min-width: 40px; border-radius: 8px; background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); display: flex; align-items: center; justify-content: center; margin-right: 0.75rem;">
+            <span style="color: #34d399; font-weight: 700; font-size: 0.8rem;">W1</span>
+        </div>
+        <div style="flex:1; min-width:0;">
+            <div class="d-flex justify-content-between">
+                <span style="color:#fff; font-weight:600; font-size: 0.85rem;">Week 1</span>
+                <div>
+                    <span class="badge me-1" style="background: rgba(123,111,166,0.1); color: #9B8EC4; font-size: 0.7rem;">40h</span>
+                    <span class="badge" style="background: rgba(78,205,196,0.1); color: #4ecdc4; font-size: 0.7rem;">Tech Corp Inc.</span>
+                </div>
+            </div>
+            <p class="mb-1 mt-1" style="color:#aaa; font-size:0.8rem; line-height: 1.5;">Onboarding and environment setup</p>
+            <small style="color:#666;"><i class="bi bi-tools me-1"></i>VS Code, Git</small>
+        </div>
+    </div>
+    <div class="d-flex align-items-start mb-2 p-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(123,111,166,0.08); border-radius: 10px;">
+        <div style="width: 40px; height: 40px; min-width: 40px; border-radius: 8px; background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); display: flex; align-items: center; justify-content: center; margin-right: 0.75rem;">
+            <span style="color: #34d399; font-weight: 700; font-size: 0.8rem;">W2</span>
+        </div>
+        <div style="flex:1; min-width:0;">
+            <div class="d-flex justify-content-between">
+                <span style="color:#fff; font-weight:600; font-size: 0.85rem;">Week 2</span>
+                <div>
+                    <span class="badge me-1" style="background: rgba(123,111,166,0.1); color: #9B8EC4; font-size: 0.7rem;">38h</span>
+                    <span class="badge" style="background: rgba(78,205,196,0.1); color: #4ecdc4; font-size: 0.7rem;">Tech Corp Inc.</span>
+                </div>
+            </div>
+            <p class="mb-1 mt-1" style="color:#aaa; font-size:0.8rem; line-height: 1.5;">Implemented database schema and models</p>
+            <small style="color:#666;"><i class="bi bi-tools me-1"></i>C#, SQL Server</small>
+        </div>
+    </div>
 </div>
 </div>
 </div>
