@@ -6,207 +6,359 @@
 
 <div class="position-relative" style="min-height: calc(100vh - 80px); overflow: hidden; padding: 2rem 0;">
     <div class="container position-relative z-1 dashboard-wrapper">
-        <div class="dashboard-header mb-4 d-flex align-items-center animate-slide-left">
+
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="alert alert-success alert-dismissible fade show" style="background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); color: #34d399; border-radius: 12px;" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>@Model.SuccessMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <!-- Header -->
+        <div class="dashboard-header mb-5 d-flex align-items-center animate-slide-left">
             <div class="premium-icon-box" style="width: 48px; height: 48px; border-radius: 12px; margin-right: 1rem;">
                 <i class="bi bi-shield-check"></i>
             </div>
             <div>
                 <h2 class="mb-0 gradient-text">Supervisor Dashboard</h2>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Review and manage student internship applications</p>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Welcome back, @(Model.SupervisorInfo?.FullName ?? "Supervisor")</p>
             </div>
         </div>
 
-        <div class="row">
-            <!-- Left Column: Supervisor Profile -->
-            <div class="col-md-4 mb-4 animate-in delay-1">
-                <div class="premium-card p-4">
-                    <div class="text-center mb-4">
-                        <div class="profile-avatar d-inline-block mb-3">
-                            <img src="https://ui-avatars.com/api/?name=@(Model.SupervisorInfo?.FullName?.Replace(" ", "+") ?? "Supervisor")&background=141420&color=9B8EC4&size=96" class="rounded-circle" alt="Avatar" width="96" height="96" />
+        <!-- Stats Cards Row -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showSection('students-section')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(78,205,196,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-people-fill" style="font-size:1.5rem; color:#4ecdc4;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.AssignedStudentCount</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Assigned Students</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showSection('reports-section')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(52,211,153,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-journal-check" style="font-size:1.5rem; color:#34d399;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.ReportsSubmittedCount</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Reports Submitted</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(255,107,107,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-exclamation-triangle-fill" style="font-size:1.5rem; color:#ff6b6b;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.ReportsMissingCount</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Reports Missing</small>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="premium-card text-center p-4 admin-card" onclick="showSection('applications-section')">
+                    <div class="stat-icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: rgba(245,158,11,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-hourglass-split" style="font-size:1.5rem; color:#f59e0b;"></i>
+                    </div>
+                    <h2 style="color:#fff; font-weight: 700; margin:0;">@Model.PendingApplications.Count</h2>
+                    <small style="color:#a0a0a0; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Pending Reviews</small>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- PROFILE SECTION -->
+        <div id="profile-section" class="detail-panel premium-card p-4 mb-4" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;"><i class="bi bi-person-circle me-2" style="color:#9B8EC4;"></i>My Profile</h5>
+                <button class="btn btn-sm text-secondary" onclick="hideSection('profile-section')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <img src="https://ui-avatars.com/api/?name=@(Model.SupervisorInfo?.FullName?.Replace(" ", "+") ?? "S")&background=141420&color=9B8EC4&size=120&bold=true" class="rounded-circle mb-3" width="120" height="120" />
+                    <h5 style="color:#fff; font-weight:600;">@(Model.SupervisorInfo?.FullName ?? "Supervisor")</h5>
+                    <span class="badge" style="background: rgba(123,111,166,0.15); color: #9B8EC4; padding: 0.4rem 1rem; border-radius: 20px;">Supervisor</span>
+                </div>
+                <div class="col-md-8">
+                    <div class="p-3" style="background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div class="row mb-3">
+                            <div class="col-6"><span class="premium-label">Email</span><p style="color:#eee; margin:0;">@User.Identity?.Name</p></div>
+                            <div class="col-6"><span class="premium-label">Department</span><p style="color:#eee; margin:0;">@(Model.SupervisorInfo?.SuperDepartment ?? "N/A")</p></div>
                         </div>
-                        <h5 class="mb-1" style="color:#fff; font-weight: 600;">@(Model.SupervisorInfo?.FullName ?? "Supervisor")</h5>
-                        <small style="color:#9B8EC4;">@(Model.SupervisorInfo?.SuperDepartment ?? "") Department</small>
-                    </div>
-                    <hr class="divider" />
-                    <div style="font-size:0.9rem;">
-                        <p class="mb-2"><strong class="premium-label" style="display:inline;">Email:</strong> <span style="color:#eee; float:right;">@User.Identity?.Name</span></p>
-                        <p class="mb-2"><strong class="premium-label" style="display:inline;">Pending:</strong> <span style="color:#d4a72c; font-weight:600; float:right;">@Model.PendingApplications.Count</span></p>
-                        <p class="mb-0"><strong class="premium-label" style="display:inline;">Active:</strong> <span style="color:#5cb85c; font-weight:600; float:right;">@Model.ApprovedApplications.Count</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column -->
-            <div class="col-md-8">
-                <ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(123,111,166,0.15);">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pending-apps" type="button" role="tab" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #7B6FA6;">
-                            Pending Applications
-                            @if (Model.PendingApplications.Count > 0)
-                            {
-                                <span class="badge ms-2" style="background:#7B6FA6; color:#fff;">@Model.PendingApplications.Count</span>
-                            }
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#active-students" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Active Students</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#student-reports" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Student Reports</button>
-                    </li>
-                </ul>
-
-                <div class="tab-content">
-                    
-                    <!-- Pending Applications Tab -->
-                    <div class="tab-pane fade show active" id="pending-apps" role="tabpanel">
-                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Applications Requiring Approval</h5>
-                        @if (Model.PendingApplications.Any())
-                        {
-                            <div class="premium-table-container shadow-sm">
-                                <table class="table-custom mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Student</th>
-                                            <th>Company</th>
-                                            <th>Position</th>
-                                            <th>GPA</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var app in Model.PendingApplications)
-                                        {
-                                            <tr>
-                                                <td style="color:#fff; font-weight:500;">@(app.Std?.FullName ?? "Unknown")</td>
-                                                <td><i class="bi bi-building me-2 text-secondary"></i>@(app.Comp?.CompanyName ?? "N/A")</td>
-                                                <td>@(app.Internship?.Title ?? "N/A")</td>
-                                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span></td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <form method="post" asp-page-handler="Accept" style="display:inline;">
-                                                            <input type="hidden" name="applicationId" value="@app.ApplicationId" />
-                                                            <button type="submit" class="btn btn-sm text-success" style="background: rgba(92, 184, 92, 0.1); border: 1px solid rgba(92, 184, 92, 0.2); border-radius: 8px;" title="Approve"><i class="bi bi-check-lg"></i></button>
-                                                        </form>
-                                                        <form method="post" asp-page-handler="Reject" style="display:inline;">
-                                                            <input type="hidden" name="applicationId" value="@app.ApplicationId" />
-                                                            <button type="submit" class="btn btn-sm text-danger ms-2" style="background: rgba(217, 83, 79, 0.1); border: 1px solid rgba(217, 83, 79, 0.2); border-radius: 8px;" title="Reject"><i class="bi bi-x-lg"></i></button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                        <div class="row mb-3">
+                            <div class="col-6"><span class="premium-label">College</span><p style="color:#eee; margin:0;">@(Model.SupervisorInfo?.College?.CollegeName ?? "N/A")</p></div>
+                            <div class="col-6"><span class="premium-label">Supervisor ID</span><p style="color:#eee; margin:0;">#@(Model.SupervisorInfo?.SupervisorId)</p></div>
+                        </div>
+                        <hr class="divider" />
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <h4 style="color:#4ecdc4; font-weight:700; margin:0;">@Model.AssignedStudentCount</h4>
+                                <small style="color:#888;">Students</small>
                             </div>
-                        }
-                        else
-                        {
-                            <div class="premium-card p-5 text-center">
-                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);">
-                                    <i class="bi bi-check-circle" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
-                                </div>
-                                <h6 style="color:#aaa;">You're all caught up!</h6>
-                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">No pending applications to review at this time.</p>
+                            <div class="col-4 text-center">
+                                <h4 style="color:#34d399; font-weight:700; margin:0;">@Model.ReportsSubmittedCount</h4>
+                                <small style="color:#888;">Reports</small>
                             </div>
-                        }
-                    </div>
-
-                    <!-- Active Students Tab -->
-                    <div class="tab-pane fade" id="active-students" role="tabpanel">
-                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Approved Students</h5>
-                        @if (Model.ApprovedApplications.Any())
-                        {
-                            <div class="premium-table-container shadow-sm">
-                                <table class="table-custom mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Student</th>
-                                            <th>Company</th>
-                                            <th>Position</th>
-                                            <th>GPA</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var app in Model.ApprovedApplications)
-                                        {
-                                            <tr>
-                                                <td style="color:#fff; font-weight:500;">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="https://ui-avatars.com/api/?name=@(app.Std?.FullName?.Replace(" ", "+") ?? "S")&background=141420&color=9B8EC4&size=28" class="rounded-circle me-2" width="28" height="28" />
-                                                        @(app.Std?.FullName ?? "Unknown")
-                                                    </div>
-                                                </td>
-                                                <td><i class="bi bi-building me-2 text-secondary"></i>@(app.Comp?.CompanyName ?? "N/A")</td>
-                                                <td>@(app.Internship?.Title ?? "N/A")</td>
-                                                <td><span class="badge" style="background: rgba(123,111,166,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span></td>
-                                                <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                            <div class="col-4 text-center">
+                                <h4 style="color:#f59e0b; font-weight:700; margin:0;">@Model.PendingApplications.Count</h4>
+                                <small style="color:#888;">Pending</small>
                             </div>
-                        }
-                        else
-                        {
-                            <div class="premium-card p-5 text-center">
-                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);">
-                                    <i class="bi bi-people" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
-                                </div>
-                                <h6 style="color:#aaa;">No active students</h6>
-                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">Students will appear here once you approve their applications.</p>
-                            </div>
-                        }
-                    </div>
-
-                    <!-- Student Reports Tab -->
-                    <div class="tab-pane fade" id="student-reports" role="tabpanel">
-                        <h5 class="mb-4" style="color:#fff; font-weight:600;">Reports from Companies</h5>
-                        @if (Model.Reports.Any())
-                        {
-                            @foreach (var report in Model.Reports)
-                            {
-                                <div class="premium-card p-4 mb-3">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <div>
-                                            <h6 style="color:#fff; font-weight:600; margin-bottom: 4px;">@(report.Task ?? "Report")</h6>
-                                            <small style="color:#7B6FA6;"><i class="bi bi-building me-1"></i> @(report.Comp?.CompanyName ?? "N/A")</small>
-                                        </div>
-                                        <span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4; border: 1px solid rgba(123,111,166,0.2); font-weight: 500; padding: 0.3rem 0.6rem; border-radius: 8px;">
-                                            <i class="bi bi-clock-history me-1"></i> @(report.NumberOfHours ?? 0) hours
-                                        </span>
-                                    </div>
-                                    <hr class="divider" />
-                                    <p style="color:#aaa; font-size:0.9rem; margin:0;"><strong style="color:#ccc;">Tools used:</strong> @(report.Tools ?? "N/A")</p>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="premium-card p-5 text-center">
-                                <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);">
-                                    <i class="bi bi-journal-text" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
-                                </div>
-                                <h6 style="color:#aaa;">No reports submitted yet</h6>
-                                <p style="color:#666; font-size:0.9rem; margin-bottom: 0;">Company evaluations will appear here.</p>
-                            </div>
-                        }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- STUDENTS SECTION -->
+        <div id="students-section" class="detail-panel premium-card p-4 mb-4" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;"><i class="bi bi-people-fill me-2" style="color:#4ecdc4;"></i>Assigned Students</h5>
+                <button class="btn btn-sm text-secondary" onclick="hideSection('students-section')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            @if (Model.AssignedStudents.Any())
+            {
+                <div class="premium-table-container shadow-sm" style="overflow: visible;">
+                    <table class="table-custom mb-0">
+                        <thead><tr><th>Student</th><th>Department</th><th>GPA</th><th>College</th><th>Report</th></tr></thead>
+                        <tbody>
+                            @foreach (var s in Model.AssignedStudents)
+                            {
+                                <tr>
+                                    <td style="color:#fff; font-weight:500;">
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=@(s.FullName?.Replace(" ", "+") ?? "S")&background=141420&color=4ecdc4&size=28" class="rounded-circle me-2" width="28" height="28" />
+                                            @(s.FullName ?? "Unknown")
+                                        </div>
+                                    </td>
+                                    <td>@(s.StDepartment ?? "N/A")</td>
+                                    <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(s.Gpa?.ToString("F1") ?? "N/A")</span></td>
+                                    <td>@(s.College?.CollegeName ?? "N/A")</td>
+                                    <td>
+                                        @{
+                                            var studentReports = Model.Reports.Where(r => r.StudentId == s.StudentId).ToList();
+                                            var weekCount = studentReports.Count;
+                                        }
+                                        @if (weekCount > 0)
+                                        {
+                                            <span class="badge" style="background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2);"><i class="bi bi-journal-check me-1"></i>@weekCount/8 weeks</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2);"><i class="bi bi-clock me-1"></i>Missing</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);">
+                        <i class="bi bi-people" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i>
+                    </div>
+                    <h6 style="color:#aaa;">No students assigned yet</h6>
+                    <p style="color:#666; font-size:0.9rem; margin:0;">Students will appear here once the admin assigns them to you.</p>
+                </div>
+            }
+        </div>
+
+        <!-- APPLICATIONS SECTION -->
+        <div id="applications-section" class="detail-panel premium-card p-4 mb-4" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;"><i class="bi bi-clipboard-check me-2" style="color:#f59e0b;"></i>Applications</h5>
+                <button class="btn btn-sm text-secondary" onclick="hideSection('applications-section')"><i class="bi bi-x-lg"></i></button>
+            </div>
+
+            <!-- Sub-tabs -->
+            <ul class="nav nav-tabs mb-4" role="tablist" style="border-bottom: 1px solid rgba(123,111,166,0.15);">
+                <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-pending" type="button" style="background:transparent; color:#fff; font-weight:500; border:none; border-bottom: 2px solid #f59e0b;">Pending <span class="badge ms-1" style="background: rgba(245,158,11,0.2); color:#f59e0b;">@Model.PendingApplications.Count</span></button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-approved" type="button" style="background:transparent; color:#777; font-weight:500; border:none;">Approved <span class="badge ms-1" style="background: rgba(52,211,153,0.15); color:#34d399;">@Model.ApprovedApplications.Count</span></button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-all" type="button" style="background:transparent; color:#777; font-weight:500; border:none;">All</button></li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Pending Tab -->
+                <div class="tab-pane fade show active" id="tab-pending">
+                    @if (Model.PendingApplications.Any())
+                    {
+                        <div class="premium-table-container shadow-sm" style="overflow: visible;">
+                            <table class="table-custom mb-0">
+                                <thead><tr><th>Student</th><th>Company</th><th>Position</th><th>GPA</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    @foreach (var app in Model.PendingApplications)
+                                    {
+                                        <tr>
+                                            <td style="color:#fff; font-weight:500;">@(app.Std?.FullName ?? "Unknown")</td>
+                                            <td><i class="bi bi-building me-2 text-secondary"></i>@(app.Comp?.CompanyName ?? "N/A")</td>
+                                            <td>@(app.Internship?.Title ?? "N/A")</td>
+                                            <td><span class="badge" style="background: rgba(255,255,255,0.1); color:#ccc;">@(app.Std?.Gpa?.ToString("F1") ?? "N/A")</span></td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <form method="post" asp-page-handler="Accept"><input type="hidden" name="applicationId" value="@app.ApplicationId" /><button type="submit" class="btn btn-sm" style="background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); border-radius: 8px; font-size: 0.75rem; padding: 0.3rem 0.7rem;"><i class="bi bi-check-lg me-1"></i>Approve</button></form>
+                                                    <form method="post" asp-page-handler="Reject"><input type="hidden" name="applicationId" value="@app.ApplicationId" /><button type="submit" class="btn btn-sm" style="background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); border-radius: 8px; font-size: 0.75rem; padding: 0.3rem 0.7rem;"><i class="bi bi-x-lg me-1"></i>Reject</button></form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5"><div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);"><i class="bi bi-check-circle" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i></div><h6 style="color:#aaa;">You're all caught up!</h6><p style="color:#666; font-size:0.9rem; margin:0;">No pending applications to review.</p></div>
+                    }
+                </div>
+
+                <!-- Approved Tab -->
+                <div class="tab-pane fade" id="tab-approved">
+                    @if (Model.ApprovedApplications.Any())
+                    {
+                        <div class="premium-table-container shadow-sm">
+                            <table class="table-custom mb-0">
+                                <thead><tr><th>Student</th><th>Company</th><th>Position</th><th>Status</th></tr></thead>
+                                <tbody>
+                                    @foreach (var app in Model.ApprovedApplications)
+                                    {
+                                        <tr>
+                                            <td style="color:#fff; font-weight:500;"><img src="https://ui-avatars.com/api/?name=@(app.Std?.FullName?.Replace(" ", "+") ?? "S")&background=141420&color=34d399&size=28" class="rounded-circle me-2" width="28" height="28" />@(app.Std?.FullName ?? "Unknown")</td>
+                                            <td><i class="bi bi-building me-2 text-secondary"></i>@(app.Comp?.CompanyName ?? "N/A")</td>
+                                            <td>@(app.Internship?.Title ?? "N/A")</td>
+                                            <td><span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5"><h6 style="color:#aaa;">No approved applications yet.</h6></div>
+                    }
+                </div>
+
+                <!-- All Tab -->
+                <div class="tab-pane fade" id="tab-all">
+                    @if (Model.AllApplications.Any())
+                    {
+                        <div class="premium-table-container shadow-sm">
+                            <table class="table-custom mb-0">
+                                <thead><tr><th>ID</th><th>Student</th><th>Company</th><th>Position</th><th>Status</th></tr></thead>
+                                <tbody>
+                                    @foreach (var app in Model.AllApplications)
+                                    {
+                                        <tr>
+                                            <td style="color:#fff;">@app.ApplicationId</td>
+                                            <td>@(app.Std?.FullName ?? "Unknown")</td>
+                                            <td>@(app.Comp?.CompanyName ?? "N/A")</td>
+                                            <td>@(app.Internship?.Title ?? "N/A")</td>
+                                            <td>
+                                                @if (app.Status == 0) { <span class="badge" style="background: rgba(245,158,11,0.1); color: #f59e0b;">Pending</span> }
+                                                else if (app.Status == 1) { <span class="badge-approved"><i class="bi bi-check-circle-fill me-1"></i>Approved</span> }
+                                                else { <span class="badge" style="background: rgba(255,107,107,0.1); color: #ff6b6b;">Rejected</span> }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5"><h6 style="color:#aaa;">No applications found.</h6></div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- REPORTS SECTION -->
+        <div id="reports-section" class="detail-panel premium-card p-4 mb-4" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 style="color:#fff; font-weight: 600; margin:0;"><i class="bi bi-journal-text me-2" style="color:#34d399;"></i>Weekly Reports</h5>
+                <button class="btn btn-sm text-secondary" onclick="hideSection('reports-section')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            @if (Model.Reports.Any())
+            {
+                var groupedReports = Model.Reports
+                    .GroupBy(r => new { r.StudentId, StudentName = r.Student?.FullName ?? "Unknown" })
+                    .OrderBy(g => g.Key.StudentName);
+
+                foreach (var group in groupedReports)
+                {
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://ui-avatars.com/api/?name=@(group.Key.StudentName.Replace(" ", "+"))&background=141420&color=4ecdc4&size=32" class="rounded-circle me-2" width="32" height="32" />
+                            <div>
+                                <h6 style="color:#fff; font-weight:600; margin:0; font-size: 0.95rem;">@group.Key.StudentName</h6>
+                                <small style="color:#888;">@group.Count() / 8 weeks submitted</small>
+                            </div>
+                        </div>
+                        <!-- Week progress bar -->
+                        <div class="d-flex gap-1 mb-3">
+                            @for (int w = 1; w <= 8; w++)
+                            {
+                                var hasWeek = group.Any(r => r.WeekNumber == w);
+                                <div style="flex:1; height: 6px; border-radius: 3px; background: @(hasWeek ? "rgba(52,211,153,0.6)" : "rgba(255,255,255,0.06)");" title="Week @w"></div>
+                            }
+                        </div>
+                        @foreach (var report in group.OrderBy(r => r.WeekNumber))
+                        {
+                            <div class="d-flex align-items-start mb-2 p-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(123,111,166,0.08); border-radius: 10px;">
+                                <div style="width: 40px; height: 40px; min-width: 40px; border-radius: 8px; background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); display: flex; align-items: center; justify-content: center; margin-right: 0.75rem;">
+                                    <span style="color: #34d399; font-weight: 700; font-size: 0.8rem;">W@(report.WeekNumber)</span>
+                                </div>
+                                <div style="flex:1; min-width:0;">
+                                    <div class="d-flex justify-content-between">
+                                        <span style="color:#fff; font-weight:600; font-size: 0.85rem;">Week @report.WeekNumber</span>
+                                        <div>
+                                            <span class="badge me-1" style="background: rgba(123,111,166,0.1); color: #9B8EC4; font-size: 0.7rem;">@(report.NumberOfHours ?? 0)h</span>
+                                            <span class="badge" style="background: rgba(78,205,196,0.1); color: #4ecdc4; font-size: 0.7rem;">@(report.Comp?.CompanyName ?? "N/A")</span>
+                                        </div>
+                                    </div>
+                                    <p class="mb-1 mt-1" style="color:#aaa; font-size:0.8rem; line-height: 1.5;">@report.Task</p>
+                                    <small style="color:#666;"><i class="bi bi-tools me-1"></i>@(report.Tools ?? "N/A")</small>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center py-5"><div class="premium-icon-box mx-auto mb-3" style="width: 64px; height: 64px; background: rgba(123,111,166,0.05); border: 1px dashed rgba(123,111,166,0.15);"><i class="bi bi-journal-text" style="color:#555; background: none; -webkit-text-fill-color: #555;"></i></div><h6 style="color:#aaa;">No weekly reports submitted yet</h6><p style="color:#666; font-size:0.9rem; margin:0;">Company evaluations will appear here once they submit weekly reports.</p></div>
+            }
+        </div>
+
     </div>
 </div>
+
+<style>
+    .admin-card:hover { transform: translateY(-5px) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important; border-color: rgba(123, 111, 166, 0.4) !important; }
+    .nav-link:hover { color: #fff !important; }
+</style>
+
 <script>
+    function showSection(id) {
+        document.querySelectorAll('.detail-panel').forEach(p => {
+            if (p.id === id) {
+                p.style.display = p.style.display === 'block' ? 'none' : 'block';
+            } else {
+                p.style.display = 'none';
+            }
+        });
+    }
+    function hideSection(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+    // Tab styling
     document.querySelectorAll('.nav-link').forEach(tab => {
         tab.addEventListener('click', function() {
-            document.querySelectorAll('.nav-link').forEach(t => {
-                t.style.color = '#777';
-                t.style.borderBottom = 'none';
-            });
-            this.style.color = '#fff';
-            this.style.borderBottom = '2px solid #7B6FA6';
+            this.closest('.nav-tabs').querySelectorAll('.nav-link').forEach(t => { t.style.color = '#777'; t.style.borderBottom = 'none'; });
+            this.style.color = '#fff'; this.style.borderBottom = '2px solid #f59e0b';
         });
     });
 </script>

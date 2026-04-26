@@ -89,10 +89,7 @@ namespace WebApplication1.Pages.Student
                 ErrorMessage = "You already have an active application. You must wait for the supervisor's decision before applying to another internship.";
                 return RedirectToPage();
             }
-            
-            // Just in case, check if already applied to this specific one (e.g. if it was rejected before, they technically can re-apply to the same one or a different one based on requirements. We will allow re-applying to the same one if it was rejected previously, so we don't strictly block re-application to the same ID if it was rejected. Wait, if it was rejected, we should allow them to apply again. So we just check if they have an active one above.)
 
-            // Get next ID
             var maxId = await _context.Applications
                 .MaxAsync(a => (int?)a.ApplicationId) ?? 0;
 

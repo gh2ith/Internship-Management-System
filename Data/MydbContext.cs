@@ -33,6 +33,8 @@ public partial class MydbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Evaluation> Evaluations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -192,11 +194,13 @@ public partial class MydbContext : DbContext
             entity.Property(e => e.NumberOfHours).HasColumnName("number_of_hours");
             entity.Property(e => e.SuperId).HasColumnName("super_id");
             entity.Property(e => e.Task)
-                .HasMaxLength(45)
+                .HasColumnType("text")
                 .HasColumnName("task");
             entity.Property(e => e.Tools)
-                .HasMaxLength(45)
+                .HasMaxLength(255)
                 .HasColumnName("tools");
+            entity.Property(e => e.WeekNumber).HasColumnName("week_number");
+            entity.Property(e => e.StudentId).HasColumnName("student_id");
 
             entity.HasOne(d => d.Comp).WithMany(p => p.Reports)
                 .HasForeignKey(d => d.CompId)
@@ -302,6 +306,13 @@ public partial class MydbContext : DbContext
             entity.HasOne(d => d.College).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CollegeId)
                 .HasConstraintName("fk_user_college");
+        });
+
+        modelBuilder.Entity<Evaluation>(entity =>
+        {
+            entity.HasKey(e => e.EvalId).HasName("PRIMARY");
+            entity.ToTable("evaluation");
+            entity.Property(e => e.EvalId).HasColumnName("eval_id").ValueGeneratedOnAdd();
         });
 
         OnModelCreatingPartial(modelBuilder);

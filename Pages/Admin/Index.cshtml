@@ -156,18 +156,16 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="premium-label">Department</label>
-                            <input type="text" name="department" class="form-control premium-input" />
+                            <input type="text" name="department" class="form-control premium-input" required />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="premium-label">GPA</label>
-                            <input type="number" step="0.01" name="gpa" class="form-control premium-input" />
+                            <input type="number" step="0.01" min="0" max="4" name="gpa" class="form-control premium-input" required />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="premium-label">College</label>
-                            <select name="collegeId" class="form-select premium-input">
-                                <option value="">Select College...</option>
-                                @foreach(var c in Model.Colleges) { <option value="@c.CollegeId">@c.CollegeName</option> }
-                            </select>
+                            <input type="text" class="form-control premium-input" value="Al-Balqa Applied University" readonly style="cursor: default; opacity: 0.85;" />
+                            <input type="hidden" name="collegeId" value="@(Model.Colleges.FirstOrDefault()?.CollegeId)" />
                         </div>
                     </div>
                     <button type="submit" class="premium-btn"><i class="bi bi-person-plus-fill me-2"></i>Create Student</button>
@@ -212,11 +210,10 @@
                                     }
                                     else
                                     {
-                                        <form method="post" asp-page-handler="UnassignSupervisor" class="d-flex align-items-center gap-2 m-0 p-0">
-                                            <input type="hidden" name="studentId" value="@s.StudentId" />
+                                        <div class="d-flex align-items-center gap-2">
                                             <span style="color:#9B8EC4; font-size:0.85rem;">@s.Super?.FullName</span>
-                                            <button type="submit" class="btn btn-sm" style="background: transparent; border: 1px solid rgba(245,158,11,0.3); color: #f59e0b; padding: 0.1rem 0.4rem; font-size: 0.7rem;" title="Unassign">✕</button>
-                                        </form>
+                                            <button type="button" class="btn btn-sm" style="background: transparent; border: 1px solid rgba(255,107,107,0.3); color: #ff6b6b; padding: 0.1rem 0.4rem; font-size: 0.7rem;" title="Unassign" onclick="openUnassignModal(@s.StudentId, '@(s.FullName)', '@(s.Super?.FullName)')">✕</button>
+                                        </div>
                                     }
                                 </td>
                                 <td>
@@ -260,11 +257,11 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="premium-label">Location</label>
-                            <input type="text" name="location" class="form-control premium-input" />
+                            <input type="text" name="location" class="form-control premium-input" required />
                         </div>
                         <div class="col-md-12 mb-3">
                             <label class="premium-label">Description</label>
-                            <input type="text" name="description" class="form-control premium-input" />
+                            <input type="text" name="description" class="form-control premium-input" required />
                         </div>
                     </div>
                     <button type="submit" class="premium-btn"><i class="bi bi-building-add me-2"></i>Create Company</button>
@@ -323,14 +320,12 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="premium-label">Department</label>
-                            <input type="text" name="department" class="form-control premium-input" />
+                            <input type="text" name="department" class="form-control premium-input" required />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="premium-label">College</label>
-                            <select name="collegeId" class="form-select premium-input">
-                                <option value="">Select College...</option>
-                                @foreach(var c in Model.Colleges) { <option value="@c.CollegeId">@c.CollegeName</option> }
-                            </select>
+                            <input type="text" class="form-control premium-input" value="Al-Balqa Applied University" readonly style="cursor: default; opacity: 0.85;" />
+                            <input type="hidden" name="collegeId" value="@(Model.Colleges.FirstOrDefault()?.CollegeId)" />
                         </div>
                     </div>
                     <button type="submit" class="premium-btn"><i class="bi bi-person-plus-fill me-2"></i>Create Supervisor</button>
@@ -584,4 +579,33 @@
         document.getElementById('terminatePositionName').textContent = positionName;
         new bootstrap.Modal(document.getElementById('terminateModal')).show();
     }
+
+    function openUnassignModal(studentId, studentName, supervisorName) {
+        document.getElementById('unassignStudentName').textContent = studentName;
+        document.getElementById('unassignSupervisorName').textContent = supervisorName;
+        document.getElementById('unassignStudentId').value = studentId;
+        new bootstrap.Modal(document.getElementById('unassignModal')).show();
+    }
 </script>
+
+<!-- Unassign Confirmation Modal -->
+<div class="modal" id="unassignModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content premium-card" style="background: #141420; border: 1px solid rgba(255, 107, 107, 0.3);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="color: #ff6b6b; font-weight: 600;"><i class="bi bi-person-dash-fill me-2"></i> Unassign Supervisor</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4" style="color: #aaa;">
+        Are you sure you want to unassign supervisor <strong id="unassignSupervisorName" style="color:#9B8EC4;"></strong> from student <strong id="unassignStudentName" style="color:#fff;"></strong>?
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="premium-btn-outline" data-bs-dismiss="modal" style="padding: 0.5rem 1.2rem;">Cancel</button>
+        <form id="unassignForm" method="post" asp-page-handler="UnassignSupervisor" class="m-0 p-0">
+            <input type="hidden" id="unassignStudentId" name="studentId" value="" />
+            <button type="button" onclick="document.getElementById('unassignForm').submit();" class="premium-btn" style="background: #ff6b6b; color: white; padding: 0.5rem 1.2rem; border: none;"><i class="bi bi-person-dash-fill me-2"></i>Unassign</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -66,7 +66,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: background 0.4s ease, backdrop-filter 0.4s ease;
+            transition: background 0.4s ease, backdrop-filter 0.4s ease, transform 0.35s ease;
+        }
+        .landing-nav.nav-hidden {
+            transform: translateY(-100%);
         }
         .landing-nav.scrolled {
             background: rgba(10, 10, 20, 0.85);
@@ -634,9 +637,18 @@
     <script>
         // Dynamic background initialized via CSS
 
-        // ===== Navbar scroll effect =====
+        // ===== Navbar scroll effect: hide on scroll down =====
+        let lastScrollY = 0;
         window.addEventListener('scroll', () => {
-            document.getElementById('landingNav').classList.toggle('scrolled', window.scrollY > 50);
+            const nav = document.getElementById('landingNav');
+            const currentY = window.scrollY;
+            if (currentY > 100) {
+                nav.classList.add('nav-hidden');
+            } else {
+                nav.classList.remove('nav-hidden');
+            }
+            nav.classList.toggle('scrolled', currentY > 50);
+            lastScrollY = currentY;
         });
 
         // ===== Scroll Reveal =====

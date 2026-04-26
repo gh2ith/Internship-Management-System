@@ -68,7 +68,7 @@ namespace WebApplication1.Data
                 context.Students.Add(new Student
                 {
                     StudentId = 4,
-                    SuperId = 2,
+                    SuperId = null,
                     CollegeId = 1,
                     StDepartment = "Software Engineering",
                     FullName = "Alice Johnson",

@@ -592,8 +592,8 @@ html, body {
     margin: 0;
 }
 .premium-input {
-    background: rgba(var(--bw-bg-rgb), 0.6) !important;
-    border: 1px solid rgba(var(--bw-border-color), 0.15) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 12px !important;
     color: #fff !important;
     padding: 0.85rem 1.2rem !important;
@@ -601,12 +601,12 @@ html, body {
     transition: all 0.3s ease !important;
 }
 .premium-input::placeholder {
-    color: rgba(255, 255, 255, 0.3) !important;
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 .premium-input:focus {
-    background: rgba(var(--bw-bg-rgb), 0.8) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
     border-color: #7B6FA6 !important;
-    box-shadow: 0 0 0 4px rgba(var(--bw-border-color), 0.15), 0 0 20px rgba(var(--bw-border-color), 0.1) !important;
+    box-shadow: 0 0 0 4px rgba(123, 111, 166, 0.15), 0 0 20px rgba(123, 111, 166, 0.1) !important;
 }
 .premium-input option {
     background-color: #1a1a2e !important;

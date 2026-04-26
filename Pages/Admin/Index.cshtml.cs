@@ -91,7 +91,7 @@ namespace WebApplication1.Pages.Admin
             { ErrorMessage = $"Email '{email}' is already in use."; return RedirectToPage(); }
 
             var id = await GetNextUserIdAsync();
-            var user = new User { UserId = id, Email = email, Password = password, Role = "Student", CollegeId = collegeId };
+            var user = new User { UserId = id, Email = email, Password = DbSeeder.HashPassword(password), Role = "Student", CollegeId = collegeId };
             var student = new Models.Student { StudentId = id, FullName = fullName, StDepartment = department, Gpa = gpa, CollegeId = collegeId };
 
             _context.Users.Add(user);
@@ -112,7 +112,7 @@ namespace WebApplication1.Pages.Admin
             { ErrorMessage = $"Email '{contactEmail}' is already in use."; return RedirectToPage(); }
 
             var id = await GetNextUserIdAsync();
-            var user = new User { UserId = id, Email = contactEmail, Password = password, Role = "Company" };
+            var user = new User { UserId = id, Email = contactEmail, Password = DbSeeder.HashPassword(password), Role = "Company" };
             var company = new Models.Company { CompanyId = id, CompanyName = companyName, ContactInfo = contactEmail, Location = location, Description = description };
 
             _context.Users.Add(user);
@@ -133,7 +133,7 @@ namespace WebApplication1.Pages.Admin
             { ErrorMessage = $"Email '{email}' is already in use."; return RedirectToPage(); }
 
             var id = await GetNextUserIdAsync();
-            var user = new User { UserId = id, Email = email, Password = password, Role = "Supervisor", CollegeId = collegeId };
+            var user = new User { UserId = id, Email = email, Password = DbSeeder.HashPassword(password), Role = "Supervisor", CollegeId = collegeId };
             var supervisor = new Models.Supervisor { SupervisorId = id, FullName = fullName, SuperDepartment = department, CollegeId = collegeId };
 
             _context.Users.Add(user);
@@ -152,6 +152,11 @@ namespace WebApplication1.Pages.Admin
             if (student == null) { ErrorMessage = "Student not found."; return RedirectToPage(); }
 
             student.SuperId = supervisorId;
+            
+            // Also assign existing reports to the new supervisor
+            var reports = await _context.Reports.Where(r => r.StudentId == studentId).ToListAsync();
+            foreach (var r in reports) r.SuperId = supervisorId;
+
             await _context.SaveChangesAsync();
 
             SuccessMessage = $"Supervisor assigned to {student.FullName} successfully.";
@@ -165,6 +170,11 @@ namespace WebApplication1.Pages.Admin
             if (student == null) { ErrorMessage = "Student not found."; return RedirectToPage(); }
 
             student.SuperId = null;
+
+            // Also unassign reports so they don't show up in the supervisor's dashboard
+            var reports = await _context.Reports.Where(r => r.StudentId == studentId).ToListAsync();
+            foreach (var r in reports) r.SuperId = null;
+
             await _context.SaveChangesAsync();
 
             SuccessMessage = $"Supervisor unassigned from {student.FullName}.";
@@ -181,6 +191,15 @@ namespace WebApplication1.Pages.Admin
             if (student.Applications.Any())
                 _context.Applications.RemoveRange(student.Applications);
 
+            // Remove related reports to ensure they don't show up in supervisor dashboards
+            var reports = await _context.Reports.Where(r => r.StudentId == studentId).ToListAsync();
+            if (reports.Any())
+                _context.Reports.RemoveRange(reports);
+
+            // Unassign from any internship posts
+            var internships = await _context.InternshipOpportunities.Where(i => i.StdId == studentId).ToListAsync();
+            foreach (var i in internships) i.StdId = null;
+
             _context.Students.Remove(student);
 
             // Remove user account
@@ -188,7 +207,7 @@ namespace WebApplication1.Pages.Admin
             if (user != null) _context.Users.Remove(user);
 
             await _context.SaveChangesAsync();
-            SuccessMessage = $"Student \"{student.FullName}\" deleted.";
+            SuccessMessage = $"Student \"{student.FullName}\" deleted and unassigned.";
             return RedirectToPage();
         }
 
@@ -271,6 +290,15 @@ namespace WebApplication1.Pages.Admin
             if (application.Status != 1) { ErrorMessage = "Only active internships can be terminated."; return RedirectToPage(); }
 
             application.Status = 3;
+            
+            // Unassign the supervisor from the student and their reports
+            if (application.Std != null)
+            {
+                application.Std.SuperId = null;
+                var reports = await _context.Reports.Where(r => r.StudentId == application.Std.StudentId).ToListAsync();
+                foreach (var r in reports) r.SuperId = null;
+            }
+
             await _context.SaveChangesAsync();
 
             SuccessMessage = $"Internship for {application.Std?.FullName ?? "student"} terminated.";
