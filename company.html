@@ -60,7 +60,10 @@
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#manage-interns" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Manage Applications</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#evaluations" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Submit Evaluations</button>
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#evaluations" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Weekly Reports</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#final-evaluation" type="button" role="tab" style="background:transparent; color:#777; font-weight:500; border:none;">Final Evaluation</button>
                     </li>
                 </ul>
 
@@ -300,37 +303,116 @@
                         </div>
                     </div>
 
-                    <!-- Evaluations Tab -->
+                    <!-- Weekly Reports Tab -->
                     <div class="tab-pane fade" id="evaluations" role="tabpanel">
-                        <div class="premium-card p-4 p-md-5">
-                            <h5 class="mb-2" style="color:#fff; font-weight:600;">Submit Evaluation</h5>
-                            <p style="color:#aaa; font-size:0.9rem; margin-bottom: 2rem;">Submit weekly progress reports or the final evaluation for your current interns.</p>
-                            
+                        <div class="premium-card p-4 p-md-5 mb-4">
+                            <h5 class="mb-2" style="color:#fff; font-weight:600;">Submit Weekly Report</h5>
+                            <p style="color:#aaa; font-size:0.9rem; margin-bottom: 2rem;">Submit weekly progress reports for your current interns (8 weeks).</p>
                             <form>
                                 <div class="mb-4">
                                     <label class="premium-label">Select Intern</label>
                                     <select class="form-select premium-input">
-                                            <option>Alice Johnson (test)</option>
-                                            <option>Alice Johnson (asd)</option>
-                                            <option>Alice Johnson (asd)</option>
+                                        <option>Alice Johnson (Software Engineering Intern)</option>
                                     </select>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="premium-label">Report Type</label>
+                                    <label class="premium-label">Week Number</label>
                                     <select class="form-select premium-input">
-                                        <option>Weekly Report (Week 1)</option>
-                                        <option>Weekly Report (Week 2)</option>
-                                        <option>Final Evaluation</option>
+                                        <option>Week 1 ✓ Submitted</option>
+                                        <option selected>Week 2</option>
+                                        <option>Week 3</option>
+                                        <option>Week 4</option>
+                                        <option>Week 5</option>
+                                        <option>Week 6</option>
+                                        <option>Week 7</option>
+                                        <option>Week 8</option>
                                     </select>
                                 </div>
-                                <div class="mb-5">
-                                    <label class="premium-label">Comments / Notes</label>
-                                    <textarea class="form-control premium-input" rows="4" placeholder="Write your performance assessment here..."></textarea>
+                                <div class="mb-4">
+                                    <label class="premium-label">Tasks & Activities <span style="color: #ff6b6b;">*</span></label>
+                                    <textarea class="form-control premium-input" rows="4" placeholder="Describe what the intern worked on this week..."></textarea>
                                 </div>
-                                <button type="submit" class="premium-btn w-100"><i class="bi bi-send-fill me-2"></i> Submit Evaluation</button>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="premium-label">Tools Used <span style="color: #ff6b6b;">*</span></label>
+                                        <input type="text" class="premium-input" placeholder="e.g., VS Code, MySQL, Git" style="width:100%;" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="premium-label">Hours This Week <span style="color: #ff6b6b;">*</span></label>
+                                        <input type="number" class="premium-input" placeholder="e.g., 40" style="width:100%;" />
+                                    </div>
+                                </div>
+                                <button type="button" class="premium-btn w-100"><i class="bi bi-send-fill me-2"></i> Submit Weekly Report</button>
+                            </form>
+                        </div>
+                        <!-- Submitted Reports -->
+                        <div class="premium-card p-4">
+                            <h6 class="mb-4" style="color:#fff; font-weight:600;"><i class="bi bi-journal-check me-2" style="color:#34d399;"></i>Submitted Reports</h6>
+                            <div class="d-flex align-items-start mb-3 p-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(123,111,166,0.1); border-radius: 12px;">
+                                <div style="width: 44px; height: 44px; min-width: 44px; border-radius: 10px; background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: #34d399; font-weight: 700; font-size: 0.85rem;">W1</span>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <h6 class="mb-1" style="color:#fff; font-weight:600; font-size: 0.9rem;">Alice Johnson</h6>
+                                        <span class="badge" style="background: rgba(123,111,166,0.1); color: #9B8EC4; font-size: 0.7rem;">10h</span>
+                                    </div>
+                                    <p class="mb-1" style="color:#aaa; font-size:0.8rem;">Worked on database schema design and API endpoints</p>
+                                    <small style="color:#666;">Tools: VS Code, MySQL, Postman</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Evaluation Tab -->
+                    <div class="tab-pane fade" id="final-evaluation" role="tabpanel">
+                        <div class="premium-card p-4 mb-4" style="border-color: rgba(245,158,11,0.2);">
+                            <div class="d-flex align-items-center mb-4">
+                                <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.25); display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <i class="bi bi-star-fill" style="font-size: 1.3rem; color: #f59e0b;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0" style="color: #fff; font-weight: 700;">Final Evaluation</h5>
+                                    <small style="color: #888;">Rate the intern's overall internship performance</small>
+                                </div>
+                            </div>
+                            <div class="p-3 mb-4" style="background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.15); border-radius: 10px;">
+                                <i class="bi bi-info-circle-fill me-2" style="color: #3b82f6;"></i>
+                                <small style="color: #bbb;">This is the final evaluation for the student's internship performance. Once submitted, it cannot be changed.</small>
+                            </div>
+                            <form>
+                                <div class="mb-4">
+                                    <label class="premium-label">Select Intern</label>
+                                    <select class="form-select premium-input">
+                                        <option>Alice Johnson — Software Engineering Intern</option>
+                                    </select>
+                                </div>
+                                <div class="premium-table-container shadow-sm mb-4" style="overflow: visible;">
+                                    <table class="table-custom mb-0" style="table-layout: fixed;">
+                                        <thead><tr><th style="width: 30%;">Criteria</th><th style="width: 70%; text-align: center;">Rating</th></tr></thead>
+                                        <tbody>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Performance Level</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate the student's overall work performance</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="perf" value="Excellent" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="perf" value="Very Good" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="perf" value="Good" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="perf" value="Acceptable" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="perf" value="Weak" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Responsibility</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate the student's sense of responsibility</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="resp" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="resp" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="resp" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="resp" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="resp" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Punctuality</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate the student's punctuality and attendance</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="punct" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="punct" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="punct" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="punct" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="punct" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Accuracy in Work</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate the student's accuracy and attention to detail</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="acc" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="acc" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="acc" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="acc" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="acc" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Teamwork</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate the student's teamwork and collaboration</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="team" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="team" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="team" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="team" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="team" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Adaptability</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate the student's adaptability to new tasks</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="adapt" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="adapt" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="adapt" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="adapt" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="adapt" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Skill Acquisition Speed</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate how quickly the student learns new skills</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="skill" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="skill" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="skill" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="skill" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="skill" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                            <tr><td><strong style="color:#fff; font-size: 0.9rem;">Overall Completion</strong><br/><small style="color:#666; font-size: 0.75rem;">Rate the student's overall task completion</small></td><td><div class="d-flex justify-content-around flex-wrap gap-1"><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="overall" style="accent-color:#34d399;"/><span style="color:#34d399;font-size:0.8rem;font-weight:500;">Excellent</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="overall" style="accent-color:#3b82f6;"/><span style="color:#3b82f6;font-size:0.8rem;font-weight:500;">Very Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="overall" style="accent-color:#f59e0b;"/><span style="color:#f59e0b;font-size:0.8rem;font-weight:500;">Good</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="overall" style="accent-color:#f97316;"/><span style="color:#f97316;font-size:0.8rem;font-weight:500;">Acceptable</span></label><label class="d-flex align-items-center gap-1" style="cursor:pointer;white-space:nowrap;"><input type="radio" name="overall" style="accent-color:#ff6b6b;"/><span style="color:#ff6b6b;font-size:0.8rem;font-weight:500;">Weak</span></label></div></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="premium-label">Additional Comments <small style="color:#666;">(Optional)</small></label>
+                                    <textarea class="form-control premium-input" rows="3" placeholder="Any additional remarks about the intern's performance..."></textarea>
+                                </div>
+                                <button type="button" class="premium-btn w-100" style="background: linear-gradient(135deg, #f59e0b, #d97706); padding: 0.75rem; font-weight: 600;">
+                                    <i class="bi bi-star-fill me-2"></i> Submit Final Evaluation
+                                </button>
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
